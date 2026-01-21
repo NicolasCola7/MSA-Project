@@ -1,484 +1,478 @@
 # Coreografia del Sistema ACMEMobility
-
-Legenda Partecipanti:
-- **RS**: Rental Service (Orchestratore BPMS ACME Mobility)
-- **User**: Cliente (App)
-- **B**: Bank (Servizio di Pagamento)
-- **S**: Station (Gestione Fisica Veicoli)
-- **FM**: Fleet Management (Coordinamento Fleet)
-- **TS**: Tracking Service (Tracciamento Posizione)
-- **BMS**: Battery Monitoring Service (Monitoraggio Batteria)
-- **LS**: Logistic Service
+## Versione Aggiornata - Allineata al Diagramma BPMN
 
 ---
 
-## Specifica Formale
+## Partecipanti
+
+- **RS**: Rental Service (Orchestratore BPMS ACME Mobility)
+- **User**: Cliente (App Mobile)
+- **B**: Bank (Servizio di Pagamento - Jolie/SOAP)
+- **S**: Station (Gestione Fisica Veicoli)
+- **FM**: Fleet Management (Coordinamento Fleet - API REST)
+- **TS**: Tracking Service (Tracciamento Posizione - Microservizio)
+- **BMS**: Battery Monitoring Service (Monitoraggio Batteria - Microservizio)
+- **LS**: Logistic Service (Gestione Manutenzione e Ricarica)
+
+---
+
+## Specifica Formale della Coreografia
 
 ```java
-(
-  // Visualizzazione veicoli disponibili
-  show_available_vehicles: user -> RS;
-  return_vehicles: RS -> user;
-  
-  (  
-    // Scenario A: Noleggio Immediato (Scan QR diretto)
+// FASE INIZIALE: Visualizzazione veicoli disponibili
+show_available_vehicles: User -> RS;
+return_vehicles: RS -> User;
+
+(  
+  // ========================================================================
+  // SCENARIO A: NOLEGGIO IMMEDIATO (Scan QR Code)
+  // ========================================================================
+  (
+    scan_qr: User -> RS;
+    
+    // --- PRE-AUTORIZZAZIONE BANCARIA ---
+    block_money: RS -> B;
+    send_token: B -> RS;
+    
+    // --- AVVIO MONITORAGGIO FLEET MANAGEMENT ---
+    start_monitoring: RS -> FM;
     (
-      scan_qr: user -> RS;
-      
-      block_money: RS -> B;
-      send_token: B -> RS;
-      
-      start_monitoring: RS -> FM;
-      (start_tracking: FM -> TS | start_battery_monitoring: FM -> BMS);
-      (ack_tracking: TS -> FM | ack_battery_monitoring: BMS -> FM);
-      ack_monitoring: FM -> RS;
-      
-      unlock_vehicle: RS -> S; 
-      vehicle_unlocked: S -> RS;
-      
-      ack_rental_started: RS -> user;
-      
-      // Monitoraggio continuo durante il noleggio
-      (             
-        request_update: user --> RS;             
-        trigger_read: RS --> FM;             
-        (                 
-          (ask_pos: FM --> TS; send_position_update: TS --> FM)
-          |                 
-          (ask_batt: FM --> BMS; send_battery_update: BMS --> FM)             
-        );
-        send_vehicle_status_update: FM --> RS;             
-        update_display: RS --> user         
-      )*;
-      
-      end_ride: user -> RS;
-      
-      lock_vehicle: RS -> S;
-      vehicle_locked: S -> RS;
-      
-      stop_monitoring: RS -> FM;
-      (stop_tracking: FM -> TS | stop_battery_monitoring: FM -> BMS);
-      (ack_stop_tracking: TS -> FM | ack_stop_battery_monitoring: BMS -> FM);
-      ack_stop_monitoring: FM -> RS;
-      
-      // Gestione della ricarica
-      (
-        (recharge_request: RS -> S; ack_recharge_request: S -> RS)
-        +
-        (no_recharge: RS -> S; ack_no_recharge: S -> RS)
-      );
-
-      // Gestione pagamento finale
-      (
-        (unlock_money: RS -> B; ack_money_unlocked: B -> RS)
-        | 
-        (send_charge: RS -> B; ack_charge_sent: B -> RS)
-      );
-
-      rental_summary: RS -> user;
-      
-      // Segnalazione danni
+      start_tracking: FM -> TS 
+      | 
+      start_battery_monitoring: FM -> BMS
+    );
+    (
+      ack_tracking: TS -> FM 
+      | 
+      ack_battery_monitoring: BMS -> FM
+    );
+    ack_monitoring: FM -> RS;
+    
+    // --- SBLOCCO FISICO VEICOLO ---
+    unlock_vehicle: RS -> S;
+    vehicle_unlocked: S -> RS;
+    
+    // --- CONFERMA INIZIO NOLEGGIO ---
+    ack_rental_started: RS -> User;
+    
+    // --- LOOP MONITORAGGIO DURANTE IL NOLEGGIO ---
+    (
+      request_update: User -> RS;
+      trigger_read: RS -> FM;
       (
         (
-          report_damage: user -> RS; 
-          ack_report_damage: RS -> user;
-          vehicle_in_queue: RS --> LS;
-          ack_vehicle_in_queue: LS --> RS;
+          ask_position: FM -> TS;
+          send_position: TS -> FM
         )
-        +
-        no_report_written: user -> RS;
+        |
+        (
+          ask_battery: FM -> BMS;
+          send_battery: BMS -> FM
+        )
+      );
+      send_vehicle_status: FM -> RS;
+      display_update: RS -> User
+    )*;
+    
+    // --- FINE NOLEGGIO ---
+    end_ride: User -> RS;
+    
+    // --- BLOCCO VEICOLO ---
+    lock_vehicle: RS -> S;
+    vehicle_locked: S -> RS;
+    
+    // --- STOP MONITORAGGIO ---
+    stop_monitoring: RS -> FM;
+    (
+      stop_tracking: FM -> TS 
+      | 
+      stop_battery_monitoring: FM -> BMS
+    );
+    (
+      ack_stop_tracking: TS -> FM 
+      | 
+      ack_stop_battery_monitoring: BMS -> FM
+    );
+    ack_stop_monitoring: FM -> RS;
+    
+    // --- GESTIONE RICARICA (Scelta basata su livello batteria) ---
+    (
+      (
+        recharge_request: RS -> S;
+        ack_recharge_request: S -> RS;
+        notify_recharge_to_logistic: RS -> LS;
+        ack_notify_recharge: LS -> RS
+      )
+      +
+      (
+        no_recharge_needed: RS -> S;
+        ack_no_recharge: S -> RS
+      )
+    );
+    
+    // --- PAGAMENTO FINALE (Parallelo: sblocco cauzione e addebito costo) ---
+    (
+      (
+        unlock_money: RS -> B;
+        ack_money_unlocked: B -> RS
+      )
+      |
+      (
+        send_charge: RS -> B;
+        ack_charge_sent: B -> RS
+      )
+    );
+    
+    // --- INVIO RIEPILOGO ---
+    rental_summary: RS -> User;
+    
+    // --- GESTIONE SEGNALAZIONE DANNI (Opzionale) ---
+    (
+      (
+        report_damage: User -> RS;
+        ack_report_damage: RS -> User;
+        vehicle_in_maintenance_queue: RS -> LS;
+        ack_vehicle_queued: LS -> RS
+      )
+      +
+      (
+        no_report: User -> RS
       )
     )
+  )
+  
+  + 
+  
+  // ========================================================================
+  // SCENARIO B: PRENOTAZIONE BREVE (Booking con anticipo max 30 min)
+  // ========================================================================
+  (
+    short_reservation: User -> RS;
     
-    + 
+    // --- PRE-AUTORIZZAZIONE BANCARIA ---
+    block_money: RS -> B;
+    send_token: B -> RS;
     
-    // Scenario B: Prenotazione Breve con gestione Timeout/Annullamento
+    // --- CONFERMA PRENOTAZIONE ---
+    ack_reservation: RS -> User;
+    
     (
-      short_reservation: user -> RS; 
-      
-      block_money: RS -> B; 
-      send_token: B -> RS;
-      
-      ack_short_reservation: RS -> user;
-      
+      // --------------------------------------------------------------------
+      // SCENARIO B1: ANNULLAMENTO ESPLICITO (> 5 min prima)
+      // --------------------------------------------------------------------
       (
-        // Sotto-scenario B1: Annullamento esplicito da parte dell'utente
+        cancel_reservation: User -> RS;
+        
+        // Verifica tempistica annullamento
         (
-          cancel_reservation: user -> RS;
+          // Annullamento in tempo (> 5 min): Rimborso totale
           (
-            (charge_money_block: RS -> B; ack_charge_money_block: B -> RS)
-            +
-            (unlock_money: RS -> B; ack_unlock_money: B -> RS)
-          );
-          reservation_canceled: RS -> user
-        )
+            unlock_money: RS -> B;
+            ack_money_unlocked: B -> RS
+          )
+          +
+          // Annullamento tardivo (< 5 min): Addebito penale
+          (
+            charge_money_block: RS -> B;
+            ack_charge_money_block: B -> RS
+          )
+        );
         
-        +  
+        reservation_cancelled: RS -> User
+      )
+      
+      +
+      
+      // --------------------------------------------------------------------
+      // SCENARIO B2: TIMEOUT - NO SHOW (Scadenza 30 minuti)
+      // --------------------------------------------------------------------
+      (
+        timeout_notification: RS -> User;
         
-        // Sotto-scenario B2: Timeout (No Show - 30 min scaduti)
+        // Addebito automatico penale
+        charge_money_block: RS -> B;
+        ack_charge_money_block: B -> RS;
+        
+        reservation_cancelled: RS -> User
+      )
+      
+      +
+      
+      // --------------------------------------------------------------------
+      // SCENARIO B3: RITIRO VEICOLO (Happy Path)
+      // --------------------------------------------------------------------
+      (
+        scan_qr: User -> RS;
+        
+        // --- AVVIO MONITORAGGIO FLEET MANAGEMENT ---
+        start_monitoring: RS -> FM;
         (
-          timeout_notify: RS -> user;
-          charge_money_block: RS -> B;
-          ack_charge_money_block: B -> RS;
-          reservation_canceled: RS -> user
-        )
-        
-        +
-        
-        // Sotto-scenario B3: Happy Path - Ritiro del veicolo prenotato
+          start_tracking: FM -> TS 
+          | 
+          start_battery_monitoring: FM -> BMS
+        );
         (
-          scan_qr: user -> RS;
+          ack_tracking: TS -> FM 
+          | 
+          ack_battery_monitoring: BMS -> FM
+        );
+        ack_monitoring: FM -> RS;
         
-          start_monitoring: RS -> FM;
-          (start_tracking: FM -> TS | start_battery_monitoring: FM -> BMS);
-          (ack_tracking: TS -> FM | ack_battery_monitoring: BMS -> FM);
-          ack_monitoring: FM -> RS;
-          
-          unlock_vehicle: RS -> S; 
-          vehicle_unlocked: S -> RS;
-          
-          ack_rental_started: RS -> user;
-          
-          // Monitoraggio continuo durante il noleggio
-          (             
-            request_update: user --> RS;             
-            trigger_read: RS --> FM;             
-            (                 
-              (ask_pos: FM --> TS; send_position_update: TS --> FM)
-              |                 
-              (ask_batt: FM --> BMS; send_battery_update: BMS --> FM)             
-            );
-            send_vehicle_status_update: FM --> RS;             
-            update_display: RS --> user         
-          )*;
-          
-          end_ride: user -> RS;
-          
-          lock_vehicle: RS -> S;
-          vehicle_locked: S -> RS;
-          
-          stop_monitoring: RS -> FM;
-          (stop_tracking: FM -> TS | stop_battery_monitoring: FM -> BMS);
-          (ack_stop_tracking: TS -> FM | ack_stop_battery_monitoring: BMS -> FM);
-          ack_stop_monitoring: FM -> RS;
-          
-          // Gestione della ricarica
-          (
-            (recharge_request: RS -> S; ack_recharge_request: S -> RS)
-            +
-            (no_recharge: RS -> S; ack_no_recharge: S -> RS)
-          );
-
-          // Gestione pagamento finale
-          (
-            (unlock_money: RS -> B; ack_money_unlocked: B -> RS)
-            |
-            (send_charge: RS -> B; ack_charge_sent: B -> RS)
-          );
-          
-          rental_summary: RS -> user;
-          
-          // Segnalazione danni
+        // --- SBLOCCO FISICO VEICOLO ---
+        unlock_vehicle: RS -> S;
+        vehicle_unlocked: S -> RS;
+        
+        // --- CONFERMA INIZIO NOLEGGIO ---
+        ack_rental_started: RS -> User;
+        
+        // --- LOOP MONITORAGGIO DURANTE IL NOLEGGIO ---
+        (
+          request_update: User -> RS;
+          trigger_read: RS -> FM;
           (
             (
-              report_damage: user -> RS; 
-              ack_report_damage: RS -> user;
-              vehicle_in_queue: RS --> LS;
-              ack_vehicle_in_queue: LS --> RS;
+              ask_position: FM -> TS;
+              send_position: TS -> FM
             )
-            +
-            no_report_written: user -> RS;
+            |
+            (
+              ask_battery: FM -> BMS;
+              send_battery: BMS -> FM
+            )
+          );
+          send_vehicle_status: FM -> RS;
+          display_update: RS -> User
+        )*;
+        
+        // --- FINE NOLEGGIO ---
+        end_ride: User -> RS;
+        
+        // --- BLOCCO VEICOLO ---
+        lock_vehicle: RS -> S;
+        vehicle_locked: S -> RS;
+        
+        // --- STOP MONITORAGGIO ---
+        stop_monitoring: RS -> FM;
+        (
+          stop_tracking: FM -> TS 
+          | 
+          stop_battery_monitoring: FM -> BMS
+        );
+        (
+          ack_stop_tracking: TS -> FM 
+          | 
+          ack_stop_battery_monitoring: BMS -> FM
+        );
+        ack_stop_monitoring: FM -> RS;
+        
+        // --- GESTIONE RICARICA ---
+        (
+          (
+            recharge_request: RS -> S;
+            ack_recharge_request: S -> RS;
+            notify_recharge_to_logistic: RS -> LS;
+            ack_notify_recharge: LS -> RS
+          )
+          +
+          (
+            no_recharge_needed: RS -> S;
+            ack_no_recharge: S -> RS
+          )
+        );
+        
+        // --- PAGAMENTO FINALE ---
+        (
+          (
+            unlock_money: RS -> B;
+            ack_money_unlocked: B -> RS
+          )
+          |
+          (
+            send_charge: RS -> B;
+            ack_charge_sent: B -> RS
+          )
+        );
+        
+        // --- INVIO RIEPILOGO ---
+        rental_summary: RS -> User;
+        
+        // --- GESTIONE SEGNALAZIONE DANNI ---
+        (
+          (
+            report_damage: User -> RS;
+            ack_report_damage: RS -> User;
+            vehicle_in_maintenance_queue: RS -> LS;
+            ack_vehicle_queued: LS -> RS
+          )
+          +
+          (
+            no_report: User -> RS
           )
         )
       )
     )
-  )      
-);
+  )
+)
 ```
 
 ---
 
-## Proiezioni in Ruoli
+## Proiezioni in Ruoli (Sistema di Ruoli)
 
-Legenda: **!** = **Invio**, **?** = **Ricezione**, **1** = **skip**
+Legenda: 
+- **!** = **Invio messaggio**
+- **?** = **Ricezione messaggio**
+- **1** = **Skip** (nessuna azione per questo partecipante)
 
-### 1) Rental Service (RS)
+---
+
+### 1) Rental Service (RS) - Orchestratore BPMS
 
 ```java
-// FASE 0: RICERCA
-show_available_vehicles?user; 
-// (Qui RS interroga internamente il DB o i veicoli, assumiamo sia interno o sincrono)
-return_vehicles!user;
+// FASE INIZIALE
+show_available_vehicles?User;
+return_vehicles!User;
 
-(  
-  // RAMO A: Noleggio Immediato (Scan QR)
+(
+  // ====== SCENARIO A: NOLEGGIO IMMEDIATO ======
   (
-    scan_qr?user;
+    scan_qr?User;
     
-    // Pagamento: Pre-autorizzazione
-    block_money!B; send_token?B;
+    // Pre-autorizzazione
+    block_money!B; 
+    send_token?B;
     
-    // Avvio Monitoraggio (Interazione con FM)
+    // Avvio monitoraggio
     start_monitoring!FM;
-    // (RS non vede le chiamate interne di FM verso TS/BMS, quindi per lui sono skip)
-    (1 | 1); 
-    (1 | 1); 
+    1; 1;  // Skip interazioni FM-TS/BMS
     ack_monitoring?FM;
     
-    // Sblocco Fisico
-    unlock_vehicle!S; vehicle_unlocked?S;
+    // Sblocco veicolo
+    unlock_vehicle!S; 
+    vehicle_unlocked?S;
     
-    ack_rental_started!user;
+    ack_rental_started!User;
     
-    // Loop di Monitoraggio durante la corsa
+    // Loop monitoraggio
     (
-      request_update?user;
+      request_update?User;
       trigger_read!FM;
-      // Ricezione parallela dati (posizione e batteria aggregati da FM)
-      send_vehicle_status_update?FM;
-      update_display!user
+      1;  // Skip interazioni FM-TS/BMS
+      send_vehicle_status?FM;
+      display_update!User
     )*;
     
-    // Fine Corsa
-    end_ride?user;
+    // Fine noleggio
+    end_ride?User;
     
-    lock_vehicle!S; vehicle_locked?S;
+    lock_vehicle!S; 
+    vehicle_locked?S;
     
-    // Stop Monitoraggio
+    // Stop monitoraggio
     stop_monitoring!FM;
-    (1 | 1);
-    (1 | 1);
+    1; 1;  // Skip interazioni FM-TS/BMS
     ack_stop_monitoring?FM;
     
-    // Gestione Ricarica (Scelta basata su logica interna RS dopo check batteria)
-    ( (recharge_request!S; ack_recharge_request?S) + (no_recharge!S; ack_no_recharge?S) );
-
-    // Pagamento Finale
-    ( (unlock_money!B; ack_money_unlocked?B) | (send_charge!B; ack_charge_sent?B) );
-    
-    rental_summary!user;
-    
-    // Gestione Danni
+    // Gestione ricarica
     (
-      (report_damage?user; ack_report_damage!user; vehicle_in_queue!LS; ack_vehicle_in_queue?LS)
+      (
+        recharge_request!S; 
+        ack_recharge_request?S;
+        notify_recharge_to_logistic!LS;
+        ack_notify_recharge?LS
+      )
       +
-      (no_report_written?user)
+      (
+        no_recharge_needed!S; 
+        ack_no_recharge?S
+      )
+    );
+    
+    // Pagamento finale
+    (
+      (unlock_money!B; ack_money_unlocked?B)
+      |
+      (send_charge!B; ack_charge_sent?B)
+    );
+    
+    rental_summary!User;
+    
+    // Gestione danni
+    (
+      (
+        report_damage?User; 
+        ack_report_damage!User;
+        vehicle_in_maintenance_queue!LS;
+        ack_vehicle_queued?LS
+      )
+      +
+      (no_report?User)
     )
   )
   
-  + 
+  +
   
-  // RAMO B: Prenotazione Breve
+  // ====== SCENARIO B: PRENOTAZIONE BREVE ======
   (
-    short_reservation?user; 
+    short_reservation?User;
     
-    block_money!B; send_token?B;
+    block_money!B; 
+    send_token?B;
     
-    ack_short_reservation!user;
-    
-    (
-      // B1: Annullamento Esplicito Utente
-      (
-        cancel_reservation?user;
-        ( (charge_money_block!B; ack_charge_money_block?B) + (unlock_money!B; ack_unlock_money?B) );
-        reservation_canceled!user
-      )
-      
-      +  
-      
-      // B2: Timeout (Evento generato internamente da RS)
-      (
-        timeout_notify!user; 
-        charge_money_block!B; ack_charge_money_block?B;
-        reservation_canceled!user
-      )
-      
-      +
-      
-      // B3: Ritiro Veicolo (Happy Path - Identico alla parte centrale di A)
-      (
-        scan_qr?user;
-      
-        start_monitoring!FM; (1 | 1); (1 | 1); ack_monitoring?FM;
-        
-        unlock_vehicle!S; vehicle_unlocked?S;
-        
-        ack_rental_started!user;
-        
-        ( request_update?user; trigger_read!FM; send_vehicle_status_update?FM; update_display!user )*;
-        
-        end_ride?user;
-        
-        lock_vehicle!S; vehicle_locked?S;
-        
-        stop_monitoring!FM; (1 | 1); (1 | 1); ack_stop_monitoring?FM;
-        
-        ( (recharge_request!S; ack_recharge_request?S) + (no_recharge!S; ack_no_recharge?S) );
-
-        ( (unlock_money!B; ack_money_unlocked?B) | (send_charge!B; ack_charge_sent?B) );
-        
-        rental_summary!user;
-        
-        ( (report_damage?user; ack_report_damage!user; vehicle_in_queue!LS; ack_vehicle_in_queue?LS) + (no_report_written?user) )
-      )
-    )
-  )
-)
-```
-
----
-
-### 2) User (Cliente - App)
-
-```java
-show_available_vehicles!RS; 
-return_vehicles?RS;
-
-(  
-  // Scelta A: Noleggio Immediato
-  (
-    scan_qr!RS;
-    
-    // Skip fasi interne (Banca, FM, Stazione)
-    1; 1; 
-    1; (1 | 1); (1 | 1); 1;
-    1; 1;
-    
-    ack_rental_started?RS;
-    
-    // Loop Monitoraggio
-    ( request_update!RS; 1; 1; update_display?RS )*;
-    
-    end_ride!RS;
-    
-    1; 1; // Lock
-    1; (1 | 1); (1 | 1); 1; // Stop FM
-    ( (1; 1) + (1; 1) ); // Recharge
-    ( (1; 1) | (1; 1) ); // Payment
-    
-    rental_summary?RS;
-    
-    ( (report_damage!RS; ack_report_damage?RS; 1; 1) + (no_report_written!RS) )
-  )
-  
-  + 
-  
-  // Scelta B: Prenotazione Breve
-  (
-    short_reservation!RS; 
-    
-    1; 1; // Bank block
-    
-    ack_short_reservation?RS;
-    
-    (
-      // B1: Decido di annullare
-      (
-        cancel_reservation!RS;
-        ( (1; 1) + (1; 1) ); // Bank adjustment (invisibile a user)
-        reservation_canceled?RS
-      )
-      
-      +  
-      
-      // B2: Ricevo Timeout (Passivo)
-      (
-        timeout_notify?RS; 
-        1; 1; // Bank charge
-        reservation_canceled?RS
-      )
-      
-      +
-      
-      // B3: Decido di ritirare (Scan QR)
-      (
-        scan_qr!RS;
-      
-        1; (1 | 1); (1 | 1); 1; // FM start
-        1; 1; // Unlock
-        
-        ack_rental_started?RS;
-        
-        ( request_update!RS; 1; 1; update_display?RS )*;
-        
-        end_ride!RS;
-        
-        1; 1; // Lock
-        1; (1 | 1); (1 | 1); 1; // FM stop
-        ( (1; 1) + (1; 1) ); // Recharge
-        ( (1; 1) | (1; 1) ); // Payment
-        
-        rental_summary?RS;
-        
-        ( (report_damage!RS; ack_report_damage?RS; 1; 1) + (no_report_written!RS) )
-      )
-    )
-  )
-)
-```
-
----
-
-### 3) Bank (B)
-
-```java
-1; 1; // Fase Ricerca
-
-(  
-  // RAMO A
-  (
-    1; // scan
-    block_money?RS; send_token!RS;
-    
-    // Tutto il noleggio è SKIP per la banca
-    1; (1 | 1); (1 | 1); 1;
-    1; 1; 1;
-    (1; 1; 1; 1)*;
-    1; 1; 1;
-    1; (1 | 1); (1 | 1); 1;
-    ( (1; 1) + (1; 1) );
-
-    // Pagamento Finale
-    ( (unlock_money?RS; ack_money_unlocked!RS) | (send_charge?RS; ack_charge_sent!RS) );
-    
-    1; ( (1; 1; 1; 1) + 1 ) // Summary & Damage
-  )
-  
-  + 
-  
-  // RAMO B
-  (
-    1; // short_res
-    block_money?RS; send_token!RS;
-    1; // ack_short
+    ack_reservation!User;
     
     (
       // B1: Annullamento
       (
-        1; // cancel msg
-        ( (charge_money_block?RS; ack_charge_money_block!RS) + (unlock_money?RS; ack_unlock_money!RS) );
-        1 // canceled msg
+        cancel_reservation?User;
+        (
+          (unlock_money!B; ack_money_unlocked?B)
+          +
+          (charge_money_block!B; ack_charge_money_block?B)
+        );
+        reservation_cancelled!User
       )
-      +  
+      
+      +
+      
       // B2: Timeout
       (
-        1; // timeout notify
-        charge_money_block?RS; ack_charge_money_block!RS;
-        1 // canceled msg
+        timeout_notification!User;
+        charge_money_block!B; 
+        ack_charge_money_block?B;
+        reservation_cancelled!User
       )
+      
       +
-      // B3: Ritiro (Happy Path)
+      
+      // B3: Ritiro (identico a Scenario A dal scan_qr in poi)
       (
-        1; // scan
-        1; (1 | 1); (1 | 1); 1; 
-        1; 1; 1;
-        (1; 1; 1; 1)*;
-        1; 1; 1; 1; (1 | 1); (1 | 1); 1; ( (1; 1) + (1; 1) );
+        scan_qr?User;
+        start_monitoring!FM; 1; 1; ack_monitoring?FM;
+        unlock_vehicle!S; vehicle_unlocked?S;
+        ack_rental_started!User;
         
-        // Pagamento Finale
-        ( (unlock_money?RS; ack_money_unlocked!RS) | (send_charge?RS; ack_charge_sent!RS) );
+        (request_update?User; trigger_read!FM; 1; send_vehicle_status?FM; display_update!User)*;
         
-        1; ( (1; 1; 1; 1) + 1 )
+        end_ride?User;
+        lock_vehicle!S; vehicle_locked?S;
+        stop_monitoring!FM; 1; 1; ack_stop_monitoring?FM;
+        
+        (
+          (recharge_request!S; ack_recharge_request?S; notify_recharge_to_logistic!LS; ack_notify_recharge?LS)
+          +
+          (no_recharge_needed!S; ack_no_recharge?S)
+        );
+        
+        ((unlock_money!B; ack_money_unlocked?B) | (send_charge!B; ack_charge_sent?B));
+        
+        rental_summary!User;
+        
+        (
+          (report_damage?User; ack_report_damage!User; vehicle_in_maintenance_queue!LS; ack_vehicle_queued?LS)
+          +
+          (no_report?User)
+        )
       )
     )
   )
@@ -487,212 +481,421 @@ return_vehicles?RS;
 
 ---
 
-### 4) Station (S)
+### 2) User (Cliente - App Mobile)
 
 ```java
-// Init: 1
+// FASE INIZIALE
+show_available_vehicles!RS;
+return_vehicles?RS;
 
-(  
-  // RAMO A
+(
+  // ====== SCENARIO A: NOLEGGIO IMMEDIATO ======
   (
-    1; 1; 1; 1; (1 | 1); (1 | 1); 1; // Skip fase avvio fino a unlock
+    scan_qr!RS;
     
-    unlock_vehicle?RS; vehicle_unlocked!RS;
-    1; // Ack rental
+    1; 1;  // Skip pre-autorizzazione (RS-B)
+    1; 1; 1; 1;  // Skip avvio monitoraggio (RS-FM-TS/BMS)
+    1; 1;  // Skip sblocco (RS-S)
     
-    (1; 1; ( (1; 1) | (1; 1) ); 1; 1)*; // Loop monitoraggio (S non fa nulla)
+    ack_rental_started?RS;
     
-    1; // End ride
-    
-    lock_vehicle?RS; vehicle_locked!RS;
-    
-    1; (1 | 1); (1 | 1); 1; // Stop FM
-    
-    // Ricarica (S è coinvolta)
-    ( (recharge_request?RS; ack_recharge_request!RS) + (no_recharge?RS; ack_no_recharge!RS) );
-
-    // Pagamento & Resto
-    ( (1; 1) | (1; 1) ); 1; ( (1; 1; 1; 1) + 1 )
-  )
-  
-  + 
-  
-  // RAMO B
-  (
-    1; 1; 1; 1;
-    
+    // Loop monitoraggio
     (
-      // B1 & B2: S non fa nulla
-      (1; ( (1; 1) + (1; 1) ); 1) + (1; 1; 1; 1)
-      
-      +
-      
-      // B3: Ritiro (Identico a A)
-      (
-        1; 1; (1 | 1); (1 | 1); 1;
-        
-        unlock_vehicle?RS; vehicle_unlocked!RS;
-        1;
-        (1; 1; ( (1; 1) | (1; 1) ); 1; 1)*;
-        1;
-        
-        lock_vehicle?RS; vehicle_locked!RS;
-        
-        1; (1 | 1); (1 | 1); 1;
-        
-        ( (recharge_request?RS; ack_recharge_request!RS) + (no_recharge?RS; ack_no_recharge!RS) );
-
-        ( (1; 1) | (1; 1) ); 1; ( (1; 1; 1; 1) + 1 )
-      )
-    )
-  )
-)
-```
-
----
-
-### 5) Fleet Management (FM)
-
-```java
-// Init: 1
-
-(  
-  // RAMO A
-  (
-    1; 1; 1; // Scan & Bank
-    
-    start_monitoring?RS;
-    (start_tracking!TS | start_battery_monitoring!BMS);
-    (ack_tracking?TS | ack_battery_monitoring?BMS);
-    ack_monitoring!RS;
-    
-    1; 1; 1; // Unlock & Ack rental
-    
-    // Loop
-    (
-      1; // User request
-      trigger_read?RS;
-      ( (ask_pos!TS; send_position_update?TS) | (ask_batt!BMS; send_battery_update?BMS) );
-      send_vehicle_status_update!RS;
-      1 // User update
+      request_update!RS;
+      1;  // Skip trigger_read (RS-FM)
+      1;  // Skip interazioni FM-TS/BMS
+      1;  // Skip send_vehicle_status (FM-RS)
+      display_update?RS
     )*;
     
-    1; 1; 1; // End & Lock
+    end_ride!RS;
     
-    stop_monitoring?RS;
-    (stop_tracking!TS | stop_battery_monitoring!BMS);
-    (ack_stop_tracking?TS | ack_stop_battery_monitoring?BMS);
-    ack_stop_monitoring!RS;
+    1; 1;  // Skip lock (RS-S)
+    1; 1; 1; 1;  // Skip stop monitoraggio (RS-FM-TS/BMS)
     
-    // Resto è skip
-    ( (1; 1) + (1; 1) );
-    ( (1; 1) | (1; 1) );
-    1;
-    ( (1; 1; 1; 1) + 1 )
+    // Skip gestione ricarica
+    (
+      (1; 1; 1; 1)
+      +
+      (1; 1)
+    );
+    
+    // Skip pagamento
+    ((1; 1) | (1; 1));
+    
+    rental_summary?RS;
+    
+    // Gestione danni
+    (
+      (report_damage!RS; ack_report_damage?RS; 1; 1)
+      +
+      (no_report!RS)
+    )
   )
   
-  + 
+  +
   
-  // RAMO B
+  // ====== SCENARIO B: PRENOTAZIONE BREVE ======
   (
-    1; 1; 1; 1; // Reservation phase
+    short_reservation!RS;
+    
+    1; 1;  // Skip pre-autorizzazione
+    
+    ack_reservation?RS;
     
     (
-      // B1 & B2: FM non fa nulla
-      (1; ( (1; 1) + (1; 1) ); 1) + (1; 1; 1; 1)
+      // B1: Annullamento
+      (
+        cancel_reservation!RS;
+        ((1; 1) + (1; 1));
+        reservation_cancelled?RS
+      )
       
       +
       
-      // B3: Ritiro (Identico a A)
+      // B2: Timeout
       (
-        1; // Scan
+        timeout_notification?RS;
+        1; 1;
+        reservation_cancelled?RS
+      )
+      
+      +
+      
+      // B3: Ritiro
+      (
+        scan_qr!RS;
+        1; 1; 1; 1;  // Skip monitoraggio
+        1; 1;  // Skip unlock
+        ack_rental_started?RS;
+        
+        (request_update!RS; 1; 1; 1; display_update?RS)*;
+        
+        end_ride!RS;
+        1; 1;  // Skip lock
+        1; 1; 1; 1;  // Skip stop monitoraggio
+        
+        ((1; 1; 1; 1) + (1; 1));  // Skip ricarica
+        ((1; 1) | (1; 1));  // Skip pagamento
+        
+        rental_summary?RS;
+        
+        ((report_damage!RS; ack_report_damage?RS; 1; 1) + (no_report!RS))
+      )
+    )
+  )
+)
+```
+
+---
+
+### 3) Bank (B) - Servizio Bancario (Jolie/SOAP)
+
+```java
+// FASE INIZIALE
+1; 1;  // Skip visualizzazione veicoli
+
+(
+  // ====== SCENARIO A: NOLEGGIO IMMEDIATO ======
+  (
+    1;  // Skip scan_qr
+    
+    // Pre-autorizzazione
+    block_money?RS;
+    send_token!RS;
+    
+    // Skip tutto fino al pagamento finale
+    1; 1; 1; 1;  // Skip monitoraggio
+    1; 1;  // Skip unlock
+    1;  // Skip ack rental
+    (1; 1; 1; 1; 1)*;  // Skip loop monitoraggio
+    1;  // Skip end_ride
+    1; 1;  // Skip lock
+    1; 1; 1; 1;  // Skip stop monitoraggio
+    
+    // Skip ricarica
+    ((1; 1; 1; 1) + (1; 1));
+    
+    // Pagamento finale
+    (
+      (unlock_money?RS; ack_money_unlocked!RS)
+      |
+      (send_charge?RS; ack_charge_sent!RS)
+    );
+    
+    1;  // Skip rental_summary
+    
+    // Skip gestione danni
+    ((1; 1; 1; 1) + 1)
+  )
+  
+  +
+  
+  // ====== SCENARIO B: PRENOTAZIONE BREVE ======
+  (
+    1;  // Skip short_reservation
+    
+    // Pre-autorizzazione
+    block_money?RS;
+    send_token!RS;
+    
+    1;  // Skip ack_reservation
+    
+    (
+      // B1: Annullamento
+      (
+        1;  // Skip cancel_reservation
+        (
+          (unlock_money?RS; ack_money_unlocked!RS)
+          +
+          (charge_money_block?RS; ack_charge_money_block!RS)
+        );
+        1  // Skip reservation_cancelled
+      )
+      
+      +
+      
+      // B2: Timeout
+      (
+        1;  // Skip timeout_notification
+        charge_money_block?RS;
+        ack_charge_money_block!RS;
+        1  // Skip reservation_cancelled
+      )
+      
+      +
+      
+      // B3: Ritiro
+      (
+        1;  // Skip scan_qr
+        1; 1; 1; 1;  // Skip monitoraggio
+        1; 1;  // Skip unlock
+        1;  // Skip ack rental
+        (1; 1; 1; 1; 1)*;  // Skip loop
+        1;  // Skip end_ride
+        1; 1;  // Skip lock
+        1; 1; 1; 1;  // Skip stop monitoraggio
+        ((1; 1; 1; 1) + (1; 1));  // Skip ricarica
+        
+        // Pagamento finale
+        ((unlock_money?RS; ack_money_unlocked!RS) | (send_charge?RS; ack_charge_sent!RS));
+        
+        1;  // Skip rental_summary
+        ((1; 1; 1; 1) + 1)  // Skip danni
+      )
+    )
+  )
+)
+```
+
+---
+
+### 4) Station (S) - Gestione Fisica Veicoli
+
+```java
+// FASE INIZIALE
+1; 1;  // Skip visualizzazione veicoli
+
+(
+  // ====== SCENARIO A: NOLEGGIO IMMEDIATO ======
+  (
+    1;  // Skip scan_qr
+    1; 1;  // Skip pre-autorizzazione
+    1; 1; 1; 1;  // Skip avvio monitoraggio
+    
+    // Sblocco veicolo
+    unlock_vehicle?RS;
+    vehicle_unlocked!RS;
+    
+    1;  // Skip ack_rental_started
+    (1; 1; 1; 1; 1)*;  // Skip loop monitoraggio
+    1;  // Skip end_ride
+    
+    // Blocco veicolo
+    lock_vehicle?RS;
+    vehicle_locked!RS;
+    
+    1; 1; 1; 1;  // Skip stop monitoraggio
+    
+    // Gestione ricarica
+    (
+      (
+        recharge_request?RS;
+        ack_recharge_request!RS;
+        1; 1  // Skip notifica logistica
+      )
+      +
+      (
+        no_recharge_needed?RS;
+        ack_no_recharge!RS
+      )
+    );
+    
+    ((1; 1) | (1; 1));  // Skip pagamento
+    1;  // Skip rental_summary
+    ((1; 1; 1; 1) + 1)  // Skip gestione danni
+  )
+  
+  +
+  
+  // ====== SCENARIO B: PRENOTAZIONE BREVE ======
+  (
+    1;  // Skip short_reservation
+    1; 1;  // Skip pre-autorizzazione
+    1;  // Skip ack_reservation
+    
+    (
+      // B1 & B2: Station non coinvolta
+      (1; ((1; 1) + (1; 1)); 1)
+      +
+      (1; 1; 1; 1)
+      
+      +
+      
+      // B3: Ritiro
+      (
+        1;  // Skip scan_qr
+        1; 1; 1; 1;  // Skip avvio monitoraggio
+        
+        unlock_vehicle?RS;
+        vehicle_unlocked!RS;
+        
+        1;  // Skip ack_rental_started
+        (1; 1; 1; 1; 1)*;  // Skip loop
+        1;  // Skip end_ride
+        
+        lock_vehicle?RS;
+        vehicle_locked!RS;
+        
+        1; 1; 1; 1;  // Skip stop monitoraggio
+        
+        (
+          (recharge_request?RS; ack_recharge_request!RS; 1; 1)
+          +
+          (no_recharge_needed?RS; ack_no_recharge!RS)
+        );
+        
+        ((1; 1) | (1; 1));  // Skip pagamento
+        1;  // Skip rental_summary
+        ((1; 1; 1; 1) + 1)  // Skip danni
+      )
+    )
+  )
+)
+```
+
+---
+
+### 5) Fleet Management (FM) - Coordinamento Fleet (API REST)
+
+```java
+// FASE INIZIALE
+1; 1;  // Skip visualizzazione veicoli
+
+(
+  // ====== SCENARIO A: NOLEGGIO IMMEDIATO ======
+  (
+    1;  // Skip scan_qr
+    1; 1;  // Skip pre-autorizzazione
+    
+    // Avvio monitoraggio
+    start_monitoring?RS;
+    (
+      start_tracking!TS 
+      | 
+      start_battery_monitoring!BMS
+    );
+    (
+      ack_tracking?TS 
+      | 
+      ack_battery_monitoring?BMS
+    );
+    ack_monitoring!RS;
+    
+    1; 1;  // Skip unlock
+    1;  // Skip ack_rental_started
+    
+    // Loop monitoraggio
+    (
+      1;  // Skip request_update
+      trigger_read?RS;
+      (
+        (ask_position!TS; send_position?TS)
+        |
+        (ask_battery!BMS; send_battery?BMS)
+      );
+      send_vehicle_status!RS;
+      1  // Skip display_update
+    )*;
+    
+    1;  // Skip end_ride
+    1; 1;  // Skip lock
+    
+    // Stop monitoraggio
+    stop_monitoring?RS;
+    (
+      stop_tracking!TS 
+      | 
+      stop_battery_monitoring!BMS
+    );
+    (
+      ack_stop_tracking?TS 
+      | 
+      ack_stop_battery_monitoring?BMS
+    );
+    ack_stop_monitoring!RS;
+    
+    // Skip resto
+    ((1; 1; 1; 1) + (1; 1));  // Skip ricarica
+    ((1; 1) | (1; 1));  // Skip pagamento
+    1;  // Skip rental_summary
+    ((1; 1; 1; 1) + 1)  // Skip danni
+  )
+  
+  +
+  
+  // ====== SCENARIO B: PRENOTAZIONE BREVE ======
+  (
+    1;  // Skip short_reservation
+    1; 1;  // Skip pre-autorizzazione
+    1;  // Skip ack_reservation
+    
+    (
+      // B1 & B2: FM non coinvolta
+      (1; ((1; 1) + (1; 1)); 1)
+      +
+      (1; 1; 1; 1)
+      
+      +
+      
+      // B3: Ritiro
+      (
+        1;  // Skip scan_qr
         
         start_monitoring?RS;
         (start_tracking!TS | start_battery_monitoring!BMS);
         (ack_tracking?TS | ack_battery_monitoring?BMS);
         ack_monitoring!RS;
         
-        1; 1; 1;
+        1; 1; 1;  // Skip unlock e ack
         
         (
           1; trigger_read?RS;
-          ( (ask_pos!TS; send_position_update?TS) | (ask_batt!BMS; send_battery_update?BMS) );
-          send_vehicle_status_update!RS; 1
+          ((ask_position!TS; send_position?TS) | (ask_battery!BMS; send_battery?BMS));
+          send_vehicle_status!RS; 1
         )*;
         
-        1; 1; 1;
+        1; 1; 1;  // Skip end_ride e lock
         
         stop_monitoring?RS;
         (stop_tracking!TS | stop_battery_monitoring!BMS);
         (ack_stop_tracking?TS | ack_stop_battery_monitoring?BMS);
         ack_stop_monitoring!RS;
         
-        // Resto è skip
-        ( (1; 1) + (1; 1) ); ( (1; 1) | (1; 1) ); 1; ( (1; 1; 1; 1) + 1 )
-      )
-    )
-  )
-)
-```
-
----
-
-### 6) Tracking Service (TS)
-
-```java
-// Init: 1
-
-(  
-  // RAMO A
-  (
-    1; 1; 1; // Start fase RS
-    
-    1; // Start mon (RS->FM)
-    (start_tracking?FM | 1); // Riceve parallelo
-    (ack_tracking!FM | 1);   // Risponde parallelo
-    1; // Ack mon (FM->RS)
-    
-    1; 1; 1; 
-    
-    // Loop
-    (
-      1; 1; 
-      ( (ask_pos?FM; send_position_update!FM) | (1; 1) );
-      1; 1
-    )*;
-    
-    1; 1; 1; 
-    
-    1;
-    (stop_tracking?FM | 1);
-    (ack_stop_tracking!FM | 1);
-    1;
-    
-    // Resto skip
-    ( (1; 1) + (1; 1) ); ( (1; 1) | (1; 1) ); 1; ( (1; 1; 1; 1) + 1 )
-  )
-  
-  + 
-  
-  // RAMO B
-  (
-    1; 1; 1; 1;
-    
-    (
-      (1; ( (1; 1) + (1; 1) ); 1) + (1; 1; 1; 1)
-      +
-      // B3: Identico a A
-      (
-        1; 1; 
-        (start_tracking?FM | 1); (ack_tracking!FM | 1); 
-        1; 1; 1; 1;
-        
-        ( 1; 1; ( (ask_pos?FM; send_position_update!FM) | (1; 1) ); 1; 1 )*;
-        
-        1; 1; 1; 1;
-        (stop_tracking?FM | 1); (ack_stop_tracking!FM | 1);
+        ((1; 1; 1; 1) + (1; 1));
+        ((1; 1) | (1; 1));
         1;
-        ( (1; 1) + (1; 1) ); ( (1; 1) | (1; 1) ); 1; ( (1; 1; 1; 1) + 1 )
+        ((1; 1; 1; 1) + 1)
       )
     )
   )
@@ -701,110 +904,269 @@ return_vehicles?RS;
 
 ---
 
-### 7) Battery Monitoring Service (BMS)
+### 6) Tracking Service (TS) - Tracciamento Posizione (Microservizio)
 
 ```java
-// Init: 1
-
-(  
-  // RAMO A
-  (
-    1; 1; 1; 
-    
-    1;
-    (1 | start_battery_monitoring?FM); 
-    (1 | ack_battery_monitoring!FM);
-    1;
-    
-    1; 1; 1;
-    
-    // Loop
-    (
-      1; 1; 
-      ( (1; 1) | (ask_batt?FM; send_battery_update!FM) );
-      1; 1
-    )*;
-    
-    1; 1; 1;
-    
-    1;
-    (1 | stop_battery_monitoring?FM);
-    (1 | ack_stop_battery_monitoring!FM);
-    1;
-    
-    ( (1; 1) + (1; 1) ); ( (1; 1) | (1; 1) ); 1; ( (1; 1; 1; 1) + 1 )
-  )
-  
-  + 
-  
-  // RAMO B
-  (
-    1; 1; 1; 1;
-    
-    (
-      (1; ( (1; 1) + (1; 1) ); 1) + (1; 1; 1; 1)
-      +
-      // B3: Identico a A
-      (
-        1; 1; 
-        (1 | start_battery_monitoring?FM); (1 | ack_battery_monitoring!FM);
-        1; 1; 1; 1;
-        
-        ( 1; 1; ( (1; 1) | (ask_batt?FM; send_battery_update!FM) ); 1; 1 )*;
-        
-        1; 1; 1; 1;
-        (1 | stop_battery_monitoring?FM); (1 | ack_stop_battery_monitoring!FM);
-        1;
-        ( (1; 1) + (1; 1) ); ( (1; 1) | (1; 1) ); 1; ( (1; 1; 1; 1) + 1 )
-      )
-    )
-  )
-)
-```
-
----
-
-### 8) Logistic Service (LS)
-
-```java
-// Init: 1
+// FASE INIZIALE
+1; 1;  // Skip visualizzazione veicoli
 
 (
-  // RAMO A
+  // ====== SCENARIO A: NOLEGGIO IMMEDIATO ======
   (
-    // Skip totale fino alla scelta finale
-    1; 1; 1; 1; (1 | 1); (1 | 1); 1; 
-    1; 1; 1;
-    (1; 1; ( (1; 1) | (1; 1) ); 1; 1)*;
-    1; 1; 1;
-    1; (1 | 1); (1 | 1); 1;
-    ( (1; 1) + (1; 1) );
-    ( (1; 1) | (1; 1) );
-    1;
+    1;  // Skip scan_qr
+    1; 1;  // Skip pre-autorizzazione
+    1;  // Skip start_monitoring
     
-    // Gestione Danni
+    // Ricezione start tracking (parallelo con BMS)
+    (start_tracking?FM | 1);
+    (ack_tracking!FM | 1);
+    
+    1;  // Skip ack_monitoring
+    1; 1;  // Skip unlock
+    1;  // Skip ack_rental_started
+    
+    // Loop monitoraggio
     (
-      (1; 1; vehicle_in_queue?RS; ack_vehicle_in_queue!RS) // Report Damage (User->RS->User->RS->LS)
+      1; 1;  // Skip request_update e trigger_read
+      (
+        (ask_position?FM; send_position!FM)
+        |
+        (1; 1)  // BMS branch
+      );
+      1; 1  // Skip send_vehicle_status e display_update
+    )*;
+    
+    1;  // Skip end_ride
+    1; 1;  // Skip lock
+    1;  // Skip stop_monitoring
+    
+    // Ricezione stop tracking
+    (stop_tracking?FM | 1);
+    (ack_stop_tracking!FM | 1);
+    
+    1;  // Skip ack_stop_monitoring
+    
+    // Skip resto
+    ((1; 1; 1; 1) + (1; 1));
+    ((1; 1) | (1; 1));
+    1;
+    ((1; 1; 1; 1) + 1)
+  )
+  
+  +
+  
+  // ====== SCENARIO B: PRENOTAZIONE BREVE ======
+  (
+    1; 1; 1; 1;  // Skip fino a scelta
+    
+    (
+      // B1 & B2: TS non coinvolta
+      (1; ((1; 1) + (1; 1)); 1)
       +
-      (1) // No Report (LS non coinvolto)
+      (1; 1; 1; 1)
+      
+      +
+      
+      // B3: Ritiro (identico a A)
+      (
+        1; 1;
+        (start_tracking?FM | 1); 
+        (ack_tracking!FM | 1);
+        1; 1; 1; 1;
+        
+        (1; 1; ((ask_position?FM; send_position!FM) | (1; 1)); 1; 1)*;
+        
+        1; 1; 1; 1;
+        (stop_tracking?FM | 1); 
+        (ack_stop_tracking!FM | 1);
+        1;
+        
+        ((1; 1; 1; 1) + (1; 1));
+        ((1; 1) | (1; 1));
+        1;
+        ((1; 1; 1; 1) + 1)
+      )
+    )
+  )
+)
+```
+
+---
+
+### 7) Battery Monitoring Service (BMS) - Monitoraggio Batteria (Microservizio)
+
+```java
+// FASE INIZIALE
+1; 1;  // Skip visualizzazione veicoli
+
+(
+  // ====== SCENARIO A: NOLEGGIO IMMEDIATO ======
+  (
+    1;  // Skip scan_qr
+    1; 1;  // Skip pre-autorizzazione
+    1;  // Skip start_monitoring
+    
+    // Ricezione start battery monitoring (parallelo con TS)
+    (1 | start_battery_monitoring?FM);
+    (1 | ack_battery_monitoring!FM);
+    
+    1;  // Skip ack_monitoring
+    1; 1;  // Skip unlock
+    1;  // Skip ack_rental_started
+    
+    // Loop monitoraggio
+    (
+      1; 1;  // Skip request_update e trigger_read
+      (
+        (1; 1)  // TS branch
+        |
+        (ask_battery?FM; send_battery!FM)
+      );
+      1; 1  // Skip send_vehicle_status e display_update
+    )*;
+    
+    1;  // Skip end_ride
+    1; 1;  // Skip lock
+    1;  // Skip stop_monitoring
+    
+    // Ricezione stop battery monitoring
+    (1 | stop_battery_monitoring?FM);
+    (1 | ack_stop_battery_monitoring!FM);
+    
+    1;  // Skip ack_stop_monitoring
+    
+    // Skip resto
+    ((1; 1; 1; 1) + (1; 1));
+    ((1; 1) | (1; 1));
+    1;
+    ((1; 1; 1; 1) + 1)
+  )
+  
+  +
+  
+  // ====== SCENARIO B: PRENOTAZIONE BREVE ======
+  (
+    1; 1; 1; 1;  // Skip fino a scelta
+    
+    (
+      // B1 & B2: BMS non coinvolta
+      (1; ((1; 1) + (1; 1)); 1)
+      +
+      (1; 1; 1; 1)
+      
+      +
+      
+      // B3: Ritiro (identico a A)
+      (
+        1; 1;
+        (1 | start_battery_monitoring?FM);
+        (1 | ack_battery_monitoring!FM);
+        1; 1; 1; 1;
+        
+        (1; 1; ((1; 1) | (ask_battery?FM; send_battery!FM)); 1; 1)*;
+        
+        1; 1; 1; 1;
+        (1 | stop_battery_monitoring?FM);
+        (1 | ack_stop_battery_monitoring!FM);
+        1;
+        
+        ((1; 1; 1; 1) + (1; 1));
+        ((1; 1) | (1; 1));
+        1;
+        ((1; 1; 1; 1) + 1)
+      )
+    )
+  )
+)
+```
+
+---
+
+### 8) Logistic Service (LS) - Gestione Manutenzione e Ricarica
+
+```java
+// FASE INIZIALE
+1; 1;  // Skip visualizzazione veicoli
+
+(
+  // ====== SCENARIO A: NOLEGGIO IMMEDIATO ======
+  (
+    // Skip tutto fino alla gestione ricarica/danni
+    1;  // Skip scan_qr
+    1; 1;  // Skip pre-autorizzazione
+    1; 1; 1; 1;  // Skip avvio monitoraggio
+    1; 1;  // Skip unlock
+    1;  // Skip ack_rental_started
+    (1; 1; 1; 1; 1)*;  // Skip loop monitoraggio
+    1;  // Skip end_ride
+    1; 1;  // Skip lock
+    1; 1; 1; 1;  // Skip stop monitoraggio
+    
+    // Gestione ricarica
+    (
+      (
+        1; 1;  // Skip recharge_request/ack (RS-S)
+        notify_recharge_to_logistic?RS;
+        ack_notify_recharge!RS
+      )
+      +
+      (1; 1)  // Skip no_recharge
+    );
+    
+    ((1; 1) | (1; 1));  // Skip pagamento
+    1;  // Skip rental_summary
+    
+    // Gestione danni
+    (
+      (
+        1; 1;  // Skip report_damage/ack (User-RS)
+        vehicle_in_maintenance_queue?RS;
+        ack_vehicle_queued!RS
+      )
+      +
+      1  // Skip no_report
     )
   )
   
   +
   
-  // RAMO B
+  // ====== SCENARIO B: PRENOTAZIONE BREVE ======
   (
-    1; 1; 1; 1;
+    1; 1; 1; 1;  // Skip fino a scelta
     
     (
-      // B1 & B2: LS non fa nulla
-      (1; ( (1; 1) + (1; 1) ); 1) + (1; 1; 1; 1)
+      // B1 & B2: LS non coinvolta
+      (1; ((1; 1) + (1; 1)); 1)
       +
-      // B3: Ritiro (Identico a A)
+      (1; 1; 1; 1)
+      
+      +
+      
+      // B3: Ritiro (identico a A nella parte finale)
       (
-        // ... (Tutto skip) ...
-        // Fino alla fine:
-        ( (1; 1; vehicle_in_queue?RS; ack_vehicle_in_queue!RS) + (1) )
+        1;  // Skip scan_qr
+        1; 1; 1; 1;  // Skip monitoraggio
+        1; 1; 1;  // Skip unlock e ack
+        (1; 1; 1; 1; 1)*;  // Skip loop
+        1; 1; 1;  // Skip end_ride e lock
+        1; 1; 1; 1;  // Skip stop monitoraggio
+        
+        // Gestione ricarica
+        (
+          (1; 1; notify_recharge_to_logistic?RS; ack_notify_recharge!RS)
+          +
+          (1; 1)
+        );
+        
+        ((1; 1) | (1; 1));  // Skip pagamento
+        1;  // Skip rental_summary
+        
+        // Gestione danni
+        (
+          (1; 1; vehicle_in_maintenance_queue?RS; ack_vehicle_queued!RS)
+          +
+          1
+        )
       )
     )
   )

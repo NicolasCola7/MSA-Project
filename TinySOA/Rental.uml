@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:tiny="http:///schemas/tiny/_BYoc0M1fEfCUUIcnJ5BZ-g/3" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/tiny/_BYoc0M1fEfCUUIcnJ5BZ-g/3 tiny.profile.uml.xml#_BYoc0c1fEfCUUIcnJ5BZ-g">
+  <uml:Model xmi:id="_1SkjwPIaEfCCcKq5W8VeNw" name="RentalTermination">
+    <packageImport xmi:type="uml:PackageImport" xmi:id="_1gvioPIaEfCCcKq5W8VeNw">
+      <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+    </packageImport>
+    <packagedElement xmi:type="uml:Package" xmi:id="_gVLR4PIcEfCCcKq5W8VeNw" name="User">
+      <packagedElement xmi:type="uml:Package" xmi:id="_GfssMPIdEfCCcKq5W8VeNw" name="UserTasks">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_RXswgPIdEfCCcKq5W8VeNw" name="RentalService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_bYaAcPIdEfCCcKq5W8VeNw" name="ackReportProcessed"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_rVmSIPK7EfCjpNmHUdLYoQ" name="receiveRentalSummary"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_qMDEgPhrEfCuXrbcuMxaPQ" name="ackRentalStarted"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_qMESoPhrEfCuXrbcuMxaPQ" name="receiveStatusUpdate"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_y1GwoPK7EfCjpNmHUdLYoQ" name="RentalServiceManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_3wQcAPK7EfCjpNmHUdLYoQ" name="ackReportProcessed"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_52gW0PK7EfCjpNmHUdLYoQ" name="receiveRentalSummary"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_q0GjAPhrEfCuXrbcuMxaPQ" name="receiveStatusUpdate"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_q0HxIPhrEfCuXrbcuMxaPQ" name="ackRentalStarted"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_TPweEPK8EfCjpNmHUdLYoQ" client="_RXswgPIdEfCCcKq5W8VeNw" supplier="_y1GwoPK7EfCjpNmHUdLYoQ"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_W9GSgPK8EfCjpNmHUdLYoQ" client="_y1GwoPK7EfCjpNmHUdLYoQ" supplier="_679UgPIiEfCCcKq5W8VeNw"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_hjFPcPIcEfCCcKq5W8VeNw" name="RentalService">
+      <packagedElement xmi:type="uml:Package" xmi:id="_mOxtEPIdEfCCcKq5W8VeNw" name="RentalServiceTasks">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_679UgPIiEfCCcKq5W8VeNw" name="RentalTerminationService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_G7ZiAPIjEfCCcKq5W8VeNw" name="endRide"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_S9JLcPK5EfCjpNmHUdLYoQ" name="receiveReport"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_-B08IPhrEfCuXrbcuMxaPQ" name="scanQr"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_KRrhUPIjEfCCcKq5W8VeNw" name="RentalTerminationManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_OVEeQPIjEfCCcKq5W8VeNw" name="endRide"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_RQ4d8PK5EfCjpNmHUdLYoQ" name="receiveReport"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_-cMj8PhrEfCuXrbcuMxaPQ" name="scanQr"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_Rjc-cPImEfCCcKq5W8VeNw" client="_679UgPIiEfCCcKq5W8VeNw" supplier="_KRrhUPIjEfCCcKq5W8VeNw"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_I1djEPK0EfCjpNmHUdLYoQ" client="_OVEeQPIjEfCCcKq5W8VeNw _KRrhUPIjEfCCcKq5W8VeNw" supplier="_wR9BMPIoEfCCcKq5W8VeNw"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_NnQeIPK0EfCjpNmHUdLYoQ" client="_KRrhUPIjEfCCcKq5W8VeNw" supplier="_dPLT0PIoEfCCcKq5W8VeNw"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_n_7bAPK0EfCjpNmHUdLYoQ" client="_KRrhUPIjEfCCcKq5W8VeNw" supplier="_TqNvQPIpEfCCcKq5W8VeNw"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_mOGCQPK6EfCjpNmHUdLYoQ" client="_KRrhUPIjEfCCcKq5W8VeNw" supplier="_knnCEPK5EfCjpNmHUdLYoQ"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_sFfTcPK6EfCjpNmHUdLYoQ" client="_KRrhUPIjEfCCcKq5W8VeNw" supplier="_AXoMYPK6EfCjpNmHUdLYoQ"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_gHMqkPK8EfCjpNmHUdLYoQ" client="_KRrhUPIjEfCCcKq5W8VeNw" supplier="_RXswgPIdEfCCcKq5W8VeNw"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_ZxJ_sPImEfCCcKq5W8VeNw" name="RentalServiceEntities">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_dPLT0PIoEfCCcKq5W8VeNw" name="StationService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_LrC5QPIpEfCCcKq5W8VeNw" name="ackVehicleLocked"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_e0JisPhsEfCuXrbcuMxaPQ" name="ackVehicleUnlocked"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_jekOQPIoEfCCcKq5W8VeNw" name="StationServiceManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_PL6_APIpEfCCcKq5W8VeNw" name="ackVehicleLocked"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_b9UIQPK1EfCjpNmHUdLYoQ" name="ackVehicleRecharged"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_fjhxMPhsEfCuXrbcuMxaPQ" name="ackVehicleUnlocked"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_qE1XoPIoEfCCcKq5W8VeNw" client="_dPLT0PIoEfCCcKq5W8VeNw" supplier="_jekOQPIoEfCCcKq5W8VeNw"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_twtzgPIoEfCCcKq5W8VeNw" name="BankServiceManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_VU70IPK3EfCjpNmHUdLYoQ" name="ackMoneyUnlocked"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_XpiUAPK3EfCjpNmHUdLYoQ" name="ackPaymentSuccessfull"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_wR9BMPIoEfCCcKq5W8VeNw" name="BankService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_NdrkAPK3EfCjpNmHUdLYoQ" name="ackMoneyUnlocked"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_PPh8IPK3EfCjpNmHUdLYoQ" name="ackPaymentSuccessfull"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_7DobEPIoEfCCcKq5W8VeNw" client="_wR9BMPIoEfCCcKq5W8VeNw" supplier="_twtzgPIoEfCCcKq5W8VeNw"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_TqNvQPIpEfCCcKq5W8VeNw" name="MonitoringService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_eP8X0PIpEfCCcKq5W8VeNw" name="ackStopMonitoring"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_qhXXwPhsEfCuXrbcuMxaPQ" name="receiveUpdate"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_qhX-0PhsEfCuXrbcuMxaPQ" name="ackMonitoring"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_qhYl4PhsEfCuXrbcuMxaPQ" name="requestUpdate"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_rvuWsPIpEfCCcKq5W8VeNw" name="MonitoringServiceManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_1SuW8PIpEfCCcKq5W8VeNw" name="ackStopMonitoring"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_rVs-wPhsEfCuXrbcuMxaPQ" name="receiveUpdate"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_rVtl0PhsEfCuXrbcuMxaPQ" name="ackMonitoring"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_rVuM4PhsEfCuXrbcuMxaPQ" name="requestUpdate"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_3w6QoPIpEfCCcKq5W8VeNw" client="_TqNvQPIpEfCCcKq5W8VeNw" supplier="_rvuWsPIpEfCCcKq5W8VeNw"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_zCPuYPKzEfCjpNmHUdLYoQ" client="_rvuWsPIpEfCCcKq5W8VeNw" supplier="_XBrG8PKwEfCjpNmHUdLYoQ"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="__WCJUPK1EfCjpNmHUdLYoQ" client="_jekOQPIoEfCCcKq5W8VeNw" supplier="_lcjC0PK1EfCjpNmHUdLYoQ"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_EaEZAPK4EfCjpNmHUdLYoQ" client="_ZxJ_sPImEfCCcKq5W8VeNw" supplier="_NWmhEPK2EfCjpNmHUdLYoQ"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_knnCEPK5EfCjpNmHUdLYoQ" name="ReportsDatabse">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_oUY10PK5EfCjpNmHUdLYoQ" name="addReport"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_rPcRsPK5EfCjpNmHUdLYoQ" name="ReportsDatabaseManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_vWBFgPK5EfCjpNmHUdLYoQ" name="addReport"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_1DLcoPK5EfCjpNmHUdLYoQ" name="LogisticServiceManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_8xB5IPK5EfCjpNmHUdLYoQ" name="ackVehicleQueued"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_AXoMYPK6EfCjpNmHUdLYoQ" name="LogisticService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_Sb0xoPK6EfCjpNmHUdLYoQ" name="ackVehicleQueued"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_XqICgPK6EfCjpNmHUdLYoQ" client="_knnCEPK5EfCjpNmHUdLYoQ" supplier="_rPcRsPK5EfCjpNmHUdLYoQ"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_iWeQcPK6EfCjpNmHUdLYoQ" client="_AXoMYPK6EfCjpNmHUdLYoQ" supplier="_1DLcoPK5EfCjpNmHUdLYoQ"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_X2Tn4PK7EfCjpNmHUdLYoQ" client="_1DLcoPK5EfCjpNmHUdLYoQ" supplier="_AY7-gPK7EfCjpNmHUdLYoQ"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_l4wPMPIcEfCCcKq5W8VeNw" name="FleetManagement">
+      <packagedElement xmi:type="uml:Package" xmi:id="_K2YOwPKwEfCjpNmHUdLYoQ" name="FleetManagementTasks">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_XBrG8PKwEfCjpNmHUdLYoQ" name="MonitoringService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_tVYZkPKwEfCjpNmHUdLYoQ" name="stopMonitoring"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_VIecs_huEfCuXrbcuMxaPQ" name="receiveTriggerRead"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_VIectfhuEfCuXrbcuMxaPQ" name="startMonitoring"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_fllBsPKwEfCjpNmHUdLYoQ" name="MonitoringServiceManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_ry7IUPKwEfCjpNmHUdLYoQ" name="stopMonitoring"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_UnLtgPhuEfCuXrbcuMxaPQ" name="receiveTriggerRead"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_UnMUkPhuEfCuXrbcuMxaPQ" name="startMonitoring"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_vqZJIPKwEfCjpNmHUdLYoQ" client="_XBrG8PKwEfCjpNmHUdLYoQ" supplier="_fllBsPKwEfCjpNmHUdLYoQ"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_I9CcoPKyEfCjpNmHUdLYoQ" client="_fllBsPKwEfCjpNmHUdLYoQ" supplier="_EmZB8PKxEfCjpNmHUdLYoQ"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_KbpIoPKyEfCjpNmHUdLYoQ" client="_fllBsPKwEfCjpNmHUdLYoQ" supplier="_GdLkcPKxEfCjpNmHUdLYoQ"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_0fB80PKwEfCjpNmHUdLYoQ" name="FletManagementEntities">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_EmZB8PKxEfCjpNmHUdLYoQ" name="BatteryMonitoringService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_gOC6cPKxEfCjpNmHUdLYoQ" name="ackStopMonitoring"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_l6wuIPhuEfCuXrbcuMxaPQ" name="receiveBatteryUpdate"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_wf3EkPhuEfCuXrbcuMxaPQ" name="ackBatteryMonitoringStarted"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_GdLkcPKxEfCjpNmHUdLYoQ" name="TrackingService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_iLAWYPKxEfCjpNmHUdLYoQ" name="ackStopTracking"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_qURsEPhuEfCuXrbcuMxaPQ" name="receivePositionUpdate"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_zjkGIPhuEfCuXrbcuMxaPQ" name="ackTrackingStarted"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_QJ-Z4PKxEfCjpNmHUdLYoQ" name="BatteryMonitoringServiceManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_1dFEAPKxEfCjpNmHUdLYoQ" name="ackStopMonitoring"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_ma-fQPhuEfCuXrbcuMxaPQ" name="receiveBatteryUpdate"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_w4JowPhuEfCuXrbcuMxaPQ" name="ackBatteryMonitoringStarted"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_VCZhYPKxEfCjpNmHUdLYoQ" name="TrackingServiceManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_3K-JMPKxEfCjpNmHUdLYoQ" name="ackStopTracking"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_q4SYEPhuEfCuXrbcuMxaPQ" name="receivePositionUpdate"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_0CjvQPhuEfCuXrbcuMxaPQ" name="ackTrackingStarted"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_DXcGEPKyEfCjpNmHUdLYoQ" client="_EmZB8PKxEfCjpNmHUdLYoQ" supplier="_QJ-Z4PKxEfCjpNmHUdLYoQ"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_FgUeIPKyEfCjpNmHUdLYoQ" client="_GdLkcPKxEfCjpNmHUdLYoQ" supplier="_VCZhYPKxEfCjpNmHUdLYoQ"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_SGISoPKzEfCjpNmHUdLYoQ" client="_VCZhYPKxEfCjpNmHUdLYoQ" supplier="_e4kf0PKyEfCjpNmHUdLYoQ"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_wI1RQPKzEfCjpNmHUdLYoQ" client="_QJ-Z4PKxEfCjpNmHUdLYoQ" supplier="_VYZ7sPKzEfCjpNmHUdLYoQ"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_nZMuQPIcEfCCcKq5W8VeNw" name="Station">
+      <packagedElement xmi:type="uml:Package" xmi:id="_f1degPK1EfCjpNmHUdLYoQ" name="StationEntitities">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_lcjC0PK1EfCjpNmHUdLYoQ" name="StationService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_qaQS8PK1EfCjpNmHUdLYoQ" name="lockVehicle"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_riyBQPK1EfCjpNmHUdLYoQ" name="rechargeVehicle"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_kVnnMPhsEfCuXrbcuMxaPQ" name="unlockVehicle"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_zWX5YPK1EfCjpNmHUdLYoQ" name="StationServiceManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_46QYsPK1EfCjpNmHUdLYoQ" name="lockVehicle"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_57OGcPK1EfCjpNmHUdLYoQ" name="rechargeVehicle"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_kA-z8PhsEfCuXrbcuMxaPQ" name="unlockVehicle"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_8g8ykPK1EfCjpNmHUdLYoQ" client="_lcjC0PK1EfCjpNmHUdLYoQ" supplier="_zWX5YPK1EfCjpNmHUdLYoQ"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_o1nB4PIcEfCCcKq5W8VeNw" name="Bank">
+      <packagedElement xmi:type="uml:Package" xmi:id="_HatxcPK2EfCjpNmHUdLYoQ" name="BankUtilities">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_NWmhEPK2EfCjpNmHUdLYoQ" name="Interface1">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_kMI48PK3EfCjpNmHUdLYoQ" name="pay"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_wGfyIPK3EfCjpNmHUdLYoQ" name="BankServiceManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_xisDUPK3EfCjpNmHUdLYoQ" name="pay"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_B1rwsPK4EfCjpNmHUdLYoQ" client="_NWmhEPK2EfCjpNmHUdLYoQ" supplier="_wGfyIPK3EfCjpNmHUdLYoQ"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_q2MZkPIcEfCCcKq5W8VeNw" name="BatteryMonitoringService">
+      <packagedElement xmi:type="uml:Package" xmi:id="_ZQ8I8PKyEfCjpNmHUdLYoQ" name="BatteryMonitoringServiceEntities">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_VYZ7sPKzEfCjpNmHUdLYoQ" name="BatteryMonitoringService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_YcL1wPKzEfCjpNmHUdLYoQ" name="stopMonitoring"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_Mkb0gPhtEfCuXrbcuMxaPQ" name="receiveStartBatteryMonitoring"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_MkcbkPhtEfCuXrbcuMxaPQ" name="requestBatteryUpdate"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_ajNzsPKzEfCjpNmHUdLYoQ" name="BatteryMonitoringServiceManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_sUF0UPKzEfCjpNmHUdLYoQ" name="stopMonitoring"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_NDxb4PhtEfCuXrbcuMxaPQ" name="requestBatteryUpdate"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_NDyC8PhtEfCuXrbcuMxaPQ" name="receiveStartBatteryMonitoring"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_uS0K0PKzEfCjpNmHUdLYoQ" client="_VYZ7sPKzEfCjpNmHUdLYoQ" supplier="_ajNzsPKzEfCjpNmHUdLYoQ"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_rwzAoPIcEfCCcKq5W8VeNw" name="TrackingService">
+      <packagedElement xmi:type="uml:Package" xmi:id="_U0i2IPKyEfCjpNmHUdLYoQ" name="TrackingServiceEntities">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_e4kf0PKyEfCjpNmHUdLYoQ" name="TrackingService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_4849UPKyEfCjpNmHUdLYoQ" name="stopTracking"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_Qjd14PhtEfCuXrbcuMxaPQ" name="requestPositionUpdate"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_QjfEAPhtEfCuXrbcuMxaPQ" name="receiveStartTracking"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_8MNZAPKyEfCjpNmHUdLYoQ" name="TrackingServiceManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_NzFJEPKzEfCjpNmHUdLYoQ" name="stopTracking"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_RTPF8PhtEfCuXrbcuMxaPQ" name="receiveStartTracking"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_RTPtAPhtEfCuXrbcuMxaPQ" name="requestPositionUpdate"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_P0JB4PKzEfCjpNmHUdLYoQ" client="_e4kf0PKyEfCjpNmHUdLYoQ" supplier="_8MNZAPKyEfCjpNmHUdLYoQ"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_yFxa4PK6EfCjpNmHUdLYoQ" name="LogisticService">
+      <packagedElement xmi:type="uml:Package" xmi:id="_3epkEPK6EfCjpNmHUdLYoQ" name="LogisticServiceEntities">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_AY7-gPK7EfCjpNmHUdLYoQ" name="LogisticService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_Eh_ekPK7EfCjpNmHUdLYoQ" name="queueVehicle"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_KOypUPK7EfCjpNmHUdLYoQ" name="LogisticServiceManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_UPTE8PK7EfCjpNmHUdLYoQ" name="queueVehicle"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_PSi3EPK7EfCjpNmHUdLYoQ" client="_AY7-gPK7EfCjpNmHUdLYoQ" supplier="_KOypUPK7EfCjpNmHUdLYoQ"/>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_6rWmUPIaEfCCcKq5W8VeNw">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Nce4IPIdEfCCcKq5W8VeNw" source="PapyrusVersion">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Nce4IfIdEfCCcKq5W8VeNw" key="Version" value="2.0.0"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Nce4IvIdEfCCcKq5W8VeNw" key="Comment" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Nce4I_IdEfCCcKq5W8VeNw" key="Copyright" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Nce4JPIdEfCCcKq5W8VeNw" key="Date" value="2025-11-29"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Nce4JfIdEfCCcKq5W8VeNw" key="Author" value=""/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_NcdqAPIdEfCCcKq5W8VeNw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="tiny.profile.uml.xml#_BYoc0c1fEfCUUIcnJ5BZ-g"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="tiny.profile.uml.xml#__qIfcMpEEfCzdMqoAvZnSA"/>
+    </profileApplication>
+  </uml:Model>
+  <tiny:Tasks xmi:id="_PKuioPIdEfCCcKq5W8VeNw" base_Package="_GfssMPIdEfCCcKq5W8VeNw"/>
+  <tiny:Tasks xmi:id="_pAhb8PIdEfCCcKq5W8VeNw" base_Package="_mOxtEPIdEfCCcKq5W8VeNw"/>
+  <tiny:ServiceInterface xmi:id="_9NIF4PIiEfCCcKq5W8VeNw" base_Interface="_679UgPIiEfCCcKq5W8VeNw"/>
+  <tiny:Expose xmi:id="_S3D7YPImEfCCcKq5W8VeNw" base_Dependency="_Rjc-cPImEfCCcKq5W8VeNw"/>
+  <tiny:Entities xmi:id="_fbqrcPImEfCCcKq5W8VeNw" base_Package="_ZxJ_sPImEfCCcKq5W8VeNw"/>
+  <tiny:ServiceInterface xmi:id="_hxnkQPIoEfCCcKq5W8VeNw" base_Interface="_dPLT0PIoEfCCcKq5W8VeNw"/>
+  <tiny:Capability xmi:id="_nRMyYPIoEfCCcKq5W8VeNw" base_Class="_jekOQPIoEfCCcKq5W8VeNw"/>
+  <tiny:Expose xmi:id="_rq3hUPIoEfCCcKq5W8VeNw" base_Dependency="_qE1XoPIoEfCCcKq5W8VeNw"/>
+  <tiny:Expose xmi:id="_9tv38PIoEfCCcKq5W8VeNw" base_Dependency="_7DobEPIoEfCCcKq5W8VeNw"/>
+  <tiny:ServiceInterface xmi:id="__fVxYPIoEfCCcKq5W8VeNw" base_Interface="_wR9BMPIoEfCCcKq5W8VeNw"/>
+  <tiny:Capability xmi:id="_AtPH4PIpEfCCcKq5W8VeNw" base_Class="_twtzgPIoEfCCcKq5W8VeNw"/>
+  <tiny:ServiceInterface xmi:id="_YrjiMPIpEfCCcKq5W8VeNw" base_Interface="_TqNvQPIpEfCCcKq5W8VeNw"/>
+  <tiny:Capability xmi:id="_xHQcEPIpEfCCcKq5W8VeNw" base_Class="_rvuWsPIpEfCCcKq5W8VeNw"/>
+  <tiny:Expose xmi:id="_9D3_EPIpEfCCcKq5W8VeNw" base_Dependency="_3w6QoPIpEfCCcKq5W8VeNw"/>
+  <tiny:ServiceInterface xmi:id="_oYtrQPKwEfCjpNmHUdLYoQ" base_Interface="_XBrG8PKwEfCjpNmHUdLYoQ"/>
+  <tiny:Capability xmi:id="_pXluUPKwEfCjpNmHUdLYoQ" base_Class="_fllBsPKwEfCjpNmHUdLYoQ"/>
+  <tiny:Expose xmi:id="_wt_7MPKwEfCjpNmHUdLYoQ" base_Dependency="_vqZJIPKwEfCjpNmHUdLYoQ"/>
+  <tiny:Entities xmi:id="_40aosPKwEfCjpNmHUdLYoQ" base_Package="_0fB80PKwEfCjpNmHUdLYoQ"/>
+  <tiny:ServiceInterface xmi:id="_Hm3wYPKxEfCjpNmHUdLYoQ" base_Interface="_GdLkcPKxEfCjpNmHUdLYoQ"/>
+  <tiny:ServiceInterface xmi:id="_erneYPKxEfCjpNmHUdLYoQ" base_Interface="_EmZB8PKxEfCjpNmHUdLYoQ"/>
+  <tiny:Capability xmi:id="_63uu0PKxEfCjpNmHUdLYoQ" base_Class="_VCZhYPKxEfCjpNmHUdLYoQ"/>
+  <tiny:Capability xmi:id="__gBIkPKxEfCjpNmHUdLYoQ" base_Class="_QJ-Z4PKxEfCjpNmHUdLYoQ"/>
+  <tiny:Expose xmi:id="_GSRfgPKyEfCjpNmHUdLYoQ" base_Dependency="_FgUeIPKyEfCjpNmHUdLYoQ"/>
+  <tiny:Expose xmi:id="_HZjQoPKyEfCjpNmHUdLYoQ" base_Dependency="_DXcGEPKyEfCjpNmHUdLYoQ"/>
+  <tiny:Entities xmi:id="_X67_UPKyEfCjpNmHUdLYoQ" base_Package="_U0i2IPKyEfCjpNmHUdLYoQ"/>
+  <tiny:Entities xmi:id="_dXBNgPKyEfCjpNmHUdLYoQ" base_Package="_ZQ8I8PKyEfCjpNmHUdLYoQ"/>
+  <tiny:ServiceInterface xmi:id="_wOMu4PKyEfCjpNmHUdLYoQ" base_Interface="_e4kf0PKyEfCjpNmHUdLYoQ"/>
+  <tiny:Capability xmi:id="_MbcnwPKzEfCjpNmHUdLYoQ" base_Class="_8MNZAPKyEfCjpNmHUdLYoQ"/>
+  <tiny:Expose xmi:id="_RCmZEPKzEfCjpNmHUdLYoQ" base_Dependency="_P0JB4PKzEfCjpNmHUdLYoQ"/>
+  <tiny:ServiceInterface xmi:id="_WaTdkPKzEfCjpNmHUdLYoQ" base_Interface="_VYZ7sPKzEfCjpNmHUdLYoQ"/>
+  <tiny:Capability xmi:id="_qxv30PKzEfCjpNmHUdLYoQ" base_Class="_ajNzsPKzEfCjpNmHUdLYoQ"/>
+  <tiny:Expose xmi:id="_vH28cPKzEfCjpNmHUdLYoQ" base_Dependency="_uS0K0PKzEfCjpNmHUdLYoQ"/>
+  <tiny:ServiceInterface xmi:id="_nXcCMPK1EfCjpNmHUdLYoQ" base_Interface="_lcjC0PK1EfCjpNmHUdLYoQ"/>
+  <tiny:Capability xmi:id="_0fongPK1EfCjpNmHUdLYoQ" base_Class="_zWX5YPK1EfCjpNmHUdLYoQ"/>
+  <tiny:Expose xmi:id="_-A6wgPK1EfCjpNmHUdLYoQ" base_Dependency="_8g8ykPK1EfCjpNmHUdLYoQ"/>
+  <tiny:Utilities xmi:id="_KXjWAPK2EfCjpNmHUdLYoQ" base_Package="_HatxcPK2EfCjpNmHUdLYoQ"/>
+  <tiny:ServiceInterface xmi:id="_ua1hkPK3EfCjpNmHUdLYoQ" base_Interface="_NWmhEPK2EfCjpNmHUdLYoQ"/>
+  <tiny:Capability xmi:id="_0dY54PK3EfCjpNmHUdLYoQ" base_Class="_wGfyIPK3EfCjpNmHUdLYoQ"/>
+  <tiny:Expose xmi:id="_C-ImgPK4EfCjpNmHUdLYoQ" base_Dependency="_B1rwsPK4EfCjpNmHUdLYoQ"/>
+  <tiny:ServiceInterface xmi:id="_sv1tcPK5EfCjpNmHUdLYoQ" base_Interface="_knnCEPK5EfCjpNmHUdLYoQ"/>
+  <tiny:Capability xmi:id="_xIFgEPK5EfCjpNmHUdLYoQ" base_Class="_rPcRsPK5EfCjpNmHUdLYoQ"/>
+  <tiny:Capability xmi:id="_3SGyUPK5EfCjpNmHUdLYoQ" base_Class="_1DLcoPK5EfCjpNmHUdLYoQ"/>
+  <tiny:ServiceInterface xmi:id="_FnotcPK6EfCjpNmHUdLYoQ" base_Interface="_AXoMYPK6EfCjpNmHUdLYoQ"/>
+  <tiny:Expose xmi:id="_a7SRQPK6EfCjpNmHUdLYoQ" base_Dependency="_XqICgPK6EfCjpNmHUdLYoQ"/>
+  <tiny:Expose xmi:id="_lByAIPK6EfCjpNmHUdLYoQ" base_Dependency="_iWeQcPK6EfCjpNmHUdLYoQ"/>
+  <tiny:Entities xmi:id="_8ipCYPK6EfCjpNmHUdLYoQ" base_Package="_3epkEPK6EfCjpNmHUdLYoQ"/>
+  <tiny:ServiceInterface xmi:id="_C_GIcPK7EfCjpNmHUdLYoQ" base_Interface="_AY7-gPK7EfCjpNmHUdLYoQ"/>
+  <tiny:Expose xmi:id="_Q67xMPK7EfCjpNmHUdLYoQ" base_Dependency="_PSi3EPK7EfCjpNmHUdLYoQ"/>
+  <tiny:Capability xmi:id="_SXLFsPK7EfCjpNmHUdLYoQ" base_Class="_KOypUPK7EfCjpNmHUdLYoQ"/>
+  <tiny:ServiceInterface xmi:id="_jemgsPK7EfCjpNmHUdLYoQ" base_Interface="_RXswgPIdEfCCcKq5W8VeNw"/>
+  <tiny:Capability xmi:id="_0Vkd0PK7EfCjpNmHUdLYoQ" base_Class="_y1GwoPK7EfCjpNmHUdLYoQ"/>
+  <tiny:Expose xmi:id="_UbQA0PK8EfCjpNmHUdLYoQ" base_Dependency="_TPweEPK8EfCjpNmHUdLYoQ"/>
+  <tiny:Capability xmi:id="_YPnDQPK8EfCjpNmHUdLYoQ" base_Class="_KRrhUPIjEfCCcKq5W8VeNw"/>
+  <tiny:Entities xmi:id="_rcmKkPhkEfCuXrbcuMxaPQ" base_Package="_f1degPK1EfCjpNmHUdLYoQ"/>
+  <tiny:Tasks xmi:id="_9W2wsPhkEfCuXrbcuMxaPQ" base_Package="_K2YOwPKwEfCjpNmHUdLYoQ"/>
+</xmi:XMI>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:tiny="http:///schemas/tiny/_BYoc0M1fEfCUUIcnJ5BZ-g/3" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/tiny/_BYoc0M1fEfCUUIcnJ5BZ-g/3 tiny.profile.uml.xml#_BYoc0c1fEfCUUIcnJ5BZ-g">
+  <uml:Model xmi:id="_PDKTIPH-EfCCcKq5W8VeNw" name="MoneyBlock">
+    <packageImport xmi:type="uml:PackageImport" xmi:id="_Pe8QMPH-EfCCcKq5W8VeNw">
+      <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+    </packageImport>
+    <packagedElement xmi:type="uml:Package" xmi:id="_n5KjYPH-EfCCcKq5W8VeNw" name="User">
+      <packagedElement xmi:type="uml:Package" xmi:id="_WPFFQPIUEfCCcKq5W8VeNw" name="UserTasks">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_0D6VEPIWEfCCcKq5W8VeNw" name="OperationService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_J1Ap4PIXEfCCcKq5W8VeNw" name="receiveErrorMessage"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_MFamQPIXEfCCcKq5W8VeNw" name="ackReservation"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_PHugsPIXEfCCcKq5W8VeNw" name="OperationManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_ULxCUPIXEfCCcKq5W8VeNw" name="receiveErrorMessage"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_V3chAPIXEfCCcKq5W8VeNw" name="ackReservation"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_ZhyEwPIXEfCCcKq5W8VeNw" client="_0D6VEPIWEfCCcKq5W8VeNw" supplier="_PHugsPIXEfCCcKq5W8VeNw"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_jrb1UPIXEfCCcKq5W8VeNw" client="_PHugsPIXEfCCcKq5W8VeNw" supplier="_N569sPH_EfCCcKq5W8VeNw"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_pxYCMPH-EfCCcKq5W8VeNw" name="RentalService">
+      <packagedElement xmi:type="uml:Package" xmi:id="_JRbIkPH_EfCCcKq5W8VeNw" name="RentalServiceTasks">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_N569sPH_EfCCcKq5W8VeNw" name="OperationService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_VQfioPH_EfCCcKq5W8VeNw" name="sendOperation"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_2m_0UPH_EfCCcKq5W8VeNw" name="MoneyBlockManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_92UhwPH_EfCCcKq5W8VeNw" name="receiveOperation"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_OZ-hUPIAEfCCcKq5W8VeNw" client="_N569sPH_EfCCcKq5W8VeNw" supplier="_2m_0UPH_EfCCcKq5W8VeNw"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_-28FoPLNEfCjpNmHUdLYoQ" client="_2m_0UPH_EfCCcKq5W8VeNw" supplier="_o6XFMPH_EfCCcKq5W8VeNw"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_bentMPLNEfCjpNmHUdLYoQ" name="RentalServiceEntities">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_o6XFMPH_EfCCcKq5W8VeNw" name="BankService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_wxc9QPH_EfCCcKq5W8VeNw" name="receiveToken"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_ymYekPH_EfCCcKq5W8VeNw" name="receiveErrorMessage"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_wGd68PLNEfCjpNmHUdLYoQ" name="BankServiceManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_1WMvMPLNEfCjpNmHUdLYoQ" name="receiveToken"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_2hpOoPLNEfCjpNmHUdLYoQ" name="receiveErrorMessage"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_LBwcsPLOEfCjpNmHUdLYoQ" client="_o6XFMPH_EfCCcKq5W8VeNw" supplier="_wGd68PLNEfCjpNmHUdLYoQ"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_SLbOEPLOEfCjpNmHUdLYoQ" client="_wGd68PLNEfCjpNmHUdLYoQ" supplier="_wcZd0PIAEfCCcKq5W8VeNw"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_qsjRAPH-EfCCcKq5W8VeNw" name="Bank">
+      <packagedElement xmi:type="uml:Package" xmi:id="_YHcFIPIAEfCCcKq5W8VeNw" name="BankUtilities">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_wcZd0PIAEfCCcKq5W8VeNw" name="BankService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_BdOhkPIBEfCCcKq5W8VeNw" name="blockMoney"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_DhYKoPIBEfCCcKq5W8VeNw" name="BankServiceManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_LHiqwPIBEfCCcKq5W8VeNw" name="blockMoney"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_P1mVUPIBEfCCcKq5W8VeNw" client="_wcZd0PIAEfCCcKq5W8VeNw" supplier="_DhYKoPIBEfCCcKq5W8VeNw"/>
+      </packagedElement>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_TkphUPH-EfCCcKq5W8VeNw">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_jLYloPH-EfCCcKq5W8VeNw" source="PapyrusVersion">
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_jLYlofH-EfCCcKq5W8VeNw" key="Version" value="2.0.0"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_jLYlovH-EfCCcKq5W8VeNw" key="Comment" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_jLYlo_H-EfCCcKq5W8VeNw" key="Copyright" value=""/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_jLYlpPH-EfCCcKq5W8VeNw" key="Date" value="2025-11-29"/>
+        <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_jLYlpfH-EfCCcKq5W8VeNw" key="Author" value=""/>
+      </eAnnotations>
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_jLWJYPH-EfCCcKq5W8VeNw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="tiny.profile.uml.xml#_BYoc0c1fEfCUUIcnJ5BZ-g"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="tiny.profile.uml.xml#__qIfcMpEEfCzdMqoAvZnSA"/>
+    </profileApplication>
+  </uml:Model>
+  <tiny:Tasks xmi:id="_hvrnMPH_EfCCcKq5W8VeNw" base_Package="_JRbIkPH_EfCCcKq5W8VeNw"/>
+  <tiny:ServiceInterface xmi:id="_jHcrYPH_EfCCcKq5W8VeNw" base_Interface="_N569sPH_EfCCcKq5W8VeNw"/>
+  <tiny:ServiceInterface xmi:id="_rqlxIPH_EfCCcKq5W8VeNw" base_Interface="_o6XFMPH_EfCCcKq5W8VeNw"/>
+  <tiny:Capability xmi:id="_9BqKoPH_EfCCcKq5W8VeNw" base_Class="_2m_0UPH_EfCCcKq5W8VeNw"/>
+  <tiny:Expose xmi:id="_Rum60PIAEfCCcKq5W8VeNw" base_Dependency="_OZ-hUPIAEfCCcKq5W8VeNw"/>
+  <tiny:Utilities xmi:id="_dRE4cPIAEfCCcKq5W8VeNw" base_Package="_YHcFIPIAEfCCcKq5W8VeNw"/>
+  <tiny:ServiceInterface xmi:id="_7pPwwPIAEfCCcKq5W8VeNw" base_Interface="_wcZd0PIAEfCCcKq5W8VeNw"/>
+  <tiny:Capability xmi:id="_FTXFoPIBEfCCcKq5W8VeNw" base_Class="_DhYKoPIBEfCCcKq5W8VeNw"/>
+  <tiny:Expose xmi:id="_Tiv8gPIBEfCCcKq5W8VeNw" base_Dependency="_P1mVUPIBEfCCcKq5W8VeNw"/>
+  <tiny:Tasks xmi:id="_eiwysPIUEfCCcKq5W8VeNw" base_Package="_WPFFQPIUEfCCcKq5W8VeNw"/>
+  <tiny:ServiceInterface xmi:id="_HeCLcPIXEfCCcKq5W8VeNw" base_Interface="_0D6VEPIWEfCCcKq5W8VeNw"/>
+  <tiny:Capability xmi:id="_RAVoIPIXEfCCcKq5W8VeNw" base_Class="_PHugsPIXEfCCcKq5W8VeNw"/>
+  <tiny:Expose xmi:id="_cQZnIPIXEfCCcKq5W8VeNw" base_Dependency="_ZhyEwPIXEfCCcKq5W8VeNw"/>
+  <tiny:Entities xmi:id="_fIW0APLNEfCjpNmHUdLYoQ" base_Package="_bentMPLNEfCjpNmHUdLYoQ"/>
+  <tiny:Capability xmi:id="_0IXDEPLNEfCjpNmHUdLYoQ" base_Class="_wGd68PLNEfCjpNmHUdLYoQ"/>
+  <tiny:Expose xmi:id="_PSBYAPLOEfCjpNmHUdLYoQ" base_Dependency="_LBwcsPLOEfCjpNmHUdLYoQ"/>
+</xmi:XMI>

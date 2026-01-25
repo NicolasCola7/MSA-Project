@@ -25,22 +25,20 @@
         </packagedElement>
         <packagedElement xmi:type="uml:Class" xmi:id="_Jm8KwPHtEfCCcKq5W8VeNw" name="ReservationCancellationManagement">
           <ownedOperation xmi:type="uml:Operation" xmi:id="_Ue7A8PHtEfCCcKq5W8VeNw" name="cancelReservation"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_4QmYgPnYEfCg1vExiCml3Q" name="onMoneyUnlocked"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_4sdOEPnYEfCg1vExiCml3Q" name="onMoneyBlockCharged"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Dependency" xmi:id="_2lv8UPHtEfCCcKq5W8VeNw" client="_nJhUUPHsEfCCcKq5W8VeNw" supplier="_Jm8KwPHtEfCCcKq5W8VeNw"/>
-        <packagedElement xmi:type="uml:Dependency" xmi:id="_3sQdEPLMEfCjpNmHUdLYoQ" client="_Jm8KwPHtEfCCcKq5W8VeNw" supplier="_zwhREPHsEfCCcKq5W8VeNw"/>
-        <packagedElement xmi:type="uml:Dependency" xmi:id="_C8RckPnPEfClO6L379CfwQ" client="_Jm8KwPHtEfCCcKq5W8VeNw" supplier="_zhPR8PnOEfClO6L379CfwQ"/>
-      </packagedElement>
-      <packagedElement xmi:type="uml:Package" xmi:id="_mGGesPLMEfCjpNmHUdLYoQ" name="RentalServiceEntities">
-        <packagedElement xmi:type="uml:Interface" xmi:id="_zwhREPHsEfCCcKq5W8VeNw" name="IBankService">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_zwhREPHsEfCCcKq5W8VeNw" name="IBankOperationAckService">
           <ownedOperation xmi:type="uml:Operation" xmi:id="_AMY74PHtEfCCcKq5W8VeNw" name="onMoneyBlockCharged"/>
           <ownedOperation xmi:type="uml:Operation" xmi:id="_CWMhAPHtEfCCcKq5W8VeNw" name="onMoneyUnlocked"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Class" xmi:id="_tFgg0PLMEfCjpNmHUdLYoQ" name="BankServiceManagement">
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_xQ4VEPLMEfCjpNmHUdLYoQ" name="onMoneyUnlocked"/>
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_zmHuIPLMEfCjpNmHUdLYoQ" name="onMoneyBlockCharged"/>
-        </packagedElement>
-        <packagedElement xmi:type="uml:Dependency" xmi:id="_2KGGwPLMEfCjpNmHUdLYoQ" client="_zwhREPHsEfCCcKq5W8VeNw" supplier="_tFgg0PLMEfCjpNmHUdLYoQ"/>
-        <packagedElement xmi:type="uml:Dependency" xmi:id="_5tptEPLMEfCjpNmHUdLYoQ" client="_tFgg0PLMEfCjpNmHUdLYoQ" supplier="_xrAEIPHuEfCCcKq5W8VeNw"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_-0gKYPnYEfCg1vExiCml3Q" client="_zwhREPHsEfCCcKq5W8VeNw" supplier="_Jm8KwPHtEfCCcKq5W8VeNw"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_FeevEPnZEfCg1vExiCml3Q" client="_Jm8KwPHtEfCCcKq5W8VeNw" supplier="_zhPR8PnOEfClO6L379CfwQ"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_If4qkPnZEfCg1vExiCml3Q" client="_Jm8KwPHtEfCCcKq5W8VeNw" supplier="_xrAEIPHuEfCCcKq5W8VeNw"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_sok6kPnaEfCg1vExiCml3Q" client="_Jm8KwPHtEfCCcKq5W8VeNw" supplier="_O8uNkPH2EfCCcKq5W8VeNw"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_mGGesPLMEfCjpNmHUdLYoQ" name="RentalServiceEntities">
         <packagedElement xmi:type="uml:Interface" xmi:id="_zhPR8PnOEfClO6L379CfwQ" name="IReservationDatabase">
           <ownedOperation xmi:type="uml:Operation" xmi:id="_34oI8PnOEfClO6L379CfwQ" name="deleteReservation"/>
         </packagedElement>
@@ -61,6 +59,7 @@
           <ownedOperation xmi:type="uml:Operation" xmi:id="_v63mcPHyEfCCcKq5W8VeNw" name="chargeMoneyBlock"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Dependency" xmi:id="_-4TPEPHyEfCCcKq5W8VeNw" client="_xrAEIPHuEfCCcKq5W8VeNw" supplier="_nlG1YPHyEfCCcKq5W8VeNw"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_1v79IPnZEfCg1vExiCml3Q" client="_nlG1YPHyEfCCcKq5W8VeNw" supplier="_zwhREPHsEfCCcKq5W8VeNw"/>
       </packagedElement>
     </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_0dwccPHqEfCCcKq5W8VeNw">
@@ -89,11 +88,10 @@
   <tiny:Capability xmi:id="_A-3yoPH2EfCCcKq5W8VeNw" base_Class="_-SoEQPH0EfCCcKq5W8VeNw"/>
   <tiny:ServiceInterface xmi:id="_R1w3QPH2EfCCcKq5W8VeNw" base_Interface="_O8uNkPH2EfCCcKq5W8VeNw"/>
   <tiny:Expose xmi:id="_hCp4MPH2EfCCcKq5W8VeNw" base_Dependency="_fkBXAPH2EfCCcKq5W8VeNw"/>
-  <tiny:Capability xmi:id="_wWJLIPLMEfCjpNmHUdLYoQ" base_Class="_tFgg0PLMEfCjpNmHUdLYoQ"/>
-  <tiny:Expose xmi:id="_21ZtkPLMEfCjpNmHUdLYoQ" base_Dependency="_2KGGwPLMEfCjpNmHUdLYoQ"/>
   <tiny:Tasks xmi:id="_iTv3EPhhEfCuXrbcuMxaPQ" base_Package="_n1qvAPH0EfCCcKq5W8VeNw"/>
   <tiny:Entities xmi:id="_wfrxUPhhEfCuXrbcuMxaPQ" base_Package="_mGGesPLMEfCjpNmHUdLYoQ"/>
   <tiny:ServiceInterface xmi:id="_157AkPnOEfClO6L379CfwQ" base_Interface="_zhPR8PnOEfClO6L379CfwQ"/>
   <tiny:Capability xmi:id="_9U6ygPnOEfClO6L379CfwQ" base_Class="_6iEQYPnOEfClO6L379CfwQ"/>
   <tiny:Expose xmi:id="_AnPe4PnPEfClO6L379CfwQ" base_Dependency="__ny0EPnOEfClO6L379CfwQ"/>
+  <tiny:Expose xmi:id="_AxmwQPnZEfCg1vExiCml3Q" base_Dependency="_-0gKYPnYEfCg1vExiCml3Q"/>
 </xmi:XMI>

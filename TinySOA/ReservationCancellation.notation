@@ -74,29 +74,29 @@
             <element xmi:type="uml:Interface" href="ReservationCancellation.uml#_O8uNkPH2EfCCcKq5W8VeNw"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_O9PK8fH2EfCCcKq5W8VeNw" x="14" y="16" width="241" height="146"/>
           </children>
-          <children xmi:type="notation:Shape" xmi:id="_QfxIs_nNEfClO6L379CfwQ" type="StereotypeComment">
-            <styles xmi:type="notation:TitleStyle" xmi:id="_QfxItPnNEfClO6L379CfwQ"/>
-            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QfxItvnNEfClO6L379CfwQ" name="BASE_ELEMENT">
+          <children xmi:type="notation:Shape" xmi:id="_cZDp4PnYEfCg1vExiCml3Q" type="StereotypeComment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_cZDp4fnYEfCg1vExiCml3Q"/>
+            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cZDp4_nYEfCg1vExiCml3Q" name="BASE_ELEMENT">
               <eObjectValue xmi:type="uml:Class" href="ReservationCancellation.uml#_-SoEQPH0EfCCcKq5W8VeNw"/>
             </styles>
             <element xsi:nil="true"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_QfxItfnNEfClO6L379CfwQ" x="234" y="271"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cZDp4vnYEfCg1vExiCml3Q" x="214" y="216"/>
           </children>
-          <children xmi:type="notation:Shape" xmi:id="_Qf2BM_nNEfClO6L379CfwQ" type="StereotypeComment">
-            <styles xmi:type="notation:TitleStyle" xmi:id="_Qf2BNPnNEfClO6L379CfwQ"/>
-            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Qf2BNvnNEfClO6L379CfwQ" name="BASE_ELEMENT">
+          <children xmi:type="notation:Shape" xmi:id="_cZbdUPnYEfCg1vExiCml3Q" type="StereotypeComment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_cZbdUfnYEfCg1vExiCml3Q"/>
+            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cZbdU_nYEfCg1vExiCml3Q" name="BASE_ELEMENT">
               <eObjectValue xmi:type="uml:Interface" href="ReservationCancellation.uml#_O8uNkPH2EfCCcKq5W8VeNw"/>
             </styles>
             <element xsi:nil="true"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Qf2BNfnNEfClO6L379CfwQ" x="214" y="31"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cZbdUvnYEfCg1vExiCml3Q" x="214" y="16"/>
           </children>
-          <children xmi:type="notation:Shape" xmi:id="_Qf5rkPnNEfClO6L379CfwQ" type="StereotypeComment">
-            <styles xmi:type="notation:TitleStyle" xmi:id="_Qf5rkfnNEfClO6L379CfwQ"/>
-            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Qf5rk_nNEfClO6L379CfwQ" name="BASE_ELEMENT">
+          <children xmi:type="notation:Shape" xmi:id="_cZjZIPnYEfCg1vExiCml3Q" type="StereotypeComment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_cZjZIfnYEfCg1vExiCml3Q"/>
+            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cZjZI_nYEfCg1vExiCml3Q" name="BASE_ELEMENT">
               <eObjectValue xmi:type="uml:Dependency" href="ReservationCancellation.uml#_fkBXAPH2EfCCcKq5W8VeNw"/>
             </styles>
             <element xsi:nil="true"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Qf5rkvnNEfClO6L379CfwQ" x="100" y="100"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cZjZIvnYEfCg1vExiCml3Q" x="100" y="100"/>
           </children>
           <styles xmi:type="notation:TitleStyle" xmi:id="_n2OIovH0EfCCcKq5W8VeNw"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_n2OIo_H0EfCCcKq5W8VeNw"/>
@@ -104,13 +104,13 @@
         <element xmi:type="uml:Package" href="ReservationCancellation.uml#_n1qvAPH0EfCCcKq5W8VeNw"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_n2NhkfH0EfCCcKq5W8VeNw" x="14" y="12" width="281" height="402"/>
       </children>
-      <children xmi:type="notation:Shape" xmi:id="_QfteUPnNEfClO6L379CfwQ" type="StereotypeComment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_QfteUfnNEfClO6L379CfwQ"/>
-        <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QfteU_nNEfClO6L379CfwQ" name="BASE_ELEMENT">
+      <children xmi:type="notation:Shape" xmi:id="_cY1AYPnYEfCg1vExiCml3Q" type="StereotypeComment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_cY1AYfnYEfCg1vExiCml3Q"/>
+        <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cY1AY_nYEfCg1vExiCml3Q" name="BASE_ELEMENT">
           <eObjectValue xmi:type="uml:Package" href="ReservationCancellation.uml#_n1qvAPH0EfCCcKq5W8VeNw"/>
         </styles>
         <element xsi:nil="true"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_QfteUvnNEfClO6L379CfwQ" x="234" y="11"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cY1AYvnYEfCg1vExiCml3Q" x="214" y="12"/>
       </children>
       <styles xmi:type="notation:TitleStyle" xmi:id="_5wGf0fHqEfCCcKq5W8VeNw"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_5wGf0vHqEfCCcKq5W8VeNw"/>
@@ -170,6 +170,14 @@
                 <element xmi:type="uml:Operation" href="ReservationCancellation.uml#_Ue7A8PHtEfCCcKq5W8VeNw"/>
                 <layoutConstraint xmi:type="notation:Location" xmi:id="_UfZiEfHtEfCCcKq5W8VeNw"/>
               </children>
+              <children xmi:type="notation:Shape" xmi:id="_4QtGMPnYEfCg1vExiCml3Q" type="Operation_ClassOperationLabel">
+                <element xmi:type="uml:Operation" href="ReservationCancellation.uml#_4QmYgPnYEfCg1vExiCml3Q"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_4QtGMfnYEfCg1vExiCml3Q"/>
+              </children>
+              <children xmi:type="notation:Shape" xmi:id="_4sfqUPnYEfCg1vExiCml3Q" type="Operation_ClassOperationLabel">
+                <element xmi:type="uml:Operation" href="ReservationCancellation.uml#_4sdOEPnYEfCg1vExiCml3Q"/>
+                <layoutConstraint xmi:type="notation:Location" xmi:id="_4sfqUfnYEfCg1vExiCml3Q"/>
+              </children>
               <styles xmi:type="notation:TitleStyle" xmi:id="_JnSwGfHtEfCCcKq5W8VeNw"/>
               <styles xmi:type="notation:SortingStyle" xmi:id="_JnSwGvHtEfCCcKq5W8VeNw"/>
               <styles xmi:type="notation:FilteringStyle" xmi:id="_JnSwG_HtEfCCcKq5W8VeNw"/>
@@ -182,41 +190,32 @@
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JnSwIfHtEfCCcKq5W8VeNw"/>
             </children>
             <element xmi:type="uml:Class" href="ReservationCancellation.uml#_Jm8KwPHtEfCCcKq5W8VeNw"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JnSJAfHtEfCCcKq5W8VeNw" x="14" y="216" width="241" height="124"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_JnSJAfHtEfCCcKq5W8VeNw" x="154" y="215" width="241" height="140"/>
           </children>
-          <children xmi:type="notation:Shape" xmi:id="_QgBnY_nNEfClO6L379CfwQ" type="StereotypeComment">
-            <styles xmi:type="notation:TitleStyle" xmi:id="_QgBnZPnNEfClO6L379CfwQ"/>
-            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgBnZvnNEfClO6L379CfwQ" name="BASE_ELEMENT">
+          <children xmi:type="notation:Shape" xmi:id="_cZ6lgPnYEfCg1vExiCml3Q" type="StereotypeComment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_cZ6lgfnYEfCg1vExiCml3Q"/>
+            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cZ6lg_nYEfCg1vExiCml3Q" name="BASE_ELEMENT">
               <eObjectValue xmi:type="uml:Interface" href="ReservationCancellation.uml#_nJhUUPHsEfCCcKq5W8VeNw"/>
             </styles>
             <element xsi:nil="true"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_QgBnZfnNEfClO6L379CfwQ" x="214" y="13"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cZ6lgvnYEfCg1vExiCml3Q" x="214" y="13"/>
           </children>
-          <children xmi:type="notation:Shape" xmi:id="_QgEqsPnNEfClO6L379CfwQ" type="StereotypeComment">
-            <styles xmi:type="notation:TitleStyle" xmi:id="_QgEqsfnNEfClO6L379CfwQ"/>
-            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgEqs_nNEfClO6L379CfwQ" name="BASE_ELEMENT">
+          <children xmi:type="notation:Shape" xmi:id="_caFkoPnYEfCg1vExiCml3Q" type="StereotypeComment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_caFkofnYEfCg1vExiCml3Q"/>
+            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_caGLsPnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
               <eObjectValue xmi:type="uml:Dependency" href="ReservationCancellation.uml#_2lv8UPHtEfCCcKq5W8VeNw"/>
             </styles>
             <element xsi:nil="true"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_QgEqsvnNEfClO6L379CfwQ" x="100" y="100"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_caFkovnYEfCg1vExiCml3Q" x="100" y="100"/>
           </children>
-          <children xmi:type="notation:Shape" xmi:id="_QgJjMPnNEfClO6L379CfwQ" type="StereotypeComment">
-            <styles xmi:type="notation:TitleStyle" xmi:id="_QgJjMfnNEfClO6L379CfwQ"/>
-            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgJjM_nNEfClO6L379CfwQ" name="BASE_ELEMENT">
+          <children xmi:type="notation:Shape" xmi:id="_caRK0PnYEfCg1vExiCml3Q" type="StereotypeComment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_caRK0fnYEfCg1vExiCml3Q"/>
+            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_caRK0_nYEfCg1vExiCml3Q" name="BASE_ELEMENT">
               <eObjectValue xmi:type="uml:Class" href="ReservationCancellation.uml#_Jm8KwPHtEfCCcKq5W8VeNw"/>
             </styles>
             <element xsi:nil="true"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_QgJjMvnNEfClO6L379CfwQ" x="214" y="233"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_caRK0vnYEfCg1vExiCml3Q" x="214" y="216"/>
           </children>
-          <styles xmi:type="notation:TitleStyle" xmi:id="_dnPs0vHsEfCCcKq5W8VeNw"/>
-          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dnPs0_HsEfCCcKq5W8VeNw"/>
-        </children>
-        <element xmi:type="uml:Package" href="ReservationCancellation.uml#_dm35YPHsEfCCcKq5W8VeNw"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dnOesfHsEfCCcKq5W8VeNw" x="174" y="12" width="281" height="402"/>
-      </children>
-      <children xmi:type="notation:Shape" xmi:id="_mGYykPLMEfCjpNmHUdLYoQ" type="Package_Shape_CN">
-        <children xmi:type="notation:DecorationNode" xmi:id="_mGZZoPLMEfCjpNmHUdLYoQ" type="Package_NameLabel_CN"/>
-        <children xmi:type="notation:BasicCompartment" xmi:id="_mGZZofLMEfCjpNmHUdLYoQ" type="Package_PackagedElementCompartment_CN">
           <children xmi:type="notation:Shape" xmi:id="_zwzk8PHsEfCCcKq5W8VeNw" type="Interface_Shape_CN">
             <children xmi:type="notation:DecorationNode" xmi:id="_zw0MAPHsEfCCcKq5W8VeNw" type="Interface_NameLabel_CN"/>
             <children xmi:type="notation:DecorationNode" xmi:id="_zw0MAfHsEfCCcKq5W8VeNw" type="Interface_FloatingNameLabel_CN">
@@ -251,64 +250,23 @@
             <element xmi:type="uml:Interface" href="ReservationCancellation.uml#_zwhREPHsEfCCcKq5W8VeNw"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_zwzk8fHsEfCCcKq5W8VeNw" x="314" y="15" width="261" height="141"/>
           </children>
-          <children xmi:type="notation:Shape" xmi:id="_tFwYcPLMEfCjpNmHUdLYoQ" type="Class_Shape_CN">
-            <children xmi:type="notation:DecorationNode" xmi:id="_tFwYcvLMEfCjpNmHUdLYoQ" type="Class_NameLabel_CN"/>
-            <children xmi:type="notation:DecorationNode" xmi:id="_tFwYc_LMEfCjpNmHUdLYoQ" type="Class_FloatingNameLabel_CN">
-              <layoutConstraint xmi:type="notation:Location" xmi:id="_tFwYdPLMEfCjpNmHUdLYoQ" y="15"/>
-            </children>
-            <children xmi:type="notation:BasicCompartment" xmi:id="_tFwYdfLMEfCjpNmHUdLYoQ" type="Class_AttributeCompartment_CN">
-              <styles xmi:type="notation:TitleStyle" xmi:id="_tFwYdvLMEfCjpNmHUdLYoQ"/>
-              <styles xmi:type="notation:SortingStyle" xmi:id="_tFwYd_LMEfCjpNmHUdLYoQ"/>
-              <styles xmi:type="notation:FilteringStyle" xmi:id="_tFwYePLMEfCjpNmHUdLYoQ"/>
-              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_tFwYefLMEfCjpNmHUdLYoQ"/>
-            </children>
-            <children xmi:type="notation:BasicCompartment" xmi:id="_tFw_gPLMEfCjpNmHUdLYoQ" type="Class_OperationCompartment_CN">
-              <children xmi:type="notation:Shape" xmi:id="_xRHloPLMEfCjpNmHUdLYoQ" type="Operation_ClassOperationLabel">
-                <element xmi:type="uml:Operation" href="ReservationCancellation.uml#_xQ4VEPLMEfCjpNmHUdLYoQ"/>
-                <layoutConstraint xmi:type="notation:Location" xmi:id="_xRHlofLMEfCjpNmHUdLYoQ"/>
-              </children>
-              <children xmi:type="notation:Shape" xmi:id="_zmYM0PLMEfCjpNmHUdLYoQ" type="Operation_ClassOperationLabel">
-                <element xmi:type="uml:Operation" href="ReservationCancellation.uml#_zmHuIPLMEfCjpNmHUdLYoQ"/>
-                <layoutConstraint xmi:type="notation:Location" xmi:id="_zmYM0fLMEfCjpNmHUdLYoQ"/>
-              </children>
-              <styles xmi:type="notation:TitleStyle" xmi:id="_tFw_gfLMEfCjpNmHUdLYoQ"/>
-              <styles xmi:type="notation:SortingStyle" xmi:id="_tFw_gvLMEfCjpNmHUdLYoQ"/>
-              <styles xmi:type="notation:FilteringStyle" xmi:id="_tFw_g_LMEfCjpNmHUdLYoQ"/>
-              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_tFw_hPLMEfCjpNmHUdLYoQ"/>
-            </children>
-            <children xmi:type="notation:BasicCompartment" xmi:id="_tFw_hfLMEfCjpNmHUdLYoQ" type="Class_NestedClassifierCompartment_CN">
-              <styles xmi:type="notation:TitleStyle" xmi:id="_tFw_hvLMEfCjpNmHUdLYoQ"/>
-              <styles xmi:type="notation:SortingStyle" xmi:id="_tFw_h_LMEfCjpNmHUdLYoQ"/>
-              <styles xmi:type="notation:FilteringStyle" xmi:id="_tFw_iPLMEfCjpNmHUdLYoQ"/>
-              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_tFw_ifLMEfCjpNmHUdLYoQ"/>
-            </children>
-            <element xmi:type="uml:Class" href="ReservationCancellation.uml#_tFgg0PLMEfCjpNmHUdLYoQ"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_tFwYcfLMEfCjpNmHUdLYoQ" x="314" y="215" width="261" height="126"/>
-          </children>
-          <children xmi:type="notation:Shape" xmi:id="_QgSGEPnNEfClO6L379CfwQ" type="StereotypeComment">
-            <styles xmi:type="notation:TitleStyle" xmi:id="_QgSGEfnNEfClO6L379CfwQ"/>
-            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgSGE_nNEfClO6L379CfwQ" name="BASE_ELEMENT">
-              <eObjectValue xmi:type="uml:Interface" href="ReservationCancellation.uml#_zwhREPHsEfCCcKq5W8VeNw"/>
+          <children xmi:type="notation:Shape" xmi:id="_AyKw8_nZEfCg1vExiCml3Q" type="StereotypeComment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_AyKw9PnZEfCg1vExiCml3Q"/>
+            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_AyLYAPnZEfCg1vExiCml3Q" name="BASE_ELEMENT">
+              <eObjectValue xmi:type="uml:Dependency" href="ReservationCancellation.uml#_-0gKYPnYEfCg1vExiCml3Q"/>
             </styles>
             <element xsi:nil="true"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_QgSGEvnNEfClO6L379CfwQ" x="234" y="11"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_AyKw9fnZEfCg1vExiCml3Q" x="100" y="100"/>
           </children>
-          <children xmi:type="notation:Shape" xmi:id="_QgVwcPnNEfClO6L379CfwQ" type="StereotypeComment">
-            <styles xmi:type="notation:TitleStyle" xmi:id="_QgVwcfnNEfClO6L379CfwQ"/>
-            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgVwc_nNEfClO6L379CfwQ" name="BASE_ELEMENT">
-              <eObjectValue xmi:type="uml:Dependency" href="ReservationCancellation.uml#_2KGGwPLMEfCjpNmHUdLYoQ"/>
-            </styles>
-            <element xsi:nil="true"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_QgVwcvnNEfClO6L379CfwQ" x="100" y="100"/>
-          </children>
-          <children xmi:type="notation:Shape" xmi:id="_Qgao8_nNEfClO6L379CfwQ" type="StereotypeComment">
-            <styles xmi:type="notation:TitleStyle" xmi:id="_Qgao9PnNEfClO6L379CfwQ"/>
-            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Qgao9vnNEfClO6L379CfwQ" name="BASE_ELEMENT">
-              <eObjectValue xmi:type="uml:Class" href="ReservationCancellation.uml#_tFgg0PLMEfCjpNmHUdLYoQ"/>
-            </styles>
-            <element xsi:nil="true"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Qgao9fnNEfClO6L379CfwQ" x="234" y="211"/>
-          </children>
+          <styles xmi:type="notation:TitleStyle" xmi:id="_dnPs0vHsEfCCcKq5W8VeNw"/>
+          <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dnPs0_HsEfCCcKq5W8VeNw"/>
+        </children>
+        <element xmi:type="uml:Package" href="ReservationCancellation.uml#_dm35YPHsEfCCcKq5W8VeNw"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_dnOesfHsEfCCcKq5W8VeNw" x="34" y="12" width="601" height="420"/>
+      </children>
+      <children xmi:type="notation:Shape" xmi:id="_mGYykPLMEfCjpNmHUdLYoQ" type="Package_Shape_CN">
+        <children xmi:type="notation:DecorationNode" xmi:id="_mGZZoPLMEfCjpNmHUdLYoQ" type="Package_NameLabel_CN"/>
+        <children xmi:type="notation:BasicCompartment" xmi:id="_mGZZofLMEfCjpNmHUdLYoQ" type="Package_PackagedElementCompartment_CN">
           <children xmi:type="notation:Shape" xmi:id="_zh1H0PnOEfClO6L379CfwQ" type="Interface_Shape_CN">
             <children xmi:type="notation:DecorationNode" xmi:id="_zh1H0vnOEfClO6L379CfwQ" type="Interface_NameLabel_CN"/>
             <children xmi:type="notation:DecorationNode" xmi:id="_zh1H0_nOEfClO6L379CfwQ" type="Interface_FloatingNameLabel_CN">
@@ -337,15 +295,7 @@
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_zh2V_vnOEfClO6L379CfwQ"/>
             </children>
             <element xmi:type="uml:Interface" href="ReservationCancellation.uml#_zhPR8PnOEfClO6L379CfwQ"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_zh1H0fnOEfClO6L379CfwQ" x="54" y="15"/>
-          </children>
-          <children xmi:type="notation:Shape" xmi:id="_16Oil_nOEfClO6L379CfwQ" type="StereotypeComment">
-            <styles xmi:type="notation:TitleStyle" xmi:id="_16OimPnOEfClO6L379CfwQ"/>
-            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_16OimvnOEfClO6L379CfwQ" name="BASE_ELEMENT">
-              <eObjectValue xmi:type="uml:Interface" href="ReservationCancellation.uml#_zhPR8PnOEfClO6L379CfwQ"/>
-            </styles>
-            <element xsi:nil="true"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_16OimfnOEfClO6L379CfwQ" x="254" y="55"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_zh1H0fnOEfClO6L379CfwQ" x="54" y="19"/>
           </children>
           <children xmi:type="notation:Shape" xmi:id="_6iV9MPnOEfClO6L379CfwQ" type="Class_Shape_CN">
             <children xmi:type="notation:DecorationNode" xmi:id="_6iWkQPnOEfClO6L379CfwQ" type="Class_NameLabel_CN"/>
@@ -375,51 +325,67 @@
               <layoutConstraint xmi:type="notation:Bounds" xmi:id="_6iWkUfnOEfClO6L379CfwQ"/>
             </children>
             <element xmi:type="uml:Class" href="ReservationCancellation.uml#_6iEQYPnOEfClO6L379CfwQ"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_6iV9MfnOEfClO6L379CfwQ" x="34" y="215"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_6iV9MfnOEfClO6L379CfwQ" x="14" y="215"/>
           </children>
-          <children xmi:type="notation:Shape" xmi:id="_9VTNBPnOEfClO6L379CfwQ" type="StereotypeComment">
-            <styles xmi:type="notation:TitleStyle" xmi:id="_9VTNBfnOEfClO6L379CfwQ"/>
-            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_9VTNB_nOEfClO6L379CfwQ" name="BASE_ELEMENT">
-              <eObjectValue xmi:type="uml:Class" href="ReservationCancellation.uml#_6iEQYPnOEfClO6L379CfwQ"/>
+          <children xmi:type="notation:Shape" xmi:id="_caplU_nYEfCg1vExiCml3Q" type="StereotypeComment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_caplVPnYEfCg1vExiCml3Q"/>
+            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_caplVvnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+              <eObjectValue xmi:type="uml:Interface" href="ReservationCancellation.uml#_zwhREPHsEfCCcKq5W8VeNw"/>
             </styles>
             <element xsi:nil="true"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_9VTNBvnOEfClO6L379CfwQ" x="314" y="255"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_caplVfnYEfCg1vExiCml3Q" x="514" y="15"/>
           </children>
-          <children xmi:type="notation:Shape" xmi:id="_Ann5YPnPEfClO6L379CfwQ" type="StereotypeComment">
-            <styles xmi:type="notation:TitleStyle" xmi:id="_Ann5YfnPEfClO6L379CfwQ"/>
-            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Ann5Y_nPEfClO6L379CfwQ" name="BASE_ELEMENT">
+          <children xmi:type="notation:Shape" xmi:id="_cbbBYPnYEfCg1vExiCml3Q" type="StereotypeComment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_cbbBYfnYEfCg1vExiCml3Q"/>
+            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cbbBY_nYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+              <eObjectValue xmi:type="uml:Interface" href="ReservationCancellation.uml#_zhPR8PnOEfClO6L379CfwQ"/>
+            </styles>
+            <element xsi:nil="true"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cbbBYvnYEfCg1vExiCml3Q" x="254" y="15"/>
+          </children>
+          <children xmi:type="notation:Shape" xmi:id="_cbt8UPnYEfCg1vExiCml3Q" type="StereotypeComment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_cbujYPnYEfCg1vExiCml3Q"/>
+            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cbujYvnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
               <eObjectValue xmi:type="uml:Dependency" href="ReservationCancellation.uml#__ny0EPnOEfClO6L379CfwQ"/>
             </styles>
             <element xsi:nil="true"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ann5YvnPEfClO6L379CfwQ" x="100" y="100"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cbujYfnYEfCg1vExiCml3Q" x="100" y="100"/>
+          </children>
+          <children xmi:type="notation:Shape" xmi:id="_cb-bAPnYEfCg1vExiCml3Q" type="StereotypeComment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_cb-bAfnYEfCg1vExiCml3Q"/>
+            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cb-bA_nYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+              <eObjectValue xmi:type="uml:Class" href="ReservationCancellation.uml#_6iEQYPnOEfClO6L379CfwQ"/>
+            </styles>
+            <element xsi:nil="true"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cb-bAvnYEfCg1vExiCml3Q" x="234" y="215"/>
           </children>
           <styles xmi:type="notation:TitleStyle" xmi:id="_mGZZovLMEfCjpNmHUdLYoQ"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_mGZZo_LMEfCjpNmHUdLYoQ"/>
         </children>
         <element xmi:type="uml:Package" href="ReservationCancellation.uml#_mGGesPLMEfCjpNmHUdLYoQ"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_mGYykfLMEfCjpNmHUdLYoQ" x="34" y="432" width="601" height="402"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_mGYykfLMEfCjpNmHUdLYoQ" x="194" y="472" width="261" height="402"/>
       </children>
-      <children xmi:type="notation:Shape" xmi:id="_Qf99B_nNEfClO6L379CfwQ" type="StereotypeComment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_Qf99CPnNEfClO6L379CfwQ"/>
-        <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Qf99CvnNEfClO6L379CfwQ" name="BASE_ELEMENT">
+      <children xmi:type="notation:Shape" xmi:id="_cZxbkPnYEfCg1vExiCml3Q" type="StereotypeComment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_cZxbkfnYEfCg1vExiCml3Q"/>
+        <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cZxbk_nYEfCg1vExiCml3Q" name="BASE_ELEMENT">
           <eObjectValue xmi:type="uml:Package" href="ReservationCancellation.uml#_dm35YPHsEfCCcKq5W8VeNw"/>
         </styles>
         <element xsi:nil="true"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Qf99CfnNEfClO6L379CfwQ" x="234" y="11"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cZxbkvnYEfCg1vExiCml3Q" x="374" y="12"/>
       </children>
-      <children xmi:type="notation:Shape" xmi:id="_QgN0o_nNEfClO6L379CfwQ" type="StereotypeComment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_QgN0pPnNEfClO6L379CfwQ"/>
-        <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgN0pvnNEfClO6L379CfwQ" name="BASE_ELEMENT">
+      <children xmi:type="notation:Shape" xmi:id="_cahCcPnYEfCg1vExiCml3Q" type="StereotypeComment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_cahCcfnYEfCg1vExiCml3Q"/>
+        <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cahpgPnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
           <eObjectValue xmi:type="uml:Package" href="ReservationCancellation.uml#_mGGesPLMEfCjpNmHUdLYoQ"/>
         </styles>
         <element xsi:nil="true"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_QgN0pfnNEfClO6L379CfwQ" x="234" y="491"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cahCcvnYEfCg1vExiCml3Q" x="234" y="432"/>
       </children>
       <styles xmi:type="notation:TitleStyle" xmi:id="_7mZ6IfHqEfCCcKq5W8VeNw"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7mZ6IvHqEfCCcKq5W8VeNw"/>
     </children>
     <element xmi:type="uml:Package" href="ReservationCancellation.uml#_7mQJIPHqEfCCcKq5W8VeNw"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7mVBofHqEfCCcKq5W8VeNw" x="280" y="-80" width="661" height="881"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_7mVBofHqEfCCcKq5W8VeNw" x="300" y="-80" width="661" height="921"/>
   </children>
   <children xmi:type="notation:Shape" xmi:id="_CAPKAPHrEfCCcKq5W8VeNw" type="Package_Shape">
     <children xmi:type="notation:DecorationNode" xmi:id="_CAPxEPHrEfCCcKq5W8VeNw" type="Package_NameLabel"/>
@@ -495,29 +461,29 @@
             <element xmi:type="uml:Class" href="ReservationCancellation.uml#_nlG1YPHyEfCCcKq5W8VeNw"/>
             <layoutConstraint xmi:type="notation:Bounds" xmi:id="_nlnywfHyEfCCcKq5W8VeNw" x="14" y="235" width="221" height="117"/>
           </children>
-          <children xmi:type="notation:Shape" xmi:id="_QgikwPnNEfClO6L379CfwQ" type="StereotypeComment">
-            <styles xmi:type="notation:TitleStyle" xmi:id="_QgikwfnNEfClO6L379CfwQ"/>
-            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Qgikw_nNEfClO6L379CfwQ" name="BASE_ELEMENT">
+          <children xmi:type="notation:Shape" xmi:id="_ccW1gPnYEfCg1vExiCml3Q" type="StereotypeComment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_ccW1gfnYEfCg1vExiCml3Q"/>
+            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ccW1g_nYEfCg1vExiCml3Q" name="BASE_ELEMENT">
               <eObjectValue xmi:type="uml:Interface" href="ReservationCancellation.uml#_xrAEIPHuEfCCcKq5W8VeNw"/>
             </styles>
             <element xsi:nil="true"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_QgikwvnNEfClO6L379CfwQ" x="234" y="193"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ccW1gvnYEfCg1vExiCml3Q" x="214" y="15"/>
           </children>
-          <children xmi:type="notation:Shape" xmi:id="_QgloEPnNEfClO6L379CfwQ" type="StereotypeComment">
-            <styles xmi:type="notation:TitleStyle" xmi:id="_QgloEfnNEfClO6L379CfwQ"/>
-            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgloE_nNEfClO6L379CfwQ" name="BASE_ELEMENT">
+          <children xmi:type="notation:Shape" xmi:id="_cceKQPnYEfCg1vExiCml3Q" type="StereotypeComment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_cceKQfnYEfCg1vExiCml3Q"/>
+            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cceKQ_nYEfCg1vExiCml3Q" name="BASE_ELEMENT">
               <eObjectValue xmi:type="uml:Dependency" href="ReservationCancellation.uml#_-4TPEPHyEfCCcKq5W8VeNw"/>
             </styles>
             <element xsi:nil="true"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_QgloEvnNEfClO6L379CfwQ" x="100" y="100"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_cceKQvnYEfCg1vExiCml3Q" x="100" y="100"/>
           </children>
-          <children xmi:type="notation:Shape" xmi:id="_Qgqgk_nNEfClO6L379CfwQ" type="StereotypeComment">
-            <styles xmi:type="notation:TitleStyle" xmi:id="_QgqglPnNEfClO6L379CfwQ"/>
-            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgqglvnNEfClO6L379CfwQ" name="BASE_ELEMENT">
+          <children xmi:type="notation:Shape" xmi:id="_ccmtIPnYEfCg1vExiCml3Q" type="StereotypeComment">
+            <styles xmi:type="notation:TitleStyle" xmi:id="_ccmtIfnYEfCg1vExiCml3Q"/>
+            <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ccn7QPnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
               <eObjectValue xmi:type="uml:Class" href="ReservationCancellation.uml#_nlG1YPHyEfCCcKq5W8VeNw"/>
             </styles>
             <element xsi:nil="true"/>
-            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_QgqglfnNEfClO6L379CfwQ" x="254" y="453"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ccmtIvnYEfCg1vExiCml3Q" x="214" y="235"/>
           </children>
           <styles xmi:type="notation:TitleStyle" xmi:id="_IKN4ovHuEfCCcKq5W8VeNw"/>
           <layoutConstraint xmi:type="notation:Bounds" xmi:id="_IKN4o_HuEfCCcKq5W8VeNw"/>
@@ -525,19 +491,19 @@
         <element xmi:type="uml:Package" href="ReservationCancellation.uml#_IJ0QAPHuEfCCcKq5W8VeNw"/>
         <layoutConstraint xmi:type="notation:Bounds" xmi:id="_IKNRkfHuEfCCcKq5W8VeNw" x="14" y="12" width="261" height="421"/>
       </children>
-      <children xmi:type="notation:Shape" xmi:id="_Qge6Z_nNEfClO6L379CfwQ" type="StereotypeComment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_QgfhcPnNEfClO6L379CfwQ"/>
-        <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgfhcvnNEfClO6L379CfwQ" name="BASE_ELEMENT">
+      <children xmi:type="notation:Shape" xmi:id="_ccPgwPnYEfCg1vExiCml3Q" type="StereotypeComment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_ccQH0PnYEfCg1vExiCml3Q"/>
+        <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ccQH0vnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
           <eObjectValue xmi:type="uml:Package" href="ReservationCancellation.uml#_IJ0QAPHuEfCCcKq5W8VeNw"/>
         </styles>
         <element xsi:nil="true"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_QgfhcfnNEfClO6L379CfwQ" x="254" y="11"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ccQH0fnYEfCg1vExiCml3Q" x="214" y="12"/>
       </children>
       <styles xmi:type="notation:TitleStyle" xmi:id="_CAPxEvHrEfCCcKq5W8VeNw"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CAPxE_HrEfCCcKq5W8VeNw"/>
     </children>
     <element xmi:type="uml:Package" href="ReservationCancellation.uml#_CAKRgPHrEfCCcKq5W8VeNw"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CAPKAfHrEfCCcKq5W8VeNw" x="960" y="320" width="301" height="481"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_CAPKAfHrEfCCcKq5W8VeNw" x="1000" y="-80" width="301" height="481"/>
   </children>
   <styles xmi:type="notation:StringValueStyle" xmi:id="_wvc-sfHqEfCCcKq5W8VeNw" name="diagram_compatibility_version" stringValue="1.4.0"/>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_wvc-svHqEfCCcKq5W8VeNw"/>
@@ -552,11 +518,11 @@
     </children>
     <children xmi:type="notation:DecorationNode" xmi:id="_2mKMBfHtEfCCcKq5W8VeNw" type="Dependency_StereotypeLabel">
       <styles xmi:type="notation:BooleanValueStyle" xmi:id="_cbASYPLMEfCjpNmHUdLYoQ" name="IS_UPDATED_POSITION" booleanValue="true"/>
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_2mKzEPHtEfCCcKq5W8VeNw" y="60"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_2mKzEPHtEfCCcKq5W8VeNw" x="-17" y="18"/>
     </children>
     <styles xmi:type="notation:FontStyle" xmi:id="_2mKMAfHtEfCCcKq5W8VeNw"/>
     <element xmi:type="uml:Dependency" href="ReservationCancellation.uml#_2lv8UPHtEfCCcKq5W8VeNw"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_2mKMAvHtEfCCcKq5W8VeNw" points="[615, 222, -643984, -643984]$[615, 301, -643984, -643984]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_2mKMAvHtEfCCcKq5W8VeNw" points="[525, 222, -643984, -643984]$[525, 301, -643984, -643984]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2nPxIPHtEfCCcKq5W8VeNw" id="(0.5429864253393665,1.0)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2nPxIfHtEfCCcKq5W8VeNw" id="(0.4979253112033195,0.0)"/>
   </edges>
@@ -571,7 +537,7 @@
     </children>
     <styles xmi:type="notation:FontStyle" xmi:id="_-42BofHyEfCCcKq5W8VeNw"/>
     <element xmi:type="uml:Dependency" href="ReservationCancellation.uml#_-4TPEPHyEfCCcKq5W8VeNw"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_-42BovHyEfCCcKq5W8VeNw" points="[1200, 360, -643984, -643984]$[1200, 440, -643984, -643984]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_-42BovHyEfCCcKq5W8VeNw" points="[1230, 60, -643984, -643984]$[1230, 140, -643984, -643984]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_-5-qEPHyEfCCcKq5W8VeNw" id="(0.6334841628959276,1.0)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_-5-qEfHyEfCCcKq5W8VeNw" id="(0.6334841628959276,0.0)"/>
   </edges>
@@ -590,51 +556,6 @@
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_fl0GwPH2EfCCcKq5W8VeNw" id="(0.6639004149377593,1.0)"/>
     <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_fl0GwfH2EfCCcKq5W8VeNw" id="(0.6639004149377593,0.0)"/>
   </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_2KcFAPLMEfCjpNmHUdLYoQ" type="Dependency_Edge" source="_zwzk8PHsEfCCcKq5W8VeNw" target="_tFwYcPLMEfCjpNmHUdLYoQ">
-    <children xmi:type="notation:DecorationNode" xmi:id="_2KcFA_LMEfCjpNmHUdLYoQ" type="Dependency_NameLabel">
-      <styles xmi:type="notation:BooleanValueStyle" xmi:id="_NrspIPnOEfClO6L379CfwQ" name="IS_UPDATED_POSITION" booleanValue="true"/>
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_2KcFBPLMEfCjpNmHUdLYoQ" y="40"/>
-    </children>
-    <children xmi:type="notation:DecorationNode" xmi:id="_2KcFBfLMEfCjpNmHUdLYoQ" type="Dependency_StereotypeLabel">
-      <styles xmi:type="notation:BooleanValueStyle" xmi:id="_NsDOcPnOEfClO6L379CfwQ" name="IS_UPDATED_POSITION" booleanValue="true"/>
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_2KcFBvLMEfCjpNmHUdLYoQ" y="60"/>
-    </children>
-    <styles xmi:type="notation:FontStyle" xmi:id="_2KcFAfLMEfCjpNmHUdLYoQ"/>
-    <element xmi:type="uml:Dependency" href="ReservationCancellation.uml#_2KGGwPLMEfCjpNmHUdLYoQ"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_2KcFAvLMEfCjpNmHUdLYoQ" points="[495, 621, -643984, -643984]$[495, 681, -643984, -643984]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2LE-MPLMEfCjpNmHUdLYoQ" id="(0.45977011494252873,1.0)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_2LFlQPLMEfCjpNmHUdLYoQ" id="(0.45977011494252873,0.0)"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_3sl0QPLMEfCjpNmHUdLYoQ" type="Dependency_Edge" source="_JnSJAPHtEfCCcKq5W8VeNw" target="_zwzk8PHsEfCCcKq5W8VeNw">
-    <children xmi:type="notation:DecorationNode" xmi:id="_3sl0Q_LMEfCjpNmHUdLYoQ" type="Dependency_NameLabel">
-      <styles xmi:type="notation:BooleanValueStyle" xmi:id="_NsPbsPnOEfClO6L379CfwQ" name="IS_UPDATED_POSITION" booleanValue="true"/>
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_3sl0RPLMEfCjpNmHUdLYoQ" y="40"/>
-    </children>
-    <children xmi:type="notation:DecorationNode" xmi:id="_3sl0RfLMEfCjpNmHUdLYoQ" type="Dependency_StereotypeLabel">
-      <styles xmi:type="notation:BooleanValueStyle" xmi:id="_NsfTUPnOEfClO6L379CfwQ" name="IS_UPDATED_POSITION" booleanValue="true"/>
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_3sl0RvLMEfCjpNmHUdLYoQ" y="60"/>
-    </children>
-    <styles xmi:type="notation:FontStyle" xmi:id="_3sl0QfLMEfCjpNmHUdLYoQ"/>
-    <element xmi:type="uml:Dependency" href="ReservationCancellation.uml#_3sQdEPLMEfCjpNmHUdLYoQ"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_3sl0QvLMEfCjpNmHUdLYoQ" points="[535, 440, -643984, -643984]$[535, 540, -643984, -643984]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_3tOGYPLMEfCjpNmHUdLYoQ" id="(0.7468879668049793,1.0)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_3tOGYfLMEfCjpNmHUdLYoQ" id="(0.6130268199233716,0.0)"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_5t-dMPLMEfCjpNmHUdLYoQ" type="Dependency_Edge" source="_tFwYcPLMEfCjpNmHUdLYoQ" target="_xrcJAPHuEfCCcKq5W8VeNw">
-    <children xmi:type="notation:DecorationNode" xmi:id="_5t_EQPLMEfCjpNmHUdLYoQ" type="Dependency_NameLabel">
-      <styles xmi:type="notation:BooleanValueStyle" xmi:id="__EWlQPnNEfClO6L379CfwQ" name="IS_UPDATED_POSITION" booleanValue="true"/>
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_5t_EQfLMEfCjpNmHUdLYoQ" y="39"/>
-    </children>
-    <children xmi:type="notation:DecorationNode" xmi:id="_5t_EQvLMEfCjpNmHUdLYoQ" type="Dependency_StereotypeLabel">
-      <styles xmi:type="notation:BooleanValueStyle" xmi:id="__EsjgPnNEfClO6L379CfwQ" name="IS_UPDATED_POSITION" booleanValue="true"/>
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_5t_EQ_LMEfCjpNmHUdLYoQ" y="59"/>
-    </children>
-    <styles xmi:type="notation:FontStyle" xmi:id="_5t-dMfLMEfCjpNmHUdLYoQ"/>
-    <element xmi:type="uml:Dependency" href="ReservationCancellation.uml#_5tptEPLMEfCjpNmHUdLYoQ"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_5t-dMvLMEfCjpNmHUdLYoQ" points="[760, 800, -643984, -643984]$[980, 400, -643984, -643984]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_5un9cPLMEfCjpNmHUdLYoQ" id="(1.0,0.31746031746031744)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_5un9cfLMEfCjpNmHUdLYoQ" id="(0.0,0.583941605839416)"/>
-  </edges>
   <edges xmi:type="notation:Connector" xmi:id="__uq0UPLMEfCjpNmHUdLYoQ" type="Dependency_Edge" source="_-TJosPH0EfCCcKq5W8VeNw" target="_nJwk4PHsEfCCcKq5W8VeNw">
     <children xmi:type="notation:DecorationNode" xmi:id="__urbYPLMEfCjpNmHUdLYoQ" type="Dependency_NameLabel">
       <styles xmi:type="notation:BooleanValueStyle" xmi:id="_1cEcYPnNEfClO6L379CfwQ" name="IS_UPDATED_POSITION" booleanValue="true"/>
@@ -647,223 +568,271 @@
     <styles xmi:type="notation:FontStyle" xmi:id="__uq0UfLMEfCjpNmHUdLYoQ"/>
     <element xmi:type="uml:Dependency" href="ReservationCancellation.uml#__uIBwPLMEfCjpNmHUdLYoQ"/>
     <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="__uq0UvLMEfCjpNmHUdLYoQ" points="[280, 400, -643984, -643984]$[460, 160, -643984, -643984]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="__wAREPLMEfCjpNmHUdLYoQ" id="(1.0,0.49586776859504134)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="__wA4IPLMEfCjpNmHUdLYoQ" id="(0.0,0.5080645161290323)"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_QfteVPnNEfClO6L379CfwQ" type="StereotypeCommentLink" source="_n2NhkPH0EfCCcKq5W8VeNw" target="_QfteUPnNEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_QfteVfnNEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QfteWfnNEfClO6L379CfwQ" name="BASE_ELEMENT">
-      <eObjectValue xmi:type="uml:Package" href="ReservationCancellation.uml#_n1qvAPH0EfCCcKq5W8VeNw"/>
-    </styles>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_QfteVvnNEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QfteV_nNEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QfteWPnNEfClO6L379CfwQ"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_QfxIt_nNEfClO6L379CfwQ" type="StereotypeCommentLink" source="_-TJosPH0EfCCcKq5W8VeNw" target="_QfxIs_nNEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_QfxIuPnNEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QfxIvPnNEfClO6L379CfwQ" name="BASE_ELEMENT">
-      <eObjectValue xmi:type="uml:Class" href="ReservationCancellation.uml#_-SoEQPH0EfCCcKq5W8VeNw"/>
-    </styles>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_QfxIufnNEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QfxIuvnNEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QfxIu_nNEfClO6L379CfwQ"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_Qf2BN_nNEfClO6L379CfwQ" type="StereotypeCommentLink" source="_O9PK8PH2EfCCcKq5W8VeNw" target="_Qf2BM_nNEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_Qf2BOPnNEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Qf2BPPnNEfClO6L379CfwQ" name="BASE_ELEMENT">
-      <eObjectValue xmi:type="uml:Interface" href="ReservationCancellation.uml#_O8uNkPH2EfCCcKq5W8VeNw"/>
-    </styles>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Qf2BOfnNEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Qf2BOvnNEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Qf2BO_nNEfClO6L379CfwQ"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_Qf5rlPnNEfClO6L379CfwQ" type="StereotypeCommentLink" source="_fksFYPH2EfCCcKq5W8VeNw" target="_Qf5rkPnNEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_Qf5rlfnNEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Qf5rmfnNEfClO6L379CfwQ" name="BASE_ELEMENT">
-      <eObjectValue xmi:type="uml:Dependency" href="ReservationCancellation.uml#_fkBXAPH2EfCCcKq5W8VeNw"/>
-    </styles>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Qf5rlvnNEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Qf5rl_nNEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Qf5rmPnNEfClO6L379CfwQ"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_Qf99C_nNEfClO6L379CfwQ" type="StereotypeCommentLink" source="_dnOesPHsEfCCcKq5W8VeNw" target="_Qf99B_nNEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_Qf99DPnNEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Qf-kEvnNEfClO6L379CfwQ" name="BASE_ELEMENT">
-      <eObjectValue xmi:type="uml:Package" href="ReservationCancellation.uml#_dm35YPHsEfCCcKq5W8VeNw"/>
-    </styles>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Qf99DfnNEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Qf-kEPnNEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Qf-kEfnNEfClO6L379CfwQ"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_QgBnZ_nNEfClO6L379CfwQ" type="StereotypeCommentLink" source="_nJwk4PHsEfCCcKq5W8VeNw" target="_QgBnY_nNEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_QgBnaPnNEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgBnbPnNEfClO6L379CfwQ" name="BASE_ELEMENT">
-      <eObjectValue xmi:type="uml:Interface" href="ReservationCancellation.uml#_nJhUUPHsEfCCcKq5W8VeNw"/>
-    </styles>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_QgBnafnNEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgBnavnNEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgBna_nNEfClO6L379CfwQ"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_QgFRwPnNEfClO6L379CfwQ" type="StereotypeCommentLink" source="_2mKMAPHtEfCCcKq5W8VeNw" target="_QgEqsPnNEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_QgFRwfnNEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgFRxfnNEfClO6L379CfwQ" name="BASE_ELEMENT">
-      <eObjectValue xmi:type="uml:Dependency" href="ReservationCancellation.uml#_2lv8UPHtEfCCcKq5W8VeNw"/>
-    </styles>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_QgFRwvnNEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgFRw_nNEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgFRxPnNEfClO6L379CfwQ"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_QgJjNPnNEfClO6L379CfwQ" type="StereotypeCommentLink" source="_JnSJAPHtEfCCcKq5W8VeNw" target="_QgJjMPnNEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_QgJjNfnNEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgJjOfnNEfClO6L379CfwQ" name="BASE_ELEMENT">
-      <eObjectValue xmi:type="uml:Class" href="ReservationCancellation.uml#_Jm8KwPHtEfCCcKq5W8VeNw"/>
-    </styles>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_QgJjNvnNEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgJjN_nNEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgJjOPnNEfClO6L379CfwQ"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_QgN0p_nNEfClO6L379CfwQ" type="StereotypeCommentLink" source="_mGYykPLMEfCjpNmHUdLYoQ" target="_QgN0o_nNEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_QgN0qPnNEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgN0rPnNEfClO6L379CfwQ" name="BASE_ELEMENT">
-      <eObjectValue xmi:type="uml:Package" href="ReservationCancellation.uml#_mGGesPLMEfCjpNmHUdLYoQ"/>
-    </styles>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_QgN0qfnNEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgN0qvnNEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgN0q_nNEfClO6L379CfwQ"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_QgSGFPnNEfClO6L379CfwQ" type="StereotypeCommentLink" source="_zwzk8PHsEfCCcKq5W8VeNw" target="_QgSGEPnNEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_QgSGFfnNEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgSGGfnNEfClO6L379CfwQ" name="BASE_ELEMENT">
-      <eObjectValue xmi:type="uml:Interface" href="ReservationCancellation.uml#_zwhREPHsEfCCcKq5W8VeNw"/>
-    </styles>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_QgSGFvnNEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgSGF_nNEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgSGGPnNEfClO6L379CfwQ"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_QgVwdPnNEfClO6L379CfwQ" type="StereotypeCommentLink" source="_2KcFAPLMEfCjpNmHUdLYoQ" target="_QgVwcPnNEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_QgVwdfnNEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgVwefnNEfClO6L379CfwQ" name="BASE_ELEMENT">
-      <eObjectValue xmi:type="uml:Dependency" href="ReservationCancellation.uml#_2KGGwPLMEfCjpNmHUdLYoQ"/>
-    </styles>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_QgVwdvnNEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgVwd_nNEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgVwePnNEfClO6L379CfwQ"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_Qgao9_nNEfClO6L379CfwQ" type="StereotypeCommentLink" source="_tFwYcPLMEfCjpNmHUdLYoQ" target="_Qgao8_nNEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_Qgao-PnNEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgbQAvnNEfClO6L379CfwQ" name="BASE_ELEMENT">
-      <eObjectValue xmi:type="uml:Class" href="ReservationCancellation.uml#_tFgg0PLMEfCjpNmHUdLYoQ"/>
-    </styles>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Qgao-fnNEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgbQAPnNEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgbQAfnNEfClO6L379CfwQ"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_Qgfhc_nNEfClO6L379CfwQ" type="StereotypeCommentLink" source="_IKNRkPHuEfCCcKq5W8VeNw" target="_Qge6Z_nNEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_QgfhdPnNEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgfhePnNEfClO6L379CfwQ" name="BASE_ELEMENT">
-      <eObjectValue xmi:type="uml:Package" href="ReservationCancellation.uml#_IJ0QAPHuEfCCcKq5W8VeNw"/>
-    </styles>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_QgfhdfnNEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgfhdvnNEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Qgfhd_nNEfClO6L379CfwQ"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_QgikxPnNEfClO6L379CfwQ" type="StereotypeCommentLink" source="_xrcJAPHuEfCCcKq5W8VeNw" target="_QgikwPnNEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_QgikxfnNEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgikyfnNEfClO6L379CfwQ" name="BASE_ELEMENT">
-      <eObjectValue xmi:type="uml:Interface" href="ReservationCancellation.uml#_xrAEIPHuEfCCcKq5W8VeNw"/>
-    </styles>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_QgikxvnNEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Qgikx_nNEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgikyPnNEfClO6L379CfwQ"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_QgloFPnNEfClO6L379CfwQ" type="StereotypeCommentLink" source="_-42BoPHyEfCCcKq5W8VeNw" target="_QgloEPnNEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_QgloFfnNEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgmPIfnNEfClO6L379CfwQ" name="BASE_ELEMENT">
-      <eObjectValue xmi:type="uml:Dependency" href="ReservationCancellation.uml#_-4TPEPHyEfCCcKq5W8VeNw"/>
-    </styles>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_QgloFvnNEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgloF_nNEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgmPIPnNEfClO6L379CfwQ"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_Qgqgl_nNEfClO6L379CfwQ" type="StereotypeCommentLink" source="_nlnywPHyEfCCcKq5W8VeNw" target="_Qgqgk_nNEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_QgqgmPnNEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_QgqgnPnNEfClO6L379CfwQ" name="BASE_ELEMENT">
-      <eObjectValue xmi:type="uml:Class" href="ReservationCancellation.uml#_nlG1YPHyEfCCcKq5W8VeNw"/>
-    </styles>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_QgqgmfnNEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_QgqgmvnNEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Qgqgm_nNEfClO6L379CfwQ"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_16Oim_nOEfClO6L379CfwQ" type="StereotypeCommentLink" source="_zh1H0PnOEfClO6L379CfwQ" target="_16Oil_nOEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_16OinPnOEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_16PJoPnOEfClO6L379CfwQ" name="BASE_ELEMENT">
-      <eObjectValue xmi:type="uml:Interface" href="ReservationCancellation.uml#_zhPR8PnOEfClO6L379CfwQ"/>
-    </styles>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_16OinfnOEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_16OinvnOEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_16Oin_nOEfClO6L379CfwQ"/>
-  </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_9VTNCPnOEfClO6L379CfwQ" type="StereotypeCommentLink" source="_6iV9MPnOEfClO6L379CfwQ" target="_9VTNBPnOEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_9VTNCfnOEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_9VT0EPnOEfClO6L379CfwQ" name="BASE_ELEMENT">
-      <eObjectValue xmi:type="uml:Class" href="ReservationCancellation.uml#_6iEQYPnOEfClO6L379CfwQ"/>
-    </styles>
-    <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_9VTNCvnOEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_9VTNC_nOEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_9VTNDPnOEfClO6L379CfwQ"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="__wAREPLMEfCjpNmHUdLYoQ" id="(1.0,0.48760330578512395)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="__wA4IPLMEfCjpNmHUdLYoQ" id="(0.0,0.5)"/>
   </edges>
   <edges xmi:type="notation:Connector" xmi:id="__oW0wPnOEfClO6L379CfwQ" type="Dependency_Edge" source="_zh1H0PnOEfClO6L379CfwQ" target="_6iV9MPnOEfClO6L379CfwQ">
     <children xmi:type="notation:DecorationNode" xmi:id="__oXb0PnOEfClO6L379CfwQ" type="Dependency_NameLabel">
+      <styles xmi:type="notation:BooleanValueStyle" xmi:id="_oWz1UPnYEfCg1vExiCml3Q" name="IS_UPDATED_POSITION" booleanValue="true"/>
       <layoutConstraint xmi:type="notation:Location" xmi:id="__oXb0fnOEfClO6L379CfwQ" y="40"/>
     </children>
     <children xmi:type="notation:DecorationNode" xmi:id="__oXb0vnOEfClO6L379CfwQ" type="Dependency_StereotypeLabel">
+      <styles xmi:type="notation:BooleanValueStyle" xmi:id="_oXYdEPnYEfCg1vExiCml3Q" name="IS_UPDATED_POSITION" booleanValue="true"/>
       <layoutConstraint xmi:type="notation:Location" xmi:id="__oXb0_nOEfClO6L379CfwQ" y="60"/>
     </children>
     <styles xmi:type="notation:FontStyle" xmi:id="__oW0wfnOEfClO6L379CfwQ"/>
     <element xmi:type="uml:Dependency" href="ReservationCancellation.uml#__ny0EPnOEfClO6L379CfwQ"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="__oW0wvnOEfClO6L379CfwQ" points="[440, 568, -643984, -643984]$[440, 640, -643984, -643984]"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="__oW0wvnOEfClO6L379CfwQ" points="[575, 598, -643984, -643984]$[575, 670, -643984, -643984]"/>
     <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="__pGboPnOEfClO6L379CfwQ" id="(0.40816326530612246,1.0)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="__pGbofnOEfClO6L379CfwQ" id="(0.37383177570093457,0.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="__pGbofnOEfClO6L379CfwQ" id="(0.4672897196261682,0.0)"/>
   </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_Ann5ZPnPEfClO6L379CfwQ" type="StereotypeCommentLink" source="__oW0wPnOEfClO6L379CfwQ" target="_Ann5YPnPEfClO6L379CfwQ">
-    <styles xmi:type="notation:FontStyle" xmi:id="_AnogcPnPEfClO6L379CfwQ"/>
-    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_AnogdPnPEfClO6L379CfwQ" name="BASE_ELEMENT">
+  <edges xmi:type="notation:Connector" xmi:id="_cY21kPnYEfCg1vExiCml3Q" type="StereotypeCommentLink" source="_n2NhkPH0EfCCcKq5W8VeNw" target="_cY1AYPnYEfCg1vExiCml3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_cY21kfnYEfCg1vExiCml3Q"/>
+    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cY3covnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+      <eObjectValue xmi:type="uml:Package" href="ReservationCancellation.uml#_n1qvAPH0EfCCcKq5W8VeNw"/>
+    </styles>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_cY21kvnYEfCg1vExiCml3Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cY3coPnYEfCg1vExiCml3Q"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cY3cofnYEfCg1vExiCml3Q"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_cZDp5PnYEfCg1vExiCml3Q" type="StereotypeCommentLink" source="_-TJosPH0EfCCcKq5W8VeNw" target="_cZDp4PnYEfCg1vExiCml3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_cZDp5fnYEfCg1vExiCml3Q"/>
+    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cZDp6fnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+      <eObjectValue xmi:type="uml:Class" href="ReservationCancellation.uml#_-SoEQPH0EfCCcKq5W8VeNw"/>
+    </styles>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_cZDp5vnYEfCg1vExiCml3Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cZDp5_nYEfCg1vExiCml3Q"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cZDp6PnYEfCg1vExiCml3Q"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_cZbdVPnYEfCg1vExiCml3Q" type="StereotypeCommentLink" source="_O9PK8PH2EfCCcKq5W8VeNw" target="_cZbdUPnYEfCg1vExiCml3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_cZbdVfnYEfCg1vExiCml3Q"/>
+    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cZbdWfnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+      <eObjectValue xmi:type="uml:Interface" href="ReservationCancellation.uml#_O8uNkPH2EfCCcKq5W8VeNw"/>
+    </styles>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_cZbdVvnYEfCg1vExiCml3Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cZbdV_nYEfCg1vExiCml3Q"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cZbdWPnYEfCg1vExiCml3Q"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_cZjZJPnYEfCg1vExiCml3Q" type="StereotypeCommentLink" source="_fksFYPH2EfCCcKq5W8VeNw" target="_cZjZIPnYEfCg1vExiCml3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_cZjZJfnYEfCg1vExiCml3Q"/>
+    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cZkAMPnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+      <eObjectValue xmi:type="uml:Dependency" href="ReservationCancellation.uml#_fkBXAPH2EfCCcKq5W8VeNw"/>
+    </styles>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_cZjZJvnYEfCg1vExiCml3Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cZjZJ_nYEfCg1vExiCml3Q"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cZjZKPnYEfCg1vExiCml3Q"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_cZxblPnYEfCg1vExiCml3Q" type="StereotypeCommentLink" source="_dnOesPHsEfCCcKq5W8VeNw" target="_cZxbkPnYEfCg1vExiCml3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_cZyCoPnYEfCg1vExiCml3Q"/>
+    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cZyCpPnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+      <eObjectValue xmi:type="uml:Package" href="ReservationCancellation.uml#_dm35YPHsEfCCcKq5W8VeNw"/>
+    </styles>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_cZyCofnYEfCg1vExiCml3Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cZyCovnYEfCg1vExiCml3Q"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cZyCo_nYEfCg1vExiCml3Q"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_cZ6lhPnYEfCg1vExiCml3Q" type="StereotypeCommentLink" source="_nJwk4PHsEfCCcKq5W8VeNw" target="_cZ6lgPnYEfCg1vExiCml3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_cZ6lhfnYEfCg1vExiCml3Q"/>
+    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cZ6lifnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+      <eObjectValue xmi:type="uml:Interface" href="ReservationCancellation.uml#_nJhUUPHsEfCCcKq5W8VeNw"/>
+    </styles>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_cZ6lhvnYEfCg1vExiCml3Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cZ6lh_nYEfCg1vExiCml3Q"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cZ6liPnYEfCg1vExiCml3Q"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_caGLsfnYEfCg1vExiCml3Q" type="StereotypeCommentLink" source="_2mKMAPHtEfCCcKq5W8VeNw" target="_caFkoPnYEfCg1vExiCml3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_caGLsvnYEfCg1vExiCml3Q"/>
+    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_caGLtvnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+      <eObjectValue xmi:type="uml:Dependency" href="ReservationCancellation.uml#_2lv8UPHtEfCCcKq5W8VeNw"/>
+    </styles>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_caGLs_nYEfCg1vExiCml3Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_caGLtPnYEfCg1vExiCml3Q"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_caGLtfnYEfCg1vExiCml3Q"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_caRx4PnYEfCg1vExiCml3Q" type="StereotypeCommentLink" source="_JnSJAPHtEfCCcKq5W8VeNw" target="_caRK0PnYEfCg1vExiCml3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_caRx4fnYEfCg1vExiCml3Q"/>
+    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_caRx5fnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+      <eObjectValue xmi:type="uml:Class" href="ReservationCancellation.uml#_Jm8KwPHtEfCCcKq5W8VeNw"/>
+    </styles>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_caRx4vnYEfCg1vExiCml3Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_caRx4_nYEfCg1vExiCml3Q"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_caRx5PnYEfCg1vExiCml3Q"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_cahpgfnYEfCg1vExiCml3Q" type="StereotypeCommentLink" source="_mGYykPLMEfCjpNmHUdLYoQ" target="_cahCcPnYEfCg1vExiCml3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_cahpgvnYEfCg1vExiCml3Q"/>
+    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cahphvnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+      <eObjectValue xmi:type="uml:Package" href="ReservationCancellation.uml#_mGGesPLMEfCjpNmHUdLYoQ"/>
+    </styles>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_cahpg_nYEfCg1vExiCml3Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cahphPnYEfCg1vExiCml3Q"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cahphfnYEfCg1vExiCml3Q"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_caqzcPnYEfCg1vExiCml3Q" type="StereotypeCommentLink" source="_zwzk8PHsEfCCcKq5W8VeNw" target="_caplU_nYEfCg1vExiCml3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_caqzcfnYEfCg1vExiCml3Q"/>
+    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_caqzdfnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+      <eObjectValue xmi:type="uml:Interface" href="ReservationCancellation.uml#_zwhREPHsEfCCcKq5W8VeNw"/>
+    </styles>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_caqzcvnYEfCg1vExiCml3Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_caqzc_nYEfCg1vExiCml3Q"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_caqzdPnYEfCg1vExiCml3Q"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_cbbocPnYEfCg1vExiCml3Q" type="StereotypeCommentLink" source="_zh1H0PnOEfClO6L379CfwQ" target="_cbbBYPnYEfCg1vExiCml3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_cbbocfnYEfCg1vExiCml3Q"/>
+    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cbbodfnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+      <eObjectValue xmi:type="uml:Interface" href="ReservationCancellation.uml#_zhPR8PnOEfClO6L379CfwQ"/>
+    </styles>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_cbbocvnYEfCg1vExiCml3Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cbboc_nYEfCg1vExiCml3Q"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cbbodPnYEfCg1vExiCml3Q"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_cbvKcPnYEfCg1vExiCml3Q" type="StereotypeCommentLink" source="__oW0wPnOEfClO6L379CfwQ" target="_cbt8UPnYEfCg1vExiCml3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_cbvKcfnYEfCg1vExiCml3Q"/>
+    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cbvKdfnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
       <eObjectValue xmi:type="uml:Dependency" href="ReservationCancellation.uml#__ny0EPnOEfClO6L379CfwQ"/>
     </styles>
     <element xsi:nil="true"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_AnogcfnPEfClO6L379CfwQ" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_AnogcvnPEfClO6L379CfwQ"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Anogc_nPEfClO6L379CfwQ"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_cbvKcvnYEfCg1vExiCml3Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cbvKc_nYEfCg1vExiCml3Q"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cbvKdPnYEfCg1vExiCml3Q"/>
   </edges>
-  <edges xmi:type="notation:Connector" xmi:id="_C8xy4PnPEfClO6L379CfwQ" type="Dependency_Edge" source="_JnSJAPHtEfCCcKq5W8VeNw" target="_zh1H0PnOEfClO6L379CfwQ">
-    <children xmi:type="notation:DecorationNode" xmi:id="_C8yZ8PnPEfClO6L379CfwQ" type="Dependency_NameLabel">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_C8yZ8fnPEfClO6L379CfwQ" y="40"/>
+  <edges xmi:type="notation:Connector" xmi:id="_cb-bBPnYEfCg1vExiCml3Q" type="StereotypeCommentLink" source="_6iV9MPnOEfClO6L379CfwQ" target="_cb-bAPnYEfCg1vExiCml3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_cb-bBfnYEfCg1vExiCml3Q"/>
+    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cb-bCfnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+      <eObjectValue xmi:type="uml:Class" href="ReservationCancellation.uml#_6iEQYPnOEfClO6L379CfwQ"/>
+    </styles>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_cb-bBvnYEfCg1vExiCml3Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cb-bB_nYEfCg1vExiCml3Q"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cb-bCPnYEfCg1vExiCml3Q"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_ccQH0_nYEfCg1vExiCml3Q" type="StereotypeCommentLink" source="_IKNRkPHuEfCCcKq5W8VeNw" target="_ccPgwPnYEfCg1vExiCml3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_ccQH1PnYEfCg1vExiCml3Q"/>
+    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ccQH2PnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+      <eObjectValue xmi:type="uml:Package" href="ReservationCancellation.uml#_IJ0QAPHuEfCCcKq5W8VeNw"/>
+    </styles>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ccQH1fnYEfCg1vExiCml3Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ccQH1vnYEfCg1vExiCml3Q"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ccQH1_nYEfCg1vExiCml3Q"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_ccW1hPnYEfCg1vExiCml3Q" type="StereotypeCommentLink" source="_xrcJAPHuEfCCcKq5W8VeNw" target="_ccW1gPnYEfCg1vExiCml3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_ccW1hfnYEfCg1vExiCml3Q"/>
+    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ccW1ifnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+      <eObjectValue xmi:type="uml:Interface" href="ReservationCancellation.uml#_xrAEIPHuEfCCcKq5W8VeNw"/>
+    </styles>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ccW1hvnYEfCg1vExiCml3Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ccW1h_nYEfCg1vExiCml3Q"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ccW1iPnYEfCg1vExiCml3Q"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_cceKRPnYEfCg1vExiCml3Q" type="StereotypeCommentLink" source="_-42BoPHyEfCCcKq5W8VeNw" target="_cceKQPnYEfCg1vExiCml3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_cceKRfnYEfCg1vExiCml3Q"/>
+    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_cceKSfnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+      <eObjectValue xmi:type="uml:Dependency" href="ReservationCancellation.uml#_-4TPEPHyEfCCcKq5W8VeNw"/>
+    </styles>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_cceKRvnYEfCg1vExiCml3Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cceKR_nYEfCg1vExiCml3Q"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cceKSPnYEfCg1vExiCml3Q"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_ccn7QfnYEfCg1vExiCml3Q" type="StereotypeCommentLink" source="_nlnywPHyEfCCcKq5W8VeNw" target="_ccmtIPnYEfCg1vExiCml3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_ccn7QvnYEfCg1vExiCml3Q"/>
+    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ccn7RvnYEfCg1vExiCml3Q" name="BASE_ELEMENT">
+      <eObjectValue xmi:type="uml:Class" href="ReservationCancellation.uml#_nlG1YPHyEfCCcKq5W8VeNw"/>
+    </styles>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ccn7Q_nYEfCg1vExiCml3Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ccn7RPnYEfCg1vExiCml3Q"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ccn7RfnYEfCg1vExiCml3Q"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_-082UPnYEfCg1vExiCml3Q" type="Dependency_Edge" source="_zwzk8PHsEfCCcKq5W8VeNw" target="_JnSJAPHtEfCCcKq5W8VeNw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_-09dYPnYEfCg1vExiCml3Q" type="Dependency_NameLabel">
+      <styles xmi:type="notation:BooleanValueStyle" xmi:id="_HYEt8PnZEfCg1vExiCml3Q" name="IS_UPDATED_POSITION" booleanValue="true"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_-09dYfnYEfCg1vExiCml3Q" x="1" y="38"/>
     </children>
-    <children xmi:type="notation:DecorationNode" xmi:id="_C8yZ8vnPEfClO6L379CfwQ" type="Dependency_StereotypeLabel">
-      <layoutConstraint xmi:type="notation:Location" xmi:id="_C8yZ8_nPEfClO6L379CfwQ" y="60"/>
+    <children xmi:type="notation:DecorationNode" xmi:id="_-09dYvnYEfCg1vExiCml3Q" type="Dependency_StereotypeLabel">
+      <styles xmi:type="notation:BooleanValueStyle" xmi:id="_HYbTQPnZEfCg1vExiCml3Q" name="IS_UPDATED_POSITION" booleanValue="true"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_-09dY_nYEfCg1vExiCml3Q" x="-36" y="-25"/>
     </children>
-    <styles xmi:type="notation:FontStyle" xmi:id="_C8xy4fnPEfClO6L379CfwQ"/>
-    <element xmi:type="uml:Dependency" href="ReservationCancellation.uml#_C8RckPnPEfClO6L379CfwQ"/>
-    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_C8xy4vnPEfClO6L379CfwQ" points="[460, 344, -643984, -643984]$[480, 440, -643984, -643984]"/>
-    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_C9pVkPnPEfClO6L379CfwQ" id="(0.4979253112033195,1.0)"/>
-    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_C9pVkfnPEfClO6L379CfwQ" id="(0.6802721088435374,0.0)"/>
+    <styles xmi:type="notation:FontStyle" xmi:id="_-082UfnYEfCg1vExiCml3Q"/>
+    <element xmi:type="uml:Dependency" href="ReservationCancellation.uml#_-0gKYPnYEfCg1vExiCml3Q"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_-082UvnYEfCg1vExiCml3Q" points="[735, 160, -643984, -643984]$[655, 220, -643984, -643984]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_-1wuoPnYEfCg1vExiCml3Q" id="(0.3065134099616858,1.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_-1wuofnYEfCg1vExiCml3Q" id="(0.6639004149377593,0.0)"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_AyLYAfnZEfCg1vExiCml3Q" type="StereotypeCommentLink" source="_-082UPnYEfCg1vExiCml3Q" target="_AyKw8_nZEfCg1vExiCml3Q">
+    <styles xmi:type="notation:FontStyle" xmi:id="_AyLYAvnZEfCg1vExiCml3Q"/>
+    <styles xmi:type="notation:EObjectValueStyle" xmi:id="_AyLYBvnZEfCg1vExiCml3Q" name="BASE_ELEMENT">
+      <eObjectValue xmi:type="uml:Dependency" href="ReservationCancellation.uml#_-0gKYPnYEfCg1vExiCml3Q"/>
+    </styles>
+    <element xsi:nil="true"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_AyLYA_nZEfCg1vExiCml3Q" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_AyLYBPnZEfCg1vExiCml3Q"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_AyLYBfnZEfCg1vExiCml3Q"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_Fe2igPnZEfCg1vExiCml3Q" type="Dependency_Edge" source="_JnSJAPHtEfCCcKq5W8VeNw" target="_zh1H0PnOEfClO6L379CfwQ">
+    <children xmi:type="notation:DecorationNode" xmi:id="_Fe3JkPnZEfCg1vExiCml3Q" type="Dependency_NameLabel">
+      <styles xmi:type="notation:BooleanValueStyle" xmi:id="_HXYKYPnZEfCg1vExiCml3Q" name="IS_UPDATED_POSITION" booleanValue="true"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_Fe3JkfnZEfCg1vExiCml3Q" y="40"/>
+    </children>
+    <children xmi:type="notation:DecorationNode" xmi:id="_Fe3JkvnZEfCg1vExiCml3Q" type="Dependency_StereotypeLabel">
+      <styles xmi:type="notation:BooleanValueStyle" xmi:id="_HXthkPnZEfCg1vExiCml3Q" name="IS_UPDATED_POSITION" booleanValue="true"/>
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_Fe3Jk_nZEfCg1vExiCml3Q" y="60"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_Fe2igfnZEfCg1vExiCml3Q"/>
+    <element xmi:type="uml:Dependency" href="ReservationCancellation.uml#_FeevEPnZEfCg1vExiCml3Q"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Fe2igvnZEfCg1vExiCml3Q" points="[655, 344, -643984, -643984]$[655, 440, -643984, -643984]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_FfoloPnZEfCg1vExiCml3Q" id="(0.6639004149377593,1.0)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_FfolofnZEfCg1vExiCml3Q" id="(0.6802721088435374,0.0)"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_IgNasPnZEfCg1vExiCml3Q" type="Dependency_Edge" source="_JnSJAPHtEfCCcKq5W8VeNw" target="_xrcJAPHuEfCCcKq5W8VeNw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_IgOBwPnZEfCg1vExiCml3Q" type="Dependency_NameLabel">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_IgOBwfnZEfCg1vExiCml3Q" y="40"/>
+    </children>
+    <children xmi:type="notation:DecorationNode" xmi:id="_IgOBwvnZEfCg1vExiCml3Q" type="Dependency_StereotypeLabel">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_IgOBw_nZEfCg1vExiCml3Q" y="60"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_IgNasfnZEfCg1vExiCml3Q"/>
+    <element xmi:type="uml:Dependency" href="ReservationCancellation.uml#_If4qkPnZEfCg1vExiCml3Q"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_IgNasvnZEfCg1vExiCml3Q" points="[720, 280, -643984, -643984]$[1040, 140, -643984, -643984]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Ig-PsPnZEfCg1vExiCml3Q" id="(0.995850622406639,0.42857142857142855)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Ig-PsfnZEfCg1vExiCml3Q" id="(0.0,0.8759124087591241)"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_1wO4EPnZEfCg1vExiCml3Q" type="Dependency_Edge" source="_nlnywPHyEfCCcKq5W8VeNw" target="_zwzk8PHsEfCCcKq5W8VeNw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_1wO4E_nZEfCg1vExiCml3Q" type="Dependency_NameLabel">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_1wPfIPnZEfCg1vExiCml3Q" y="40"/>
+    </children>
+    <children xmi:type="notation:DecorationNode" xmi:id="_1wPfIfnZEfCg1vExiCml3Q" type="Dependency_StereotypeLabel">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_1wPfIvnZEfCg1vExiCml3Q" y="60"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_1wO4EfnZEfCg1vExiCml3Q"/>
+    <element xmi:type="uml:Dependency" href="ReservationCancellation.uml#_1v79IPnZEfCg1vExiCml3Q"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_1wO4EvnZEfCg1vExiCml3Q" points="[1040, 260, -643984, -643984]$[860, 160, -643984, -643984]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_1w5mcPnZEfCg1vExiCml3Q" id="(0.0,0.17094017094017094)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_1w5mcfnZEfCg1vExiCml3Q" id="(0.7662835249042146,0.9929078014184397)"/>
+  </edges>
+  <edges xmi:type="notation:Connector" xmi:id="_spCNkPnaEfCg1vExiCml3Q" type="Dependency_Edge" source="_JnSJAPHtEfCCcKq5W8VeNw" target="_O9PK8PH2EfCCcKq5W8VeNw">
+    <children xmi:type="notation:DecorationNode" xmi:id="_spC0oPnaEfCg1vExiCml3Q" type="Dependency_NameLabel">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_spC0ofnaEfCg1vExiCml3Q" y="40"/>
+    </children>
+    <children xmi:type="notation:DecorationNode" xmi:id="_spC0ovnaEfCg1vExiCml3Q" type="Dependency_StereotypeLabel">
+      <layoutConstraint xmi:type="notation:Location" xmi:id="_spC0o_naEfCg1vExiCml3Q" y="60"/>
+    </children>
+    <styles xmi:type="notation:FontStyle" xmi:id="_spCNkfnaEfCg1vExiCml3Q"/>
+    <element xmi:type="uml:Dependency" href="ReservationCancellation.uml#_sok6kPnaEfCg1vExiCml3Q"/>
+    <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_spCNkvnaEfCg1vExiCml3Q" points="[500, 280, -643984, -643984]$[220, 140, -643984, -643984]"/>
+    <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_spx0cPnaEfCg1vExiCml3Q" id="(0.0,0.42857142857142855)"/>
+    <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_spx0cfnaEfCg1vExiCml3Q" id="(0.995850622406639,0.815068493150685)"/>
   </edges>
 </notation:Diagram>

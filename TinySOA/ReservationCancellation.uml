@@ -7,12 +7,12 @@
     <packagedElement xmi:type="uml:Package" xmi:id="_5vxIoPHqEfCCcKq5W8VeNw" name="User">
       <packagedElement xmi:type="uml:Package" xmi:id="_n1qvAPH0EfCCcKq5W8VeNw" name="UserTasks">
         <packagedElement xmi:type="uml:Class" xmi:id="_-SoEQPH0EfCCcKq5W8VeNw" name="ReservationServiceManagement">
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_Ct6HUPH2EfCCcKq5W8VeNw" name="ackReservationCanceled"/>
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_E8mMcPH2EfCCcKq5W8VeNw" name="reservationTimeout"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_Ct6HUPH2EfCCcKq5W8VeNw" name="notifyReservationCanceled"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_E8mMcPH2EfCCcKq5W8VeNw" name="notifyReservationTimeout"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Interface" xmi:id="_O8uNkPH2EfCCcKq5W8VeNw" name="ReservationService">
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_S2SgIPH2EfCCcKq5W8VeNw" name="ackReservationCanceled"/>
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_WiHRoPH2EfCCcKq5W8VeNw" name="reservationTimeout"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_O8uNkPH2EfCCcKq5W8VeNw" name="IReservationService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_S2SgIPH2EfCCcKq5W8VeNw" name="notifyReservationCanceled"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_WiHRoPH2EfCCcKq5W8VeNw" name="notifyReservationTimeout"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Dependency" xmi:id="_fkBXAPH2EfCCcKq5W8VeNw" client="_O8uNkPH2EfCCcKq5W8VeNw" supplier="_-SoEQPH0EfCCcKq5W8VeNw"/>
         <packagedElement xmi:type="uml:Dependency" xmi:id="__uIBwPLMEfCjpNmHUdLYoQ" client="_-SoEQPH0EfCCcKq5W8VeNw" supplier="_nJhUUPHsEfCCcKq5W8VeNw"/>
@@ -20,7 +20,7 @@
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_7mQJIPHqEfCCcKq5W8VeNw" name="RentalService">
       <packagedElement xmi:type="uml:Package" xmi:id="_dm35YPHsEfCCcKq5W8VeNw" name="RentalServiceTasks">
-        <packagedElement xmi:type="uml:Interface" xmi:id="_nJhUUPHsEfCCcKq5W8VeNw" name="ReservationCancellationService">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_nJhUUPHsEfCCcKq5W8VeNw" name="IReservationCancellationService">
           <ownedOperation xmi:type="uml:Operation" xmi:id="_vzsPIPHsEfCCcKq5W8VeNw" name="cancelReservation"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Class" xmi:id="_Jm8KwPHtEfCCcKq5W8VeNw" name="ReservationCancellationManagement">
@@ -28,23 +28,31 @@
         </packagedElement>
         <packagedElement xmi:type="uml:Dependency" xmi:id="_2lv8UPHtEfCCcKq5W8VeNw" client="_nJhUUPHsEfCCcKq5W8VeNw" supplier="_Jm8KwPHtEfCCcKq5W8VeNw"/>
         <packagedElement xmi:type="uml:Dependency" xmi:id="_3sQdEPLMEfCjpNmHUdLYoQ" client="_Jm8KwPHtEfCCcKq5W8VeNw" supplier="_zwhREPHsEfCCcKq5W8VeNw"/>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="_C8RckPnPEfClO6L379CfwQ" client="_Jm8KwPHtEfCCcKq5W8VeNw" supplier="_zhPR8PnOEfClO6L379CfwQ"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Package" xmi:id="_mGGesPLMEfCjpNmHUdLYoQ" name="RentalServiceEntities">
-        <packagedElement xmi:type="uml:Interface" xmi:id="_zwhREPHsEfCCcKq5W8VeNw" name="BankService">
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_AMY74PHtEfCCcKq5W8VeNw" name="ackChargeMoneyBlock"/>
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_CWMhAPHtEfCCcKq5W8VeNw" name="ackUnlockMoney"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_zwhREPHsEfCCcKq5W8VeNw" name="IBankService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_AMY74PHtEfCCcKq5W8VeNw" name="onMoneyBlockCharged"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_CWMhAPHtEfCCcKq5W8VeNw" name="onMoneyUnlocked"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Class" xmi:id="_tFgg0PLMEfCjpNmHUdLYoQ" name="BankServiceManagement">
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_xQ4VEPLMEfCjpNmHUdLYoQ" name="ackUnlockMoney"/>
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_zmHuIPLMEfCjpNmHUdLYoQ" name="ackChargeMoneyBlock"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_xQ4VEPLMEfCjpNmHUdLYoQ" name="onMoneyUnlocked"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_zmHuIPLMEfCjpNmHUdLYoQ" name="onMoneyBlockCharged"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Dependency" xmi:id="_2KGGwPLMEfCjpNmHUdLYoQ" client="_zwhREPHsEfCCcKq5W8VeNw" supplier="_tFgg0PLMEfCjpNmHUdLYoQ"/>
         <packagedElement xmi:type="uml:Dependency" xmi:id="_5tptEPLMEfCjpNmHUdLYoQ" client="_tFgg0PLMEfCjpNmHUdLYoQ" supplier="_xrAEIPHuEfCCcKq5W8VeNw"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_zhPR8PnOEfClO6L379CfwQ" name="IReservationDatabase">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_34oI8PnOEfClO6L379CfwQ" name="deleteReservation"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_6iEQYPnOEfClO6L379CfwQ" name="ReservationDatabaseManagement">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_-MKjkPnOEfClO6L379CfwQ" name="deleteReservation"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Dependency" xmi:id="__ny0EPnOEfClO6L379CfwQ" client="_zhPR8PnOEfClO6L379CfwQ" supplier="_6iEQYPnOEfClO6L379CfwQ"/>
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_CAKRgPHrEfCCcKq5W8VeNw" name="Bank">
       <packagedElement xmi:type="uml:Package" xmi:id="_IJ0QAPHuEfCCcKq5W8VeNw" name="BankUtilities">
-        <packagedElement xmi:type="uml:Interface" xmi:id="_xrAEIPHuEfCCcKq5W8VeNw" name="BankService">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_xrAEIPHuEfCCcKq5W8VeNw" name="IBankService">
           <ownedOperation xmi:type="uml:Operation" xmi:id="_b57AoPHyEfCCcKq5W8VeNw" name="chargeMoneyBlock"/>
           <ownedOperation xmi:type="uml:Operation" xmi:id="_iXh9QPHyEfCCcKq5W8VeNw" name="unlockMoney"/>
         </packagedElement>
@@ -85,4 +93,7 @@
   <tiny:Expose xmi:id="_21ZtkPLMEfCjpNmHUdLYoQ" base_Dependency="_2KGGwPLMEfCjpNmHUdLYoQ"/>
   <tiny:Tasks xmi:id="_iTv3EPhhEfCuXrbcuMxaPQ" base_Package="_n1qvAPH0EfCCcKq5W8VeNw"/>
   <tiny:Entities xmi:id="_wfrxUPhhEfCuXrbcuMxaPQ" base_Package="_mGGesPLMEfCjpNmHUdLYoQ"/>
+  <tiny:ServiceInterface xmi:id="_157AkPnOEfClO6L379CfwQ" base_Interface="_zhPR8PnOEfClO6L379CfwQ"/>
+  <tiny:Capability xmi:id="_9U6ygPnOEfClO6L379CfwQ" base_Class="_6iEQYPnOEfClO6L379CfwQ"/>
+  <tiny:Expose xmi:id="_AnPe4PnPEfClO6L379CfwQ" base_Dependency="__ny0EPnOEfClO6L379CfwQ"/>
 </xmi:XMI>

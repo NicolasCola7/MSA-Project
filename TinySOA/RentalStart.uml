@@ -7,10 +7,10 @@
     <packagedElement xmi:type="uml:Package" xmi:id="_SVVZAPLDEfCjpNmHUdLYoQ" name="User">
       <packagedElement xmi:type="uml:Package" xmi:id="_aQtUIPLDEfCjpNmHUdLYoQ" name="UserTasks">
         <packagedElement xmi:type="uml:Class" xmi:id="_5xFKoPLDEfCjpNmHUdLYoQ" name="BootstrapServiceManagement">
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_4LV0gPLGEfCjpNmHUdLYoQ" name="receiveVehicles"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_4LV0gPLGEfCjpNmHUdLYoQ" name="inizializeUserSession"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Interface" xmi:id="_6zEEsPLGEfCjpNmHUdLYoQ" name="BootstrapService">
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_PJvp8PLHEfCjpNmHUdLYoQ" name="receiveVehicles"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_6zEEsPLGEfCjpNmHUdLYoQ" name="IBootstrapService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_PJvp8PLHEfCjpNmHUdLYoQ" name="inizializeUserSession"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Dependency" xmi:id="_E8ADkPLHEfCjpNmHUdLYoQ" client="_6zEEsPLGEfCjpNmHUdLYoQ" supplier="_5xFKoPLDEfCjpNmHUdLYoQ"/>
         <packagedElement xmi:type="uml:Dependency" xmi:id="_GZlb4PLHEfCjpNmHUdLYoQ" client="_5xFKoPLDEfCjpNmHUdLYoQ" supplier="_ZFsdEPLEEfCjpNmHUdLYoQ"/>
@@ -19,10 +19,10 @@
     <packagedElement xmi:type="uml:Package" xmi:id="_V1klkPLDEfCjpNmHUdLYoQ" name="RentalService">
       <packagedElement xmi:type="uml:Package" xmi:id="_cw71MPLDEfCjpNmHUdLYoQ" name="RentalServiceTasks">
         <packagedElement xmi:type="uml:Class" xmi:id="_75trEPLDEfCjpNmHUdLYoQ" name="VehicleRetrivalServiceManagement">
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_VnIZkPLGEfCjpNmHUdLYoQ" name="getVehicles"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_VnIZkPLGEfCjpNmHUdLYoQ" name="getAvailableVehicles"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Interface" xmi:id="_ZFsdEPLEEfCjpNmHUdLYoQ" name="VehicleRetrievalService">
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_WrVBgPLGEfCjpNmHUdLYoQ" name="getVehicles"/>
+        <packagedElement xmi:type="uml:Interface" xmi:id="_ZFsdEPLEEfCjpNmHUdLYoQ" name="IVehicleRetrievalService">
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_WrVBgPLGEfCjpNmHUdLYoQ" name="getAvailableVehicles"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Dependency" xmi:id="_HQPXEPLHEfCjpNmHUdLYoQ" client="_ZFsdEPLEEfCjpNmHUdLYoQ" supplier="_75trEPLDEfCjpNmHUdLYoQ"/>
         <packagedElement xmi:type="uml:Dependency" xmi:id="_I-dMYPLHEfCjpNmHUdLYoQ" client="_75trEPLDEfCjpNmHUdLYoQ" supplier="_J1aJ4PLEEfCjpNmHUdLYoQ"/>
@@ -31,7 +31,7 @@
         <packagedElement xmi:type="uml:Class" xmi:id="_85wLwPLDEfCjpNmHUdLYoQ" name="VehiclesDatabaseManagement">
           <ownedOperation xmi:type="uml:Operation" xmi:id="_Wu6y8PLEEfCjpNmHUdLYoQ" name="getVehicles"/>
         </packagedElement>
-        <packagedElement xmi:type="uml:Interface" xmi:id="_J1aJ4PLEEfCjpNmHUdLYoQ" name="VehiclesDatabase">
+        <packagedElement xmi:type="uml:Interface" xmi:id="_J1aJ4PLEEfCjpNmHUdLYoQ" name="IVehiclesDatabase">
           <ownedOperation xmi:type="uml:Operation" xmi:id="_UI3WsPLEEfCjpNmHUdLYoQ" name="getVehicles"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Dependency" xmi:id="_JxMQ4PLHEfCjpNmHUdLYoQ" client="_J1aJ4PLEEfCjpNmHUdLYoQ" supplier="_85wLwPLDEfCjpNmHUdLYoQ"/>

@@ -32,10 +32,10 @@
     <packagedElement xmi:type="uml:Package" xmi:id="_uqRksPFXEfCmjO7Mb2-ouw" name="LogisticService">
       <packagedElement xmi:type="uml:Package" xmi:id="_BYPfsPFYEfCmjO7Mb2-ouw" name="LogisticlServiceTasks">
         <packagedElement xmi:type="uml:Interface" xmi:id="_w8Pf8PFaEfCmjO7Mb2-ouw" name="ICheckVehicleService">
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_2TuiAPFaEfCmjO7Mb2-ouw" name="notifyCheckCompleted"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_2TuiAPFaEfCmjO7Mb2-ouw" name="onReceiveStatusUpdate"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Class" xmi:id="_8SrzwPFaEfCmjO7Mb2-ouw" name="CheckStatusServiceManagement">
-          <ownedOperation xmi:type="uml:Operation" xmi:id="_HcZ6MPFbEfCmjO7Mb2-ouw" name="notifyCheckCompleted"/>
+          <ownedOperation xmi:type="uml:Operation" xmi:id="_HcZ6MPFbEfCmjO7Mb2-ouw" name="onReceiveStatusUpdate"/>
         </packagedElement>
         <packagedElement xmi:type="uml:Dependency" xmi:id="_P-5fsPFbEfCmjO7Mb2-ouw" client="_w8Pf8PFaEfCmjO7Mb2-ouw" supplier="_8SrzwPFaEfCmjO7Mb2-ouw"/>
         <packagedElement xmi:type="uml:Dependency" xmi:id="_MFakAPLMEfCjpNmHUdLYoQ" client="_8SrzwPFaEfCmjO7Mb2-ouw" supplier="_rU2kMPFbEfCmjO7Mb2-ouw"/>

@@ -7,6 +7,8 @@
   <semanticResources>pathmap://UML_PROFILES/Standard.profile.uml</semanticResources>
   <semanticResources>pathmap://UML_METAMODELS/UML.metamodel.uml</semanticResources>
   <semanticResources>pathmap://UML_METAMODELS/Ecore.metamodel.uml</semanticResources>
+  <semanticResources>Rental.uml</semanticResources>
+  <semanticResources>tiny.profile.uml.xml</semanticResources>
   <ownedViews xmi:type="viewpoint:DView" uid="_1UX6kPIaEfCCcKq5W8VeNw">
     <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.papyrus.sirius.uml.diagram.compositestructure/description/papyrus_compositestructure.odesign#//@ownedViewpoints[name='CompositeStructureDiagram']"/>
   </ownedViews>

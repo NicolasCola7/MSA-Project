@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ACMEMobility</title>
+  <style>
+    /* ── Reset & base ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Header ───────────────────────────────────────────── */
+    header {
+      background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+    header .logo { font-size: 1.75rem; }
+    header h1 { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em; }
+    header .tag {
+      margin-left: auto;
+      font-size: 0.7rem;
+      background: rgba(255,255,255,0.15);
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+    }
+
+    /* ── Main layout ──────────────────────────────────────── */
+    main { flex: 1; display: flex; flex-direction: column; gap: 1.5rem; padding: 1.5rem; max-width: 960px; margin: 0 auto; width: 100%; }
+
+    /* ── Status bar ───────────────────────────────────────── */
+    #status-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: #1e2030;
+      border: 1px solid #2d3250;
+      border-radius: 10px;
+      padding: 0.9rem 1.2rem;
+      font-size: 0.875rem;
+    }
+    #status-bar .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #6b7280;
+      flex-shrink: 0;
+      transition: background 0.3s;
+    }
+    #status-bar.loading .dot { background: #f59e0b; animation: pulse 1s infinite; }
+    #status-bar.ok .dot     { background: #22c55e; }
+    #status-bar.error .dot  { background: #ef4444; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    /* ── Stats row ────────────────────────────────────────── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+      gap: 1rem;
+    }
+    .stat-card {
+      background: #1e2030;
+      border: 1px solid #2d3250;
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .stat-card .val { font-size: 2rem; font-weight: 700; color: #38bdf8; }
+    .stat-card .lbl { font-size: 0.75rem; color: #94a3b8; margin-top: 0.2rem; }
+
+    /* ── Vehicle grid ─────────────────────────────────────── */
+    #vehicle-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .vehicle-card {
+      background: #1e2030;
+      border: 1px solid #2d3250;
+      border-radius: 12px;
+      padding: 1.2rem;
+      transition: transform 0.15s, border-color 0.15s;
+      cursor: pointer;
+    }
+    .vehicle-card:hover { transform: translateY(-2px); border-color: #38bdf8; }
+
+    .vehicle-card .vc-header {
+      display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem;
+    }
+    .vehicle-card .vc-icon { font-size: 1.8rem; }
+    .vehicle-card .vc-title { font-weight: 600; font-size: 0.95rem; }
+    .vehicle-card .vc-id { font-size: 0.7rem; color: #64748b; }
+
+    .vehicle-card .vc-badge {
+      margin-left: auto;
+      font-size: 0.65rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: #14532d;
+      color: #4ade80;
+    }
+
+    .vehicle-card .vc-row {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.8rem; color: #94a3b8; margin-bottom: 0.4rem;
+    }
+
+    /* Battery bar */
+    .battery-bar {
+      height: 6px; border-radius: 999px;
+      background: #2d3250; overflow: hidden;
+      margin-top: 0.25rem;
+    }
+    .battery-fill {
+      height: 100%; border-radius: 999px;
+      transition: width 0.4s;
+    }
+    .battery-fill.high   { background: #22c55e; }
+    .battery-fill.medium { background: #f59e0b; }
+    .battery-fill.low    { background: #ef4444; }
+
+    .vehicle-card .vc-action {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 0.55rem;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg,#1e40af,#0ea5e9);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .vehicle-card .vc-action:hover { opacity: 0.85; }
+
+    /* ── Empty / loader ───────────────────────────────────── */
+    .loader {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1rem; padding: 3rem;
+      color: #64748b; font-size: 0.9rem;
+      grid-column: 1 / -1;
+    }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid #2d3250;
+      border-top-color: #38bdf8;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Process info panel ───────────────────────────────── */
+    #process-panel {
+      background: #0d1117;
+      border: 1px solid #1e3a5f;
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      font-size: 0.78rem;
+      color: #64748b;
+    }
+    #process-panel h3 { color: #38bdf8; font-size: 0.85rem; margin-bottom: 0.5rem; }
+    #process-panel .event-log { display: flex; flex-direction: column; gap: 0.3rem; }
+    #process-panel .log-item {
+      display: flex; gap: 0.6rem;
+    }
+    #process-panel .log-time { color: #475569; flex-shrink: 0; }
+    #process-panel .log-ok   { color: #22c55e; }
+    #process-panel .log-info { color: #38bdf8; }
+    #process-panel .log-warn { color: #f59e0b; }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="logo">🛴</span>
+  <h1>ACMEMobility</h1>
+  <span class="tag">DEV</span>
+</header>
+
+<main>
+
+  <!-- Status bar -->
+  <div id="status-bar">
+    <div class="dot"></div>
+    <span id="status-text">Connecting to Rental Service...</span>
+    <span id="user-tag" style="margin-left:auto;font-size:0.7rem;color:#475569"></span>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat-card">
+      <div class="val" id="count-total">—</div>
+      <div class="lbl">Available Vehicles</div>
+    </div>
+    <div class="stat-card">
+      <div class="val" id="count-scooter">—</div>
+      <div class="lbl">Scooters</div>
+    </div>
+    <div class="stat-card">
+      <div class="val" id="count-kick">—</div>
+      <div class="lbl">Kick Scooters</div>
+    </div>
+    <div class="stat-card">
+      <div class="val" id="count-car">—</div>
+      <div class="lbl">Cars</div>
+    </div>
+  </div>
+
+  <!-- Vehicle grid -->
+  <div id="vehicle-grid">
+    <div class="loader">
+      <div class="spinner"></div>
+      <span>Loading available vehicles...</span>
+    </div>
+  </div>
+
+  <!-- Process trace panel -->
+  <div id="process-panel">
+    <h3>🔄 Camunda Process Trace</h3>
+    <div class="event-log" id="event-log">
+      <div class="log-item"><span class="log-time">--:--:--</span><span>Waiting for API response...</span></div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  // ─── Config ────────────────────────────────────────────────
+  const API_BASE = 'http://localhost:8080/api';
+  const userId   = 'user-' + Math.random().toString(36).slice(2, 7);
+
+  // ─── Helpers ───────────────────────────────────────────────
+  const $ = id => document.getElementById(id);
+  const now = () => new Date().toLocaleTimeString('en-GB');
+
+  function addLog(msg, cls = 'log-info') {
+    const log = $('event-log');
+    const item = document.createElement('div');
+    item.className = 'log-item';
+    item.innerHTML = `<span class="log-time">${now()}</span><span class="${cls}">${msg}</span>`;
+    log.appendChild(item);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function setStatus(state, text) {
+    const bar = $('status-bar');
+    bar.className = state;
+    $('status-text').textContent = text;
+  }
+
+  function vehicleIcon(type) {
+    return { SCOOTER: '🛵', KICK_SCOOTER: '🛴', CAR: '🚗' }[type] || '🚗';
+  }
+
+  function batteryClass(pct) {
+    if (pct >= 50) return 'high';
+    if (pct >= 20) return 'medium';
+    return 'low';
+  }
+
+  function renderVehicles(vehicles) {
+    const grid = $('vehicle-grid');
+    grid.innerHTML = '';
+
+    if (!vehicles.length) {
+      grid.innerHTML = '<div class="loader"><span>No vehicles available right now.</span></div>';
+      return;
+    }
+
+    vehicles.forEach(v => {
+      const card = document.createElement('div');
+      card.className = 'vehicle-card';
+      const bClass = batteryClass(v.batteryLevel);
+      card.innerHTML = `
+        <div class="vc-header">
+          <span class="vc-icon">${vehicleIcon(v.type)}</span>
+          <div>
+            <div class="vc-title">${v.model}</div>
+            <div class="vc-id">ID: ${v.id}</div>
+          </div>
+          <span class="vc-badge">AVAILABLE</span>
+        </div>
+        <div class="vc-row">📍 ${v.stationName}</div>
+        <div class="vc-row">🔋 Battery: ${v.batteryLevel}%</div>
+        <div class="battery-bar">
+          <div class="battery-fill ${bClass}" style="width:${v.batteryLevel}%"></div>
+        </div>
+        <button class="vc-action" onclick="selectVehicle('${v.id}','${v.model}')">
+          Rent Now / Reserve
+        </button>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function updateStats(vehicles) {
+    $('count-total').textContent  = vehicles.length;
+    $('count-scooter').textContent = vehicles.filter(v => v.type === 'SCOOTER').length;
+    $('count-kick').textContent    = vehicles.filter(v => v.type === 'KICK_SCOOTER').length;
+    $('count-car').textContent     = vehicles.filter(v => v.type === 'CAR').length;
+  }
+
+  function selectVehicle(id, model) {
+    addLog(`Selected vehicle ${id} (${model}) — next: QR scan or reservation`, 'log-ok');
+    alert(`Vehicle ${model} selected!\n\nNext step: scan QR code or choose reservation time.\n(Not yet implemented in this draft)`);
+  }
+
+  // ─── Main fetch ────────────────────────────────────────────
+  async function loadVehicles() {
+    $('user-tag').textContent = `👤 ${userId}`;
+    setStatus('loading', 'Fetching available vehicles...');
+    addLog(`Opening map as ${userId}`, 'log-info');
+    addLog('Calling GET /api/vehicles → triggers Zeebe message Message_openingMap', 'log-info');
+
+    try {
+      const res  = await fetch(`${API_BASE}/vehicles?userId=${userId}`);
+      const data = await res.json();
+
+      if (data.status === 'ok') {
+        setStatus('ok', `${data.count} vehicles available near you`);
+        renderVehicles(data.vehicles);
+        updateStats(data.vehicles);
+        addLog(`✅ Received ${data.count} vehicles from Rental Service`, 'log-ok');
+        addLog('✅ Zeebe process instance started (rental-service-process)', 'log-ok');
+        addLog('⏳ BPMN: token at "get available vehicles" (dbOperation job)', 'log-info');
+        addLog('⏳ BPMN: token moving to "return vehicles" (returnVehicles job)', 'log-info');
+        addLog('⏳ BPMN: waiting for next user action (QR scan or reservation)', 'log-info');
+      } else {
+        throw new Error('Unexpected response from server');
+      }
+
+    } catch (err) {
+      setStatus('error', 'Cannot reach Rental Service — is it running?');
+      $('vehicle-grid').innerHTML = '<div class="loader"><span>⚠️ Service unavailable. Make sure docker-compose is running.</span></div>';
+      addLog(`❌ Error: ${err.message}`, 'log-warn');
+    }
+  }
+
+  // ─── Boot ──────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', loadVehicles);
+</script>
+</body>
+</html>

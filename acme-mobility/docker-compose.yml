@@ -1,0 +1,128 @@
+version: '3.8'
+
+# ============================================================
+# ACMEMobility - Docker Compose (Dev Environment)
+# Stack: Frontend (nginx) + RentalService (Spring Boot 3)
+#        + Zeebe (Camunda 8) + Operate + Elasticsearch
+# ============================================================
+
+networks:
+  acme-net:
+    driver: bridge
+
+volumes:
+  elasticsearch-data:
+
+services:
+
+  # ----------------------------------------------------------
+  # INFRASTRUCTURE: Elasticsearch (required by Operate)
+  # ----------------------------------------------------------
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.9.1
+    container_name: acme-elasticsearch
+    hostname: acme-elasticsearch          # fixes "Temporary failure in name resolution"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - network.host=0.0.0.0             # bind to all interfaces, skip DNS publish
+      - network.publish_host=_local_     # use loopback for cluster publish address
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    networks:
+      - acme-net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 20s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  # ----------------------------------------------------------
+  # BPMS: Zeebe (Camunda 8 workflow engine)
+  # ----------------------------------------------------------
+  zeebe:
+    image: camunda/zeebe:8.4.6
+    container_name: acme-zeebe
+    environment:
+      - ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_CLASSNAME=io.camunda.zeebe.exporter.ElasticsearchExporter
+      - ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_ARGS_URL=http://elasticsearch:9200
+      - ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_ARGS_BULK_DELAY=1
+      - ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_ARGS_BULK_SIZE=1
+      - ZEEBE_BROKER_GATEWAY_SECURITY_AUTHENTICATION_MODE=none
+      - ZEEBE_BROKER_GATEWAY_NETWORK_HOST=0.0.0.0
+    ports:
+      - "26500:26500"   # gRPC gateway (used by Java clients)
+      - "9600:9600"     # Monitoring/health
+    networks:
+      - acme-net
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9600/actuator/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  # ----------------------------------------------------------
+  # BPMS UI: Camunda Operate (process monitoring dashboard)
+  # ----------------------------------------------------------
+  operate:
+    image: camunda/operate:8.4.6
+    container_name: acme-operate
+    environment:
+      - CAMUNDA_OPERATE_ZEEBE_GATEWAYADDRESS=zeebe:26500
+      - CAMUNDA_OPERATE_ELASTICSEARCH_URL=http://elasticsearch:9200
+      - CAMUNDA_OPERATE_ZEEBEELASTICSEARCH_URL=http://elasticsearch:9200
+      - SPRING_PROFILES_ACTIVE=dev
+    ports:
+      - "8081:8080"   # http://localhost:8081  (admin/admin)
+    networks:
+      - acme-net
+    depends_on:
+      zeebe:
+        condition: service_healthy
+
+  # ----------------------------------------------------------
+  # BACKEND: RentalService (Spring Boot 3 / Java 21)
+  # ----------------------------------------------------------
+  rental-service:
+    build:
+      context: ./rental-service
+      dockerfile: Dockerfile
+    container_name: acme-rental-service
+    environment:
+      - ZEEBE_CLIENT_BROKER_GATEWAYADDRESS=zeebe:26500
+      - ZEEBE_CLIENT_SECURITY_PLAINTEXT=true
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "8080:8080"   # REST API: http://localhost:8080/api
+    networks:
+      - acme-net
+    depends_on:
+      zeebe:
+        condition: service_healthy
+
+  # ----------------------------------------------------------
+  # FRONTEND: Static HTML served by nginx
+  # ----------------------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: acme-frontend
+    ports:
+      - "3000:80"     # http://localhost:3000
+    networks:
+      - acme-net
+    depends_on:
+      - rental-service

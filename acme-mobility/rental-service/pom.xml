@@ -54,6 +54,18 @@
       <version>${spring-zeebe.version}</version>
     </dependency>
 
+    <!-- WebSocket (push asincrono dal Worker al browser) -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-websocket</artifactId>
+    </dependency>
+
+    <!-- Jackson (serializzazione JSON nelle sessioni WebSocket) -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+
     <!-- Lombok (boilerplate reduction) -->
     <dependency>
       <groupId>org.projectlombok</groupId>
@@ -69,15 +81,6 @@
     </dependency>
 
   </dependencies>
-
-  <repositories>
-    <!-- Camunda official Maven repository -->
-    <repository>
-      <id>camunda-nexus</id>
-      <name>Camunda Public Repository</name>
-      <url>https://artifacts.camunda.com/artifactory/public/</url>
-    </repository>
-  </repositories>
 
   <build>
     <plugins>

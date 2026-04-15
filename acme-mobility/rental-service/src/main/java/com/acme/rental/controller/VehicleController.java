@@ -1,29 +1,28 @@
 package com.acme.rental.controller;
 
-import com.acme.rental.model.Vehicle;
 import com.acme.rental.service.VehicleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 /**
- * REST controller for vehicle-related endpoints.
+ * Punto di ingresso HTTP per le operazioni sui veicoli.
  *
- * This is the first touchpoint: the user opens the ACMEMobility app/map
- * and the frontend calls GET /api/vehicles to see available vehicles.
+ * RESPONSABILITÀ UNICA: ricevere la chiamata HTTP, delegare al Service,
+ * rispondere IMMEDIATAMENTE con 202 Accepted.
  *
- * Simultaneously, the backend publishes the Zeebe message that
- * starts the BPMN process instance for this user session.
+ * Il Controller NON conosce i dati dei veicoli.
+ * I dati reali arriveranno al browser in modo asincrono via WebSocket,
+ * quando il Worker ReturnVehiclesWorker avrà completato il suo task su Zeebe.
  */
 @Slf4j
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")   // allow frontend on different port in dev
+@CrossOrigin(origins = "*")
 public class VehicleController {
 
     private final VehicleService vehicleService;
@@ -31,34 +30,29 @@ public class VehicleController {
     /**
      * GET /api/vehicles?userId={userId}
      *
-     * Returns the list of available vehicles near the user.
-     * Triggers the BPMN process start (Message_openingMap) as a side-effect.
-     *
-     * In production: userId comes from JWT token, not query param.
+     * Pubblica il messaggio Zeebe che avvia il processo e risponde subito
+     * con 202 Accepted. I veicoli arriveranno al browser via WebSocket.
      */
     @GetMapping("/vehicles")
-    public ResponseEntity<Map<String, Object>> getAvailableVehicles(
+    public ResponseEntity<Map<String, String>> requestAvailableVehicles(
             @RequestParam(defaultValue = "user-anonymous") String userId) {
 
-        log.info("[API] GET /api/vehicles called by user={}", userId);
+        log.info("[Controller] GET /api/vehicles — userId={}", userId);
 
-        List<Vehicle> vehicles = vehicleService.getAvailableVehicles(userId);
+        // delega al Service: pubblica messaggio Zeebe
+        vehicleService.requestAvailableVehicles(userId);
 
-        return ResponseEntity.ok(Map.of(
-            "status",   "ok",
-            "count",    vehicles.size(),
-            "vehicles", vehicles
+        // risponde SUBITO — il canale HTTP si chiude qui
+        return ResponseEntity.accepted().body(Map.of(
+            "status",  "processing",
+            "message", "Richiesta presa in carico. I veicoli arriveranno via WebSocket.",
+            "userId",  userId
         ));
     }
 
-    /**
-     * GET /api/health — simple health check
-     */
+    /** GET /api/health — health check */
     @GetMapping("/health")
     public ResponseEntity<Map<String, String>> health() {
-        return ResponseEntity.ok(Map.of(
-            "service", "rental-service",
-            "status",  "UP"
-        ));
+        return ResponseEntity.ok(Map.of("service", "rental-service", "status", "UP"));
     }
 }

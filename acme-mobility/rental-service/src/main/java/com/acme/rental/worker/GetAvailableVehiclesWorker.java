@@ -3,8 +3,14 @@ package com.acme.rental.worker;
 import io.camunda.zeebe.client.api.response.ActivatedJob;
 import io.camunda.zeebe.client.api.worker.JobClient;
 import io.camunda.zeebe.spring.client.annotation.JobWorker;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
+
+import com.acme.rental.service.WebSocketSessionRegistry;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
 import java.util.Map;
@@ -22,7 +28,11 @@ import java.util.Map;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class GetAvailableVehiclesWorker {
+
+    private final WebSocketSessionRegistry sessionRegistry;
+    private final ObjectMapper objectMapper;
 
     private static final List<Map<String, Object>> VEHICLE_DATA = List.of(
         Map.of("id","V001","type","SCOOTER","model","NIU NQi GTs","batteryLevel",92,"stationName","Stazione Centrale","latitude",44.4949,"longitude",11.3426),
@@ -32,7 +42,7 @@ public class GetAvailableVehiclesWorker {
         Map.of("id","V005","type","KICK_SCOOTER","model","Segway Ninebot Max","batteryLevel",41,"stationName","Via delle Lame","latitude",44.5045,"longitude",11.3489)
     );
 
-    @JobWorker(type = "dbOperation")
+    @JobWorker(type = "getVehicles")
     public void handleGetAvailableVehicles(final JobClient client, final ActivatedJob job) {
 
         String userId    = (String) job.getVariablesAsMap().getOrDefault("userId", "unknown");
@@ -44,12 +54,31 @@ public class GetAvailableVehiclesWorker {
         List<Map<String, Object>> available = VEHICLE_DATA;
 
         log.info("[Worker:dbOperation] Returning {} vehicles to process", available.size());
+        
+        // ── push WebSocket al browser ─────────────────────────────────────────
+        WebSocketSession session = sessionRegistry.getSession(userId);
 
+        if (session != null && session.isOpen()) {
+            try {
+                String payload = objectMapper.writeValueAsString(Map.of(
+                    "type", "VEHICLES_AVAILABLE",
+                    "count", available.size(),
+                    "vehicles", available
+                ));
+                session.sendMessage(new TextMessage(payload));
+                log.info("[Worker:returnVehicles] Push WebSocket inviato a userId={}", userId);
+            } catch (Exception e) {
+                log.error("[Worker:returnVehicles] Errore push WebSocket per userId={}: {}", userId, e.getMessage());
+            }
+        } else {
+            // la sessione WebSocket non è disponibile (utente disconnesso o timeout)
+            // in produzione: si potrebbe fare retry o salvare in cache per recupero successivo
+            log.warn("[Worker:returnVehicles] Nessuna sessione WebSocket attiva per userId={}", userId);
+        }
+
+        // ── completa il job su Zeebe ──────────────────────────────────────────
         client.newCompleteCommand(job.getKey())
-            .variables(Map.of(
-                "vehicleList",  available,
-                "vehicleCount", available.size()
-            ))
+            .variables(Map.of("vehiclesReturnedToUser", session != null && session.isOpen()))
             .send()
             .join();
     }

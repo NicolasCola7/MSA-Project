@@ -12,32 +12,31 @@
       <bpmn:lane id="Lane_0oyry2b">
         <bpmn:extensionElements />
         <bpmn:flowNodeRef>Gateway_0zsnypt</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1ffx23t</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_09qhr3b</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_checkStatus</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_reserveVehicle</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0qnr0hr</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0g1nzuk</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1jtg857</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0vhsb3g</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0tp942k</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_startMonitoring</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_blockMoney</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_getVehicles</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_17rmkkh</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1m8t8pl</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_chargeMoneyBlock</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0psm3mm</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0pxy3gc</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_cancelReservation</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1it8lrj</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_07hpf9k</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1dqoaxw</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1z0q4nv</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1j6onzb</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_unlockVehicle</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_monitoringLogic</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_requestLockVehicle</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_04blk9e</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1s4xubj</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_requestRechargeVehicle</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0jyqvln</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0x3tciq</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1hklufx</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_handleEndRide</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_HandleReport</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0jemu81</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0w0ujhp</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1exlg3e</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0ximthf</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_1hqx3ea</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_vehicleStatusUpdate</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_17bw7mg</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_01fhfxz</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_03dhdr5</bpmn:flowNodeRef>
@@ -45,8 +44,9 @@
         <bpmn:flowNodeRef>Event_1wbz1l8</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0bt38ne</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0ptz4qe</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0m49m6p</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0j1tkcl</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_unlockMoney</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_stopMonitoring</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:exclusiveGateway id="Gateway_0zsnypt" name="is short reservation" default="Flow_1vcwouv">
@@ -54,14 +54,14 @@
       <bpmn:outgoing>Flow_1wfrt3r</bpmn:outgoing>
       <bpmn:outgoing>Flow_1vcwouv</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="Activity_1ffx23t" name="check status">
+    <bpmn:serviceTask id="Activity_checkStatus" name="check status">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="checkStatus" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1vcwouv</bpmn:incoming>
       <bpmn:outgoing>Flow_0lpsnx0</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_09qhr3b" name="reserve vehicle">
+    <bpmn:serviceTask id="Activity_reserveVehicle" name="reserve vehicle">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="reserveVehicle" />
       </bpmn:extensionElements>
@@ -79,78 +79,78 @@
       <bpmn:incoming>Flow_1s3j6cz</bpmn:incoming>
       <bpmn:outgoing>Flow_0l11gdm</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="Activity_1jtg857" name="start monitoring">
+    <bpmn:serviceTask id="Activity_startMonitoring" name="start monitoring">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="startMonitoring" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0l11gdm</bpmn:incoming>
       <bpmn:outgoing>Flow_04sddp2</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:boundaryEvent id="Event_03dhdr5" attachedToRef="Activity_1ffx23t">
+    <bpmn:boundaryEvent id="Event_03dhdr5" attachedToRef="Activity_checkStatus">
       <bpmn:outgoing>Flow_1d1aocw</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_1u364e8" />
     </bpmn:boundaryEvent>
-    <bpmn:boundaryEvent id="Event_1d4oq6r" attachedToRef="Activity_09qhr3b">
+    <bpmn:boundaryEvent id="Event_1d4oq6r" attachedToRef="Activity_reserveVehicle">
       <bpmn:outgoing>Flow_1fvtm17</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_1cmekfx" />
     </bpmn:boundaryEvent>
-    <bpmn:boundaryEvent id="Event_1wbz1l8" attachedToRef="Activity_09qhr3b">
+    <bpmn:boundaryEvent id="Event_1wbz1l8" attachedToRef="Activity_reserveVehicle">
       <bpmn:outgoing>Flow_0hu1j4p</bpmn:outgoing>
       <bpmn:timerEventDefinition id="TimerEventDefinition_0rmx22g">
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT30M</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:boundaryEvent>
-    <bpmn:boundaryEvent id="Event_0bt38ne" attachedToRef="Activity_09qhr3b">
+    <bpmn:boundaryEvent id="Event_0bt38ne" attachedToRef="Activity_reserveVehicle">
       <bpmn:outgoing>Flow_1rhq1ar</bpmn:outgoing>
       <bpmn:signalEventDefinition id="SignalEventDefinition_1dr70by" signalRef="Signal_08nulrc" />
     </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="Flow_1anhq63" sourceRef="Activity_0tp942k" targetRef="Activity_0vhsb3g" />
-    <bpmn:sequenceFlow id="Flow_08nze6g" sourceRef="Activity_0vhsb3g" targetRef="Gateway_0zsnypt" />
-    <bpmn:sequenceFlow id="Flow_1wfrt3r" sourceRef="Gateway_0zsnypt" targetRef="Activity_09qhr3b">
+    <bpmn:sequenceFlow id="Flow_1anhq63" sourceRef="Activity_getVehicles" targetRef="Activity_blockMoney" />
+    <bpmn:sequenceFlow id="Flow_08nze6g" sourceRef="Activity_blockMoney" targetRef="Gateway_0zsnypt" />
+    <bpmn:sequenceFlow id="Flow_1wfrt3r" sourceRef="Gateway_0zsnypt" targetRef="Activity_reserveVehicle">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=isShort = true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1vcwouv" sourceRef="Gateway_0zsnypt" targetRef="Activity_1ffx23t" />
-    <bpmn:sequenceFlow id="Flow_0lpsnx0" sourceRef="Activity_1ffx23t" targetRef="Gateway_0g1nzuk" />
-    <bpmn:sequenceFlow id="Flow_1fvtm17" sourceRef="Event_1d4oq6r" targetRef="Activity_0m49m6p" />
-    <bpmn:sequenceFlow id="Flow_1d1aocw" sourceRef="Event_03dhdr5" targetRef="Activity_0m49m6p" />
-    <bpmn:sequenceFlow id="Flow_10s0hxm" sourceRef="Activity_0m49m6p" targetRef="Event_0j1tkcl" />
-    <bpmn:sequenceFlow id="Flow_1s3j6cz" sourceRef="Activity_09qhr3b" targetRef="Gateway_0g1nzuk" />
+    <bpmn:sequenceFlow id="Flow_1vcwouv" sourceRef="Gateway_0zsnypt" targetRef="Activity_checkStatus" />
+    <bpmn:sequenceFlow id="Flow_0lpsnx0" sourceRef="Activity_checkStatus" targetRef="Gateway_0g1nzuk" />
+    <bpmn:sequenceFlow id="Flow_1fvtm17" sourceRef="Event_1d4oq6r" targetRef="Activity_unlockMoney" />
+    <bpmn:sequenceFlow id="Flow_1d1aocw" sourceRef="Event_03dhdr5" targetRef="Activity_unlockMoney" />
+    <bpmn:sequenceFlow id="Flow_10s0hxm" sourceRef="Activity_unlockMoney" targetRef="Event_0j1tkcl" />
+    <bpmn:sequenceFlow id="Flow_1s3j6cz" sourceRef="Activity_reserveVehicle" targetRef="Gateway_0g1nzuk" />
     <bpmn:sequenceFlow id="Flow_1rhq1ar" sourceRef="Event_0bt38ne" targetRef="Gateway_0qnr0hr" />
-    <bpmn:sequenceFlow id="Flow_0nairkv" sourceRef="Gateway_0qnr0hr" targetRef="Activity_1m8t8pl" />
+    <bpmn:sequenceFlow id="Flow_0nairkv" sourceRef="Gateway_0qnr0hr" targetRef="Activity_chargeMoneyBlock" />
     <bpmn:sequenceFlow id="Flow_1syjbug" name="more than 5 minutes ealrty" sourceRef="Gateway_0qnr0hr" targetRef="Activity_17rmkkh">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=diffMinutes &gt; 5</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_12w26ds" sourceRef="Activity_17rmkkh" targetRef="Gateway_0psm3mm" />
-    <bpmn:sequenceFlow id="Flow_0hu1j4p" sourceRef="Event_1wbz1l8" targetRef="Activity_1m8t8pl" />
-    <bpmn:sequenceFlow id="Flow_1sj7xjc" sourceRef="Activity_1m8t8pl" targetRef="Gateway_0psm3mm" />
-    <bpmn:sequenceFlow id="Flow_08g2gu2" sourceRef="Gateway_0psm3mm" targetRef="Activity_0pxy3gc" />
-    <bpmn:sequenceFlow id="Flow_14173bv" sourceRef="Activity_0pxy3gc" targetRef="Event_1it8lrj" />
-    <bpmn:sequenceFlow id="Flow_0l11gdm" sourceRef="Gateway_0g1nzuk" targetRef="Activity_1jtg857" />
-    <bpmn:sequenceFlow id="Flow_04sddp2" sourceRef="Activity_1jtg857" targetRef="Activity_07hpf9k" />
-    <bpmn:sequenceFlow id="Flow_1u3f6le" sourceRef="Activity_07hpf9k" targetRef="Activity_1dqoaxw" />
-    <bpmn:sequenceFlow id="Flow_0a6ir22" sourceRef="Activity_1dqoaxw" targetRef="Activity_1z0q4nv" />
-    <bpmn:sequenceFlow id="Flow_05ujou5" sourceRef="Activity_1z0q4nv" targetRef="Activity_1j6onzb" />
-    <bpmn:sequenceFlow id="Flow_163ea8q" sourceRef="Activity_1j6onzb" targetRef="Gateway_04blk9e" />
-    <bpmn:sequenceFlow id="Flow_120yzta" name="battery lower than 15%" sourceRef="Gateway_04blk9e" targetRef="Activity_1s4xubj">
+    <bpmn:sequenceFlow id="Flow_0hu1j4p" sourceRef="Event_1wbz1l8" targetRef="Activity_chargeMoneyBlock" />
+    <bpmn:sequenceFlow id="Flow_1sj7xjc" sourceRef="Activity_chargeMoneyBlock" targetRef="Gateway_0psm3mm" />
+    <bpmn:sequenceFlow id="Flow_08g2gu2" sourceRef="Gateway_0psm3mm" targetRef="Activity_cancelReservation" />
+    <bpmn:sequenceFlow id="Flow_14173bv" sourceRef="Activity_cancelReservation" targetRef="Event_1it8lrj" />
+    <bpmn:sequenceFlow id="Flow_0l11gdm" sourceRef="Gateway_0g1nzuk" targetRef="Activity_startMonitoring" />
+    <bpmn:sequenceFlow id="Flow_04sddp2" sourceRef="Activity_startMonitoring" targetRef="Activity_unlockVehicle" />
+    <bpmn:sequenceFlow id="Flow_1u3f6le" sourceRef="Activity_unlockVehicle" targetRef="Activity_monitoringLogic" />
+    <bpmn:sequenceFlow id="Flow_0a6ir22" sourceRef="Activity_monitoringLogic" targetRef="Activity_requestLockVehicle" />
+    <bpmn:sequenceFlow id="Flow_05ujou5" sourceRef="Activity_requestLockVehicle" targetRef="Activity_stopMonitoring" />
+    <bpmn:sequenceFlow id="Flow_163ea8q" sourceRef="Activity_stopMonitoring" targetRef="Gateway_04blk9e" />
+    <bpmn:sequenceFlow id="Flow_120yzta" name="battery lower than 15%" sourceRef="Gateway_04blk9e" targetRef="Activity_requestRechargeVehicle">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=battery &lt; 15</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0v1hwk3" sourceRef="Gateway_04blk9e" targetRef="Gateway_0jyqvln" />
-    <bpmn:sequenceFlow id="Flow_0t2qlw4" sourceRef="Activity_1s4xubj" targetRef="Gateway_0jyqvln" />
-    <bpmn:sequenceFlow id="Flow_091c5uf" sourceRef="Gateway_0jyqvln" targetRef="Activity_0x3tciq" />
-    <bpmn:sequenceFlow id="Flow_068s0z8" sourceRef="Activity_0x3tciq" targetRef="Activity_1hklufx" />
-    <bpmn:sequenceFlow id="Flow_1y0e5wa" sourceRef="Activity_1hklufx" targetRef="Event_0jemu81" />
-    <bpmn:sequenceFlow id="Flow_16j4igj" sourceRef="Activity_1hqx3ea" targetRef="Event_0w0ujhp" />
+    <bpmn:sequenceFlow id="Flow_0t2qlw4" sourceRef="Activity_requestRechargeVehicle" targetRef="Gateway_0jyqvln" />
+    <bpmn:sequenceFlow id="Flow_091c5uf" sourceRef="Gateway_0jyqvln" targetRef="Activity_handleEndRide" />
+    <bpmn:sequenceFlow id="Flow_068s0z8" sourceRef="Activity_handleEndRide" targetRef="Activity_HandleReport" />
+    <bpmn:sequenceFlow id="Flow_1y0e5wa" sourceRef="Activity_HandleReport" targetRef="Event_0jemu81" />
+    <bpmn:sequenceFlow id="Flow_16j4igj" sourceRef="Activity_vehicleStatusUpdate" targetRef="Event_0w0ujhp" />
     <bpmn:sequenceFlow id="Flow_0kcbm85" sourceRef="Event_1exlg3e" targetRef="Activity_17bw7mg" />
-    <bpmn:sequenceFlow id="Flow_1rbxqse" sourceRef="Event_0ximthf" targetRef="Activity_1hqx3ea" />
+    <bpmn:sequenceFlow id="Flow_1rbxqse" sourceRef="Event_0ximthf" targetRef="Activity_vehicleStatusUpdate" />
     <bpmn:sequenceFlow id="Flow_1uxug4u" sourceRef="Activity_17bw7mg" targetRef="Event_01fhfxz" />
-    <bpmn:serviceTask id="Activity_0vhsb3g" name="block money">
+    <bpmn:serviceTask id="Activity_blockMoney" name="block money">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="blockMoney" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1anhq63</bpmn:incoming>
       <bpmn:outgoing>Flow_08nze6g</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_0tp942k" name="get available vehicles">
+    <bpmn:serviceTask id="Activity_getVehicles" name="get available vehicles">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="getVehicles" />
       </bpmn:extensionElements>
@@ -164,7 +164,7 @@
       <bpmn:incoming>Flow_1syjbug</bpmn:incoming>
       <bpmn:outgoing>Flow_12w26ds</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_1m8t8pl" name="charge money block">
+    <bpmn:serviceTask id="Activity_chargeMoneyBlock" name="charge money block">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="chargeMoneyBlock" />
       </bpmn:extensionElements>
@@ -177,7 +177,7 @@
       <bpmn:incoming>Flow_12w26ds</bpmn:incoming>
       <bpmn:outgoing>Flow_08g2gu2</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="Activity_0pxy3gc" name="cancel reservation">
+    <bpmn:serviceTask id="Activity_cancelReservation" name="cancel reservation">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="cancelReservation" />
       </bpmn:extensionElements>
@@ -187,40 +187,33 @@
     <bpmn:endEvent id="Event_1it8lrj">
       <bpmn:incoming>Flow_14173bv</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="Activity_07hpf9k" name="unlock vehicle">
+    <bpmn:serviceTask id="Activity_unlockVehicle" name="unlock vehicle">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="unlockVehicle" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_04sddp2</bpmn:incoming>
       <bpmn:outgoing>Flow_1u3f6le</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_1dqoaxw" name="monitoring logic">
+    <bpmn:serviceTask id="Activity_monitoringLogic" name="monitoring logic">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="monitoringLogic" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1u3f6le</bpmn:incoming>
       <bpmn:outgoing>Flow_0a6ir22</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_1z0q4nv" name="lock vehicle">
+    <bpmn:serviceTask id="Activity_requestLockVehicle" name="lock vehicle">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="requestLockVehicle" />
+        <zeebe:taskDefinition type="lockVehicle" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0a6ir22</bpmn:incoming>
       <bpmn:outgoing>Flow_05ujou5</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_1j6onzb" name="stop monitoring">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="stopMonitoring" />
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_05ujou5</bpmn:incoming>
-      <bpmn:outgoing>Flow_163ea8q</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="Gateway_04blk9e" default="Flow_0v1hwk3">
       <bpmn:incoming>Flow_163ea8q</bpmn:incoming>
       <bpmn:outgoing>Flow_120yzta</bpmn:outgoing>
       <bpmn:outgoing>Flow_0v1hwk3</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="Activity_1s4xubj" name="recharge vehicle">
+    <bpmn:serviceTask id="Activity_requestRechargeVehicle" name="recharge vehicle">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="requestRechargeVehicle" />
       </bpmn:extensionElements>
@@ -232,14 +225,14 @@
       <bpmn:incoming>Flow_0t2qlw4</bpmn:incoming>
       <bpmn:outgoing>Flow_091c5uf</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:serviceTask id="Activity_0x3tciq" name="handle end ride">
+    <bpmn:serviceTask id="Activity_handleEndRide" name="handle end ride">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="handleEndRide" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_091c5uf</bpmn:incoming>
       <bpmn:outgoing>Flow_068s0z8</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Activity_1hklufx" name="handle report">
+    <bpmn:serviceTask id="Activity_HandleReport" name="handle report">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="HandleReport" />
       </bpmn:extensionElements>
@@ -262,7 +255,7 @@
       <bpmn:outgoing>Flow_1rbxqse</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_099ovv4" messageRef="Message_2ik1suu" />
     </bpmn:startEvent>
-    <bpmn:serviceTask id="Activity_1hqx3ea" name="update vehicle status">
+    <bpmn:serviceTask id="Activity_vehicleStatusUpdate" name="update vehicle status">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="vehicleStatusUpdate" />
       </bpmn:extensionElements>
@@ -288,19 +281,26 @@
       <bpmn:outgoing>Flow_1dnsjkf</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_1xuo02m" messageRef="Message_39vik6d" />
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_1dnsjkf" sourceRef="Event_0ptz4qe" targetRef="Activity_0tp942k" />
-    <bpmn:serviceTask id="Activity_0m49m6p" name="unlock money">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="unlockMoney" />
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1fvtm17</bpmn:incoming>
-      <bpmn:incoming>Flow_1d1aocw</bpmn:incoming>
-      <bpmn:outgoing>Flow_10s0hxm</bpmn:outgoing>
-    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1dnsjkf" sourceRef="Event_0ptz4qe" targetRef="Activity_getVehicles" />
     <bpmn:endEvent id="Event_0j1tkcl">
       <bpmn:incoming>Flow_10s0hxm</bpmn:incoming>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_0p495vj" errorRef="Error_0mqqvyf" />
     </bpmn:endEvent>
+    <bpmn:serviceTask id="Activity_unlockMoney" name="unlock money">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="unlockMoney" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1d1aocw</bpmn:incoming>
+      <bpmn:incoming>Flow_1fvtm17</bpmn:incoming>
+      <bpmn:outgoing>Flow_10s0hxm</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_stopMonitoring" name="stop monitoring">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="stopMonitoring" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_05ujou5</bpmn:incoming>
+      <bpmn:outgoing>Flow_163ea8q</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmn:message id="Message_39vik6d" name="Message_openingMap" />
   <bpmn:message id="Message_0ju8r17" name="Message_receiveOperation">
@@ -425,10 +425,10 @@
           <dc:Bounds x="662" y="326" width="55" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_09hmxdp_di" bpmnElement="Activity_1ffx23t">
+      <bpmndi:BPMNShape id="Activity_09hmxdp_di" bpmnElement="Activity_checkStatus">
         <dc:Bounds x="750" y="160" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1jwglb5_di" bpmnElement="Activity_09qhr3b">
+      <bpmndi:BPMNShape id="Activity_1jwglb5_di" bpmnElement="Activity_reserveVehicle">
         <dc:Bounds x="750" y="353" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
@@ -438,59 +438,56 @@
       <bpmndi:BPMNShape id="Gateway_0g1nzuk_di" bpmnElement="Gateway_0g1nzuk" isMarkerVisible="true">
         <dc:Bounds x="1025" y="368" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_01iqdvc_di" bpmnElement="Activity_1jtg857">
+      <bpmndi:BPMNShape id="Activity_01iqdvc_di" bpmnElement="Activity_startMonitoring">
         <dc:Bounds x="1190" y="353" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1vnq3jj_di" bpmnElement="Activity_0vhsb3g">
+      <bpmndi:BPMNShape id="Activity_1vnq3jj_di" bpmnElement="Activity_blockMoney">
         <dc:Bounds x="490" y="240" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_17aysme_di" bpmnElement="Activity_0tp942k">
+      <bpmndi:BPMNShape id="Activity_17aysme_di" bpmnElement="Activity_getVehicles">
         <dc:Bounds x="350" y="240" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_10nsl7r_di" bpmnElement="Activity_17rmkkh">
         <dc:Bounds x="990" y="580" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0b7epxf_di" bpmnElement="Activity_1m8t8pl">
+      <bpmndi:BPMNShape id="Activity_0b7epxf_di" bpmnElement="Activity_chargeMoneyBlock">
         <dc:Bounds x="990" y="465" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0psm3mm_di" bpmnElement="Gateway_0psm3mm" isMarkerVisible="true">
         <dc:Bounds x="1135" y="545" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1r8hfzn_di" bpmnElement="Activity_0pxy3gc">
+      <bpmndi:BPMNShape id="Activity_1r8hfzn_di" bpmnElement="Activity_cancelReservation">
         <dc:Bounds x="1220" y="530" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1it8lrj_di" bpmnElement="Event_1it8lrj">
         <dc:Bounds x="1352" y="552" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1qmtp2q_di" bpmnElement="Activity_07hpf9k">
+      <bpmndi:BPMNShape id="Activity_1qmtp2q_di" bpmnElement="Activity_unlockVehicle">
         <dc:Bounds x="1330" y="353" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1oxb4iu_di" bpmnElement="Activity_1dqoaxw">
+      <bpmndi:BPMNShape id="Activity_1oxb4iu_di" bpmnElement="Activity_monitoringLogic">
         <dc:Bounds x="1470" y="353" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0fhic15_di" bpmnElement="Activity_1z0q4nv">
+      <bpmndi:BPMNShape id="Activity_0fhic15_di" bpmnElement="Activity_requestLockVehicle">
         <dc:Bounds x="1610" y="353" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_18o6ba3_di" bpmnElement="Activity_1j6onzb">
-        <dc:Bounds x="1750" y="353" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_04blk9e_di" bpmnElement="Gateway_04blk9e" isMarkerVisible="true">
         <dc:Bounds x="1915" y="368" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1qlewj0_di" bpmnElement="Activity_1s4xubj">
+      <bpmndi:BPMNShape id="Activity_1qlewj0_di" bpmnElement="Activity_requestRechargeVehicle">
         <dc:Bounds x="1980" y="450" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0jyqvln_di" bpmnElement="Gateway_0jyqvln" isMarkerVisible="true">
         <dc:Bounds x="2095" y="368" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0ms2ahy_di" bpmnElement="Activity_0x3tciq">
+      <bpmndi:BPMNShape id="Activity_0ms2ahy_di" bpmnElement="Activity_handleEndRide">
         <dc:Bounds x="2170" y="353" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_03twidv_di" bpmnElement="Activity_1hklufx">
+      <bpmndi:BPMNShape id="Activity_03twidv_di" bpmnElement="Activity_HandleReport">
         <dc:Bounds x="2350" y="353" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
@@ -512,7 +509,7 @@
           <dc:Bounds x="2035" y="637" width="73" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1qii3c4_di" bpmnElement="Activity_1hqx3ea">
+      <bpmndi:BPMNShape id="Activity_1qii3c4_di" bpmnElement="Activity_vehicleStatusUpdate">
         <dc:Bounds x="2130" y="645" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
@@ -528,11 +525,14 @@
           <dc:Bounds x="268" y="305" width="64" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1p8e4sq_di" bpmnElement="Activity_0m49m6p">
+      <bpmndi:BPMNShape id="Activity_1p8e4sq_di" bpmnElement="Activity_unlockMoney">
         <dc:Bounds x="970" y="90" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1tu263i_di" bpmnElement="Event_0j1tkcl">
         <dc:Bounds x="1122" y="112" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18o6ba3_di" bpmnElement="Activity_stopMonitoring">
+        <dc:Bounds x="1750" y="353" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1oipa0q" bpmnElement="Event_0bt38ne">
         <dc:Bounds x="772" y="415" width="36" height="36" />

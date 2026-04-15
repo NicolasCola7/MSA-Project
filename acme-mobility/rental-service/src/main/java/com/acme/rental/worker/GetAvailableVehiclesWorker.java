@@ -18,8 +18,8 @@ import java.util.Map;
 /**
  * Zeebe Job Worker for the Service Task "get available vehicles".
  *
- * BPMN element : Activity_0tp942k
- * Job type     : dbOperation
+ * BPMN element : Activity_getVehicles
+ * Job type     : getVehicles
  *
  * Fetches the available vehicles from the DB (mocked in-memory here)
  * and injects them as process variables for the next tasks.

@@ -22,8 +22,9 @@
 ## Run
 
 ```bash
-# 1. Clone / enter the project
-cd acme-mobility
+# 1. Enter the project (Automated)
+# The terminal already opens in acme-mobility/
+
 
 # 2. Build and start all containers
 docker-compose up --build

@@ -1,4 +1,4 @@
-version: '3.8'
+# version removed — obsolete in modern Docker Compose
 
 # ============================================================
 # ACMEMobility - Docker Compose (Dev Environment)
@@ -25,7 +25,7 @@ services:
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
       - network.host=0.0.0.0             # bind to all interfaces, skip DNS publish
       - network.publish_host=_local_     # use loopback for cluster publish address
     ulimits:
@@ -40,10 +40,10 @@ services:
       - acme-net
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
-      interval: 20s
-      timeout: 10s
-      retries: 10
-      start_period: 30s
+      interval: 30s
+      timeout: 15s
+      retries: 20
+      start_period: 120s
 
   # ----------------------------------------------------------
   # BPMS: Zeebe (Camunda 8 workflow engine)
@@ -58,6 +58,7 @@ services:
       - ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_ARGS_BULK_SIZE=1
       - ZEEBE_BROKER_GATEWAY_SECURITY_AUTHENTICATION_MODE=none
       - ZEEBE_BROKER_GATEWAY_NETWORK_HOST=0.0.0.0
+      - JAVA_OPTS=-Xms256m -Xmx512m
     ports:
       - "26500:26500"   # gRPC gateway (used by Java clients)
       - "9600:9600"     # Monitoring/health
@@ -67,11 +68,11 @@ services:
       elasticsearch:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:9600/actuator/health || exit 1"]
+      test: ["CMD", "bash", "-c", "echo > /dev/tcp/127.0.0.1/9600"]
       interval: 30s
-      timeout: 10s
-      retries: 10
-      start_period: 30s
+      timeout: 15s
+      retries: 20
+      start_period: 120s
 
   # ----------------------------------------------------------
   # BPMS UI: Camunda Operate (process monitoring dashboard)

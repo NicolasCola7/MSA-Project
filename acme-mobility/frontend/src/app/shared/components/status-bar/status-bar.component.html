@@ -1,0 +1,7 @@
+<div class="status-bar" [class]="config().dotClass">
+  <span class="dot"></span>
+  <span class="status-text">{{ config().text }}</span>
+  @if (vehicleCount() > 0) {
+    <span class="vehicle-count">{{ vehicleCount() }} vehicles available</span>
+  }
+</div>

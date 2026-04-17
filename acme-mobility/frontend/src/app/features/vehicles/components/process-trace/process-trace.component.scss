@@ -1,0 +1,38 @@
+.process-panel {
+  background: #0d1117;
+  border: 1px solid #1e3a5f;
+  border-radius: var(--radius-md);
+  padding: 1rem 1.2rem;
+  font-size: 0.78rem;
+  color: var(--color-text-dim);
+}
+
+.panel-title {
+  color: var(--color-accent);
+  font-size: var(--font-size-sm);
+  margin-bottom: 0.5rem;
+}
+
+.event-log {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-height: 180px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 2px; }
+}
+
+.log-item {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.log-time  { color: #475569; flex-shrink: 0; }
+.log-info  { color: var(--color-accent); }
+.log-ok    { color: var(--color-success); }
+.log-warn  { color: var(--color-warning); }
+.log-error { color: var(--color-error); }

@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subscription, filter } from 'rxjs';
+import { Observable, Subscription, filter, take } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 import { environment } from '@env/environment';
 import {
@@ -8,11 +9,10 @@ import {
   VehiclesAcceptedResponse,
   VehicleStats,
   computeStats,
-  EMPTY_STATS,
 } from '@core/models/vehicle.model';
 import { WsVehiclesAvailableMessage } from '@core/models/ws-messages.model';
 import { TraceLog, createLog } from '@core/models/trace-log.model';
-import { WebSocketService } from './websocket.service';
+import { WebSocketService, WsConnectionState } from './websocket.service';
 
 export type LoadingState =
   | 'idle'
@@ -25,7 +25,7 @@ export type LoadingState =
 @Injectable({ providedIn: 'root' })
 export class VehicleService implements OnDestroy {
   private readonly http = inject(HttpClient);
-  private readonly ws  = inject(WebSocketService);
+  private readonly ws   = inject(WebSocketService);
 
   // ── Public Signals ─────────────────────────────────────────────────────────
   readonly vehicles     = signal<Vehicle[]>([]);
@@ -35,13 +35,19 @@ export class VehicleService implements OnDestroy {
   readonly logs         = signal<TraceLog[]>([]);
 
   // ── Re-export WS state for the status bar ─────────────────────────────────
-  readonly wsState      = this.ws.connectionState;
+  readonly wsState       = this.ws.connectionState;
   readonly isWsConnected = this.ws.isConnected;
 
-  private msgSub: Subscription | null = null;
+  // ── toObservable MUST be created in the constructor (injection context) ────
+  // Storing it as a field so initialize() can subscribe to it later.
+  private readonly wsState$: Observable<WsConnectionState>;
+
+  private subs: Subscription[] = [];
   private userId = '';
 
   constructor() {
+    // toObservable() called here → valid injection context ✅
+    this.wsState$ = toObservable(this.ws.connectionState);
     this.listenToWsMessages();
   }
 
@@ -55,25 +61,31 @@ export class VehicleService implements OnDestroy {
     this.addLog('Opening WebSocket connection…');
     this.ws.connect(userId);
 
-    // STEP 2 — Poll until WS is open, then fire HTTP
-    const interval = setInterval(() => {
-      const state = this.ws.connectionState();
-      if (state === 'connected') {
-        clearInterval(interval);
-        this.addLog('✅ WebSocket open — session registered', 'ok');
-        this.callVehiclesApi();
-      } else if (state === 'error' || state === 'closed') {
-        clearInterval(interval);
-        this.handleError('WebSocket connection failed. Is the backend running?');
-      }
-    }, 100);
+    // STEP 2 — Subscribe to the pre-built Observable.
+    // take(1) auto-completes after the first terminal state,
+    // so no manual unsubscribe is needed.
+    const wsSub = this.wsState$
+      .pipe(
+        filter(state => state === 'connected' || state === 'error' || state === 'closed'),
+        take(1),
+      )
+      .subscribe(state => {
+        if (state === 'connected') {
+          this.addLog('✅ WebSocket open — session registered', 'ok');
+          this.callVehiclesApi();
+        } else {
+          this.handleError('WebSocket connection failed. Is the backend running?');
+        }
+      });
+
+    this.subs.push(wsSub);
   }
 
   private callVehiclesApi(): void {
     this.loadingState.set('api-calling');
     this.addLog(`GET ${environment.apiBase}/vehicles → 202 Accepted expected`);
 
-    this.http
+    const httpSub = this.http
       .get<VehiclesAcceptedResponse>(
         `${environment.apiBase}/vehicles?userId=${this.userId}`,
       )
@@ -87,10 +99,12 @@ export class VehicleService implements OnDestroy {
         },
         error: err => this.handleError(`API error: ${err.message}`),
       });
+
+    this.subs.push(httpSub);
   }
 
   private listenToWsMessages(): void {
-    this.msgSub = this.ws.messages$
+    const msgSub = this.ws.messages$
       .pipe(
         filter(
           (msg): msg is WsVehiclesAvailableMessage =>
@@ -104,6 +118,8 @@ export class VehicleService implements OnDestroy {
         this.vehicles.set(msg.vehicles);
         this.loadingState.set('loaded');
       });
+
+    this.subs.push(msgSub);
   }
 
   private handleError(msg: string): void {
@@ -117,6 +133,6 @@ export class VehicleService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.msgSub?.unsubscribe();
+    this.subs.forEach(s => s.unsubscribe());
   }
 }

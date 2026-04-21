@@ -16,7 +16,7 @@ import java.util.Map;
  *
  * Il Controller NON conosce i dati dei veicoli.
  * I dati reali arriveranno al browser in modo asincrono via WebSocket,
- * quando il VehicleService avrà completato il suo task su Zeebe (getVehicles).
+ * quando il Worker ReturnVehiclesWorker avrà completato il suo task su Zeebe.
  */
 @Slf4j
 @RestController

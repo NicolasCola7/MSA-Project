@@ -1,12 +1,12 @@
 import { Injectable, OnDestroy, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subscription, filter, take } from 'rxjs';
+import { Observable, Subscription, filter } from 'rxjs';
 import { toObservable } from '@angular/core/rxjs-interop';
 
 import { environment } from '@env/environment';
 import {
   Vehicle,
-  VehiclesAcceptedResponse,
+  VehiclesResponse,
   VehicleStats,
   computeStats,
 } from '@core/models/vehicle.model';
@@ -16,11 +16,13 @@ import { WebSocketService, WsConnectionState } from './websocket.service';
 
 export type LoadingState =
   | 'idle'
+  | 'loading'        // HTTP GET in corso
+  | 'loaded'
+  | 'error'
+  // ── stati asincroni Zeebe — usati dai flussi futuri (scan QR, noleggio, ecc.) ──
   | 'ws-connecting'
   | 'api-calling'
-  | 'waiting-push'
-  | 'loaded'
-  | 'error';
+  | 'waiting-push';
 
 @Injectable({ providedIn: 'root' })
 export class VehicleService implements OnDestroy {
@@ -34,76 +36,62 @@ export class VehicleService implements OnDestroy {
   readonly errorMessage = signal<string | null>(null);
   readonly logs         = signal<TraceLog[]>([]);
 
-  // ── Re-export WS state for the status bar ─────────────────────────────────
+  // ── Re-export WS state (usato dai flussi Zeebe futuri) ────────────────────
   readonly wsState       = this.ws.connectionState;
   readonly isWsConnected = this.ws.isConnected;
 
-  // ── toObservable MUST be created in the constructor (injection context) ────
-  // Storing it as a field so initialize() can subscribe to it later.
+  // ── toObservable nel constructor (injection context) ──────────────────────
+  // Tenuto per i flussi futuri che richiedono WS → HTTP → push Zeebe.
+  // REGOLA: toObservable() usa inject() internamente, deve stare qui.
   private readonly wsState$: Observable<WsConnectionState>;
 
   private subs: Subscription[] = [];
-  private userId = '';
 
   constructor() {
-    // toObservable() called here → valid injection context ✅
     this.wsState$ = toObservable(this.ws.connectionState);
     this.listenToWsMessages();
   }
 
-  /** Called once from VehiclesComponent.ngOnInit() */
-  initialize(userId: string): void {
-    this.userId = userId;
-    this.addLog(`Session: ${userId}`);
+  // ─────────────────────────────────────────────────────────────────────────
+  // FLUSSO ATTIVO — GET /api/vehicles (sincrono, senza Zeebe)
+  //
+  // Il backend risponde direttamente con i veicoli nel body (200 OK).
+  // Nessun userId richiesto, nessun WebSocket, nessun processo Zeebe.
+  // ─────────────────────────────────────────────────────────────────────────
+  loadVehicles(): void {
+    this.loadingState.set('loading');
+    this.addLog('GET /api/vehicles…');
 
-    // STEP 1 — Open WebSocket FIRST
-    this.loadingState.set('ws-connecting');
-    this.addLog('Opening WebSocket connection…');
-    this.ws.connect(userId);
-
-    // STEP 2 — Subscribe to the pre-built Observable.
-    // take(1) auto-completes after the first terminal state,
-    // so no manual unsubscribe is needed.
-    const wsSub = this.wsState$
-      .pipe(
-        filter(state => state === 'connected' || state === 'error' || state === 'closed'),
-        take(1),
-      )
-      .subscribe(state => {
-        if (state === 'connected') {
-          this.addLog('✅ WebSocket open — session registered', 'ok');
-          this.callVehiclesApi();
-        } else {
-          this.handleError('WebSocket connection failed. Is the backend running?');
-        }
-      });
-
-    this.subs.push(wsSub);
-  }
-
-  private callVehiclesApi(): void {
-    this.loadingState.set('api-calling');
-    this.addLog(`GET ${environment.apiBase}/vehicles → 202 Accepted expected`);
-
-    const httpSub = this.http
-      .get<VehiclesAcceptedResponse>(
-        `${environment.apiBase}/vehicles?userId=${this.userId}`,
-      )
+    const sub = this.http
+      .get<VehiclesResponse>(`${environment.apiBase}/vehicles`)
       .subscribe({
         next: res => {
-          this.addLog(`✅ Server: "${res.message}"`, 'ok');
-          this.addLog('⏳ Zeebe starting process instance…');
-          this.addLog('⏳ Token → Service Task "get available vehicles"');
-          this.addLog('⏳ GetAvailableVehiclesWorker polling job…');
-          this.loadingState.set('waiting-push');
+          this.addLog(`✅ ${res.count} veicoli ricevuti`, 'ok');
+          this.vehicles.set(res.vehicles);
+          this.loadingState.set('loaded');
         },
-        error: err => this.handleError(`API error: ${err.message}`),
+        error: err => this.handleError(`Errore API: ${err.message}`),
       });
 
-    this.subs.push(httpSub);
+    this.subs.push(sub);
   }
 
+  // ─────────────────────────────────────────────────────────────────────────
+  // FLUSSO FUTURO — WS → HTTP → push Zeebe
+  //
+  // Da usare quando il backend implementerà operazioni orchestrate
+  // (scan QR, prenotazione, ecc.) che richiedono il pattern asincrono.
+  //
+  // Esempio d'uso (non ancora attivo):
+  //   this.ws.connect(userId);
+  //   this.wsState$
+  //     .pipe(filter(s => s === 'connected'), take(1))
+  //     .subscribe(() => this.callZeebeFlow('/api/rental/scan', { vehicleId }));
+  // ─────────────────────────────────────────────────────────────────────────
+
   private listenToWsMessages(): void {
+    // Listener per VEHICLES_AVAILABLE — non più usato nel flusso attuale,
+    // mantenuto per compatibilità nel caso in cui il backend ritorni al pattern Zeebe.
     const msgSub = this.ws.messages$
       .pipe(
         filter(
@@ -112,9 +100,7 @@ export class VehicleService implements OnDestroy {
         ),
       )
       .subscribe(msg => {
-        this.addLog(`✅ WebSocket push: ${msg.count} vehicles received`, 'ok');
-        this.addLog('✅ ReturnVehiclesWorker completed Zeebe job', 'ok');
-        this.addLog('⏳ Token → Catch Event "receive scan QR" (process waiting…)');
+        this.addLog(`✅ WebSocket push: ${msg.count} veicoli ricevuti`, 'ok');
         this.vehicles.set(msg.vehicles);
         this.loadingState.set('loaded');
       });

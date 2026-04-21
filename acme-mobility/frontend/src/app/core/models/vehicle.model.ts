@@ -15,9 +15,25 @@ export interface Vehicle {
   longitude?: number;
 }
 
-// ── API response ──────────────────────────────────────────────────────────────
+// ── API responses ─────────────────────────────────────────────────────────────
 
-export interface VehiclesAcceptedResponse {
+/**
+ * GET /api/vehicles — risposta sincrona
+ * Il controller restituisce direttamente i veicoli nel body (200 OK).
+ * Nessun Zeebe coinvolto: è una semplice lettura REST.
+ */
+export interface VehiclesResponse {
+  status: string;        // "ok"
+  count: number;
+  vehicles: Vehicle[];
+}
+
+/**
+ * Risposta 202 Accepted per le operazioni orchestrate da Zeebe.
+ * Usata dai flussi futuri (scan QR, prenotazione, ecc.)
+ * dove il backend pubblica un messaggio Zeebe e risponde in asincrono via WebSocket.
+ */
+export interface ZeebeAcceptedResponse {
   message: string;
   processInstanceKey?: string;
 }

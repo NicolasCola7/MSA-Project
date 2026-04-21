@@ -28,10 +28,10 @@ public class ZeebeDeploymentConfig {
         try {
             log.info("[Zeebe] Deploying BPMN process definition...");
 
-            var resource = new ClassPathResource("bpmn/rental-process.bpmn");
+            var resource = new ClassPathResource("bpmn/rental_process.bpmn");
 
             var result = zeebeClient.newDeployResourceCommand()
-                .addResourceStream(resource.getInputStream(), "rental-process.bpmn")
+                .addResourceStream(resource.getInputStream(), "rental_process.bpmn")
                 .send()
                 .join();
 

@@ -1,5 +1,3 @@
-version: '3.8'
-
 # ============================================================
 # ACMEMobility - Docker Compose (Dev Environment)
 # Stack: Frontend (nginx) + RentalService (Spring Boot 3)
@@ -67,11 +65,11 @@ services:
       elasticsearch:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:9600/actuator/health || exit 1"]
+      test: ["CMD", "bash", "-c", "echo > /dev/tcp/127.0.0.1/9600"]
       interval: 30s
-      timeout: 10s
-      retries: 10
-      start_period: 30s
+      timeout: 15s
+      retries: 20
+      start_period: 120s 
 
   # ----------------------------------------------------------
   # BPMS UI: Camunda Operate (process monitoring dashboard)

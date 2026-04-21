@@ -1,0 +1,11 @@
+<div class="process-panel">
+  <h3 class="panel-title">🔄 Trace — Execution Flow</h3>
+  <div class="event-log" #logContainer>
+    @for (log of logs(); track log.id) {
+      <div class="log-item">
+        <span class="log-time">{{ log.time }}</span>
+        <span [class]="'log-msg log-' + log.level">{{ log.message }}</span>
+      </div>
+    }
+  </div>
+</div>

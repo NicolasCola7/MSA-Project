@@ -1,0 +1,16 @@
+<main class="vehicles-shell">
+  <acme-status-bar
+    [state]="vehicleService.loadingState()"
+    [vehicleCount]="vehicleService.stats().total" />
+
+  <acme-stats-bar
+    [stats]="vehicleService.stats()" />
+
+  <acme-vehicle-grid
+    [vehicles]="vehicleService.vehicles()"
+    [loadingState]="vehicleService.loadingState()"
+    (vehicleSelected)="onVehicleSelected($event)" />
+
+  <acme-process-trace
+    [logs]="vehicleService.logs()" />
+</main>

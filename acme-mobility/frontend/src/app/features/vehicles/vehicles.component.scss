@@ -4,7 +4,13 @@
   flex-direction: column;
   gap: 1.5rem;
   padding: var(--space-lg);
-  max-width: 960px;
+  max-width: 1280px;
   margin: 0 auto;
   width: 100%;
+}
+
+// Let the map take whatever vertical space is left after the bars.
+acme-vehicle-map {
+  flex: 1;
+  min-height: 500px;
 }

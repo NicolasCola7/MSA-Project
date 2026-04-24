@@ -1,0 +1,112 @@
+// ── Map container ──────────────────────────────────────────────────────────
+:host {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  min-height: 500px;
+}
+
+.acme-map-container {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  // Leaflet's own stacking context sometimes bleeds; pin it.
+  z-index: 0;
+}
+
+// ── Custom DivIcon marker ─────────────────────────────────────────────────
+// Leaflet injects the DivIcon HTML into a detached element outside this
+// component's host, so we need ::ng-deep to reach those classes.
+
+::ng-deep .acme-vehicle-marker {
+  background: transparent;
+  border: none;
+}
+
+::ng-deep .acme-vehicle-marker .marker-bubble {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 2px solid var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+::ng-deep .acme-vehicle-marker:hover .marker-bubble {
+  transform: scale(1.12);
+}
+
+// ── Popup dark-theme overrides ────────────────────────────────────────────
+
+::ng-deep .leaflet-popup-content-wrapper,
+::ng-deep .leaflet-popup-tip {
+  background: var(--color-surface) !important;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+::ng-deep .leaflet-popup-content-wrapper {
+  border-radius: var(--radius-md);
+}
+
+::ng-deep .leaflet-popup-content {
+  margin: 0.75rem 1rem;
+}
+
+::ng-deep .leaflet-popup-close-button {
+  color: var(--color-text-muted) !important;
+}
+
+// ── Popup inner content (vehicle card) ────────────────────────────────────
+
+::ng-deep .vehicle-popup .vp-title {
+  font-weight: 600;
+  font-size: var(--font-size-md);
+  margin-bottom: 0.25rem;
+  color: var(--color-text);
+}
+
+::ng-deep .vehicle-popup .vp-id {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-bottom: 0.5rem;
+  font-family: monospace;
+}
+
+::ng-deep .vehicle-popup .vp-row {
+  font-size: var(--font-size-sm);
+  margin: 0.25rem 0;
+  color: var(--color-text);
+}
+
+// ── Attribution and controls tuned for dark UI ────────────────────────────
+
+::ng-deep .leaflet-control-attribution {
+  background: rgba(30, 32, 48, 0.85) !important;
+  color: var(--color-text-muted) !important;
+  font-size: var(--font-size-xs);
+  padding: 2px 6px;
+}
+
+::ng-deep .leaflet-control-attribution a {
+  color: var(--color-accent) !important;
+}
+
+::ng-deep .leaflet-bar a {
+  background: var(--color-surface) !important;
+  color: var(--color-text) !important;
+  border-bottom-color: var(--color-border) !important;
+}
+
+::ng-deep .leaflet-bar a:hover {
+  background: var(--color-border) !important;
+}

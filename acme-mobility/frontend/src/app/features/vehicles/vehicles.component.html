@@ -6,9 +6,8 @@
   <acme-stats-bar
     [stats]="vehicleService.stats()" />
 
-  <acme-vehicle-grid
+  <acme-vehicle-map
     [vehicles]="vehicleService.vehicles()"
-    [loadingState]="vehicleService.loadingState()"
     (vehicleSelected)="onVehicleSelected($event)" />
 
   <acme-process-trace

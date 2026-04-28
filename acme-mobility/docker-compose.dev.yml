@@ -1,31 +1,23 @@
-# ============================================================
-# ACMEMobility - Docker Compose (Dev Environment)
-# Stack: Frontend (nginx) + RentalService (Spring Boot 3)
-#        + Zeebe (Camunda 8) + Operate + Elasticsearch
-# ============================================================
-
 networks:
   acme-net:
     driver: bridge
 
 volumes:
   elasticsearch-data:
+  maven-cache:
 
 services:
 
-  # ----------------------------------------------------------
-  # INFRASTRUCTURE: Elasticsearch (required by Operate)
-  # ----------------------------------------------------------
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.9.1
     container_name: acme-elasticsearch
-    hostname: acme-elasticsearch          # fixes "Temporary failure in name resolution"
+    hostname: acme-elasticsearch
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - network.host=0.0.0.0             # bind to all interfaces, skip DNS publish
-      - network.publish_host=_local_     # use loopback for cluster publish address
+      - network.host=0.0.0.0
+      - network.publish_host=_local_
     ulimits:
       memlock:
         soft: -1
@@ -43,9 +35,6 @@ services:
       retries: 10
       start_period: 30s
 
-  # ----------------------------------------------------------
-  # BPMS: Zeebe (Camunda 8 workflow engine)
-  # ----------------------------------------------------------
   zeebe:
     image: camunda/zeebe:8.4.6
     container_name: acme-zeebe
@@ -71,9 +60,6 @@ services:
       retries: 20
       start_period: 120s 
 
-  # ----------------------------------------------------------
-  # BPMS UI: Camunda Operate (process monitoring dashboard)
-  # ----------------------------------------------------------
   operate:
     image: camunda/operate:8.4.6
     container_name: acme-operate
@@ -90,9 +76,6 @@ services:
       zeebe:
         condition: service_healthy
 
-  # ----------------------------------------------------------
-  # BACKEND: RentalService (Spring Boot 3 / Java 21)
-  # ----------------------------------------------------------
   rental-service:
     build:
       context: ./rental-service
@@ -103,23 +86,26 @@ services:
       - ZEEBE_CLIENT_SECURITY_PLAINTEXT=true
       - SPRING_PROFILES_ACTIVE=docker
     ports:
-      - "8080:8080"   # REST API: http://localhost:8080/api
+      - "8080:8080"
+    volumes: 
+      - ./rental-service:/app # java source code
+      - maven-cache:/root/.m2 # maven cache so dependencies persist between restarts
     networks:
       - acme-net
     depends_on:
       zeebe:
         condition: service_healthy
 
-  # ----------------------------------------------------------
-  # FRONTEND: Static HTML served by nginx
-  # ----------------------------------------------------------
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: acme-frontend
     ports:
-      - "3000:80"     # http://localhost:3000
+      - "4200:4200"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     networks:
       - acme-net
     depends_on:

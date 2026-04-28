@@ -38,6 +38,17 @@
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
+    <!--
+    This library tells Spring Boot to watch the compiled output directory
+    and instantly restart the application context whenever a file changes.
+    -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <scope>runtime</scope>
+      <optional>true</optional>
+    </dependency>
+
     <!-- Spring Actuator (health checks) -->
     <dependency>
       <groupId>org.springframework.boot</groupId>

@@ -35,6 +35,5 @@ logs/
 # ── Docker ────────────────────────────────────────────────
 elasticsearch-data/
 
-
 .github
 .metadata

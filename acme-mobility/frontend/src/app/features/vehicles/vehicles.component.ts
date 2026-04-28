@@ -23,7 +23,6 @@ export class VehiclesComponent implements OnInit {
   protected readonly vehicleService = inject(VehicleService);
 
   ngOnInit(): void {
-    // Flusso sincrono: semplice GET REST, nessun userId necessario
     this.vehicleService.loadVehicles();
   }
 

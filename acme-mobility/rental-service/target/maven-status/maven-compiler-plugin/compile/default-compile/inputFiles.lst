@@ -1,8 +1,0 @@
-/app/src/main/java/com/acme/rental/RentalServiceApplication.java
-/app/src/main/java/com/acme/rental/controller/VehicleController.java
-/app/src/main/java/com/acme/rental/config/ZeebeDeploymentConfig.java
-/app/src/main/java/com/acme/rental/config/WebSocketConfig.java
-/app/src/main/java/com/acme/rental/model/Vehicle.java
-/app/src/main/java/com/acme/rental/repository/VehicleRepository.java
-/app/src/main/java/com/acme/rental/service/WebSocketSessionRegistry.java
-/app/src/main/java/com/acme/rental/service/VehicleService.java

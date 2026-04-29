@@ -1,0 +1,67 @@
+<div class="scan-shell">
+
+  <button class="back-btn" (click)="goBack()">← Mappa</button>
+
+  <!-- READY ──────────────────────────────────────────────────────────── -->
+  @if (phase() === 'ready') {
+    <div class="card">
+      <div class="card-icon">{{ emoji() }}</div>
+
+      <div class="card-body">
+        <h2 class="model">{{ vehicle()?.model ?? vehicleId() }}</h2>
+        <span class="vehicle-id">{{ vehicleId() }}</span>
+
+        <div class="info-row">
+          <span class="info-label">Batteria</span>
+          <span class="battery {{ batteryClass() }}">🔋 {{ vehicle()?.batteryLevel ?? '—' }}%</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Stato</span>
+          <span class="badge {{ statusClass() }}">{{ statusLabel() }}</span>
+        </div>
+      </div>
+
+      <div class="qr-hint">
+        <span class="qr-icon">📷</span>
+        <span>QR verificato</span>
+      </div>
+
+      <button class="start-btn" (click)="startRental()" [disabled]="!canStart()">
+        Avvia Noleggio
+      </button>
+
+      @if (!canStart() && vehicle()) {
+        <p class="unavailable-note">⚠ Veicolo {{ statusLabel().toLowerCase() }} — non noleggiabile</p>
+      }
+    </div>
+  }
+
+  <!-- STARTING ────────────────────────────────────────────────────────── -->
+  @if (phase() === 'starting') {
+    <div class="centered">
+      <div class="spinner"></div>
+      <p class="waiting-text">Avvio noleggio…</p>
+      <span class="waiting-sub">Comunicazione con Zeebe in corso</span>
+    </div>
+  }
+
+  <!-- SUCCESS ─────────────────────────────────────────────────────────── -->
+  @if (phase() === 'success') {
+    <div class="centered">
+      <div class="success-ring">🚀</div>
+      <h2 class="success-title">Noleggio Avviato!</h2>
+      <p class="success-sub">{{ vehicle()?.model }} sbloccato. Buon viaggio!</p>
+      <button class="start-btn" (click)="goToActiveRide()">Vai alla corsa →</button>
+    </div>
+  }
+
+  <!-- ERROR ───────────────────────────────────────────────────────────── -->
+  @if (phase() === 'error') {
+    <div class="centered">
+      <span class="error-icon">⚠️</span>
+      <p class="error-text">{{ errorMessage() }}</p>
+      <button class="start-btn" (click)="phase.set('ready')">Riprova</button>
+    </div>
+  }
+
+</div>

@@ -13,14 +13,10 @@
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--color-border);
-  // Leaflet's own stacking context sometimes bleeds; pin it.
   z-index: 0;
 }
 
 // ── Custom DivIcon marker ─────────────────────────────────────────────────
-// Leaflet injects the DivIcon HTML into a detached element outside this
-// component's host, so we need ::ng-deep to reach those classes.
-
 ::ng-deep .acme-vehicle-marker {
   background: transparent;
   border: none;
@@ -56,36 +52,172 @@
 
 ::ng-deep .leaflet-popup-content-wrapper {
   border-radius: var(--radius-md);
+  padding: 0;
 }
 
 ::ng-deep .leaflet-popup-content {
-  margin: 0.75rem 1rem;
+  margin: 0;
+  min-width: 220px;
 }
 
 ::ng-deep .leaflet-popup-close-button {
   color: var(--color-text-muted) !important;
+  top: 8px !important;
+  right: 8px !important;
+  z-index: 1;
 }
 
-// ── Popup inner content (vehicle card) ────────────────────────────────────
+// ── Popup inner content ────────────────────────────────────────────────────
+
+::ng-deep .vehicle-popup {
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-family: var(--font-family);
+}
+
+// Header: emoji icon + model name + id
+::ng-deep .vehicle-popup .vp-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding-right: 1.4rem; // room for the × close button
+}
+
+::ng-deep .vehicle-popup .vp-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
 
 ::ng-deep .vehicle-popup .vp-title {
-  font-weight: 600;
-  font-size: var(--font-size-md);
-  margin-bottom: 0.25rem;
+  font-weight: 700;
+  font-size: 0.95rem;
   color: var(--color-text);
+  line-height: 1.2;
 }
 
 ::ng-deep .vehicle-popup .vp-id {
-  font-size: var(--font-size-xs);
+  font-size: 0.68rem;
   color: var(--color-text-muted);
-  margin-bottom: 0.5rem;
   font-family: monospace;
+  margin-top: 1px;
+  word-break: break-all;
+}
+
+::ng-deep .vehicle-popup .vp-divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: 0 -1rem;
+}
+
+// Info rows
+::ng-deep .vehicle-popup .vp-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
 ::ng-deep .vehicle-popup .vp-row {
-  font-size: var(--font-size-sm);
-  margin: 0.25rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+::ng-deep .vehicle-popup .vp-label {
+  color: var(--color-text-muted);
+}
+
+::ng-deep .vehicle-popup .vp-value {
   color: var(--color-text);
+  font-weight: 500;
+}
+
+// Battery colours
+::ng-deep .vehicle-popup .battery-high   { color: var(--color-success); }
+::ng-deep .vehicle-popup .battery-medium { color: var(--color-warning); }
+::ng-deep .vehicle-popup .battery-low    { color: var(--color-error);   }
+
+// Status badge
+::ng-deep .vehicle-popup .vp-badge {
+  font-size: 0.68rem;
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+::ng-deep .vehicle-popup .status-available    { background: rgba(34,197,94,.18);  color: var(--color-success); }
+::ng-deep .vehicle-popup .status-reserved     { background: rgba(245,158,11,.18); color: var(--color-warning); }
+::ng-deep .vehicle-popup .status-in-rental    { background: rgba(56,189,248,.18); color: var(--color-accent);  }
+::ng-deep .vehicle-popup .status-maintenance  { background: rgba(239,68,68,.18);  color: var(--color-error);   }
+::ng-deep .vehicle-popup .status-charging     { background: rgba(139,92,246,.18); color: #a78bfa;              }
+
+// ── Action buttons ─────────────────────────────────────────────────────────
+
+::ng-deep .vehicle-popup .vp-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: 0.2rem;
+}
+
+::ng-deep .vehicle-popup .vp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.5rem;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.1s ease;
+  font-family: var(--font-family);
+  white-space: nowrap;
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.15);
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+    filter: brightness(0.95);
+  }
+
+  &:disabled {
+    opacity: 0.38;
+    cursor: not-allowed;
+  }
+}
+
+::ng-deep .vehicle-popup .vp-btn--scan {
+  background: var(--color-accent);
+  color: #0f172a;
+}
+
+::ng-deep .vehicle-popup .vp-btn--book {
+  background: var(--color-surface);
+  color: var(--color-accent);
+  border: 1.5px solid var(--color-accent);
+}
+
+::ng-deep .vehicle-popup .vp-btn-icon {
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+// Unavailable note
+::ng-deep .vehicle-popup .vp-unavailable-note {
+  font-size: 0.7rem;
+  color: var(--color-warning);
+  text-align: center;
+  padding: 0.2rem 0 0;
 }
 
 // ── Attribution and controls tuned for dark UI ────────────────────────────

@@ -8,7 +8,9 @@
 
   <acme-vehicle-map
     [vehicles]="vehicleService.vehicles()"
-    (vehicleSelected)="onVehicleSelected($event)" />
+    (vehicleSelected)="onVehicleSelected($event)"
+    (scanQrSelected)="onScanQr($event)"
+    (prenotaSelected)="onPrenota($event)" />
 
   <acme-process-trace
     [logs]="vehicleService.logs()" />

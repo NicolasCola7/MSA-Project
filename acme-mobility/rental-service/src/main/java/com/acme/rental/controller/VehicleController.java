@@ -33,6 +33,17 @@ public class VehicleController {
         ));
     }
 
+    @PostMapping("/rental/scan")
+    public ResponseEntity<Map<String, Object>> scanQr(@RequestBody Map<String, String> body) {
+        String userId = body.get("userId");
+        log.info("[Controller] POST /api/rental/scan userId={}", userId);
+        vehicleService.scanQr(userId);
+        return ResponseEntity.accepted().body(Map.of(
+            "status",  "accepted",
+            "message", "Scan avviato"
+        ));
+    }
+
     @GetMapping("/health")
     public ResponseEntity<Map<String, String>> health() {
         return ResponseEntity.ok(Map.of("service", "rental-service", "status", "UP"));

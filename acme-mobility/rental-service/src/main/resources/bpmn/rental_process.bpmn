@@ -53,7 +53,6 @@
       <bpmn:incoming>Flow_0l11gdm</bpmn:incoming>
       <bpmn:outgoing>Flow_04sddp2</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_start_to_blockMoney" sourceRef="Event_0ptz4qe" targetRef="Activity_blockMoney" />
     <bpmn:sequenceFlow id="Flow_0nairkv" sourceRef="Gateway_0qnr0hr" targetRef="Activity_chargeMoneyBlock" />
     <bpmn:sequenceFlow id="Flow_1syjbug" name="more than 5 minutes ealrty" sourceRef="Gateway_0qnr0hr" targetRef="Activity_17rmkkh">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=diffMinutes &gt; 5</bpmn:conditionExpression>
@@ -197,7 +196,7 @@
     <bpmn:intermediateCatchEvent id="Event_0phdpjg" name="receive booking">
       <bpmn:incoming>Flow_0qc0p5z</bpmn:incoming>
       <bpmn:outgoing>Flow_0wvplz6</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0n0n4xt" messageRef="Message_2c3jt0r" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0n0n4xt" messageRef="Message_18nq0ac" />
     </bpmn:intermediateCatchEvent>
     <bpmn:eventBasedGateway id="Gateway_06ct1j3">
       <bpmn:incoming>Flow_1icandq</bpmn:incoming>
@@ -238,7 +237,7 @@
   <bpmn:signal id="Signal_08nulrc" name="Signal_undoReservation" />
   <bpmn:message id="Message_2c3jt0r" name="Message_scanQr">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=reservationId" />
+      <zeebe:subscription correlationKey="=userId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_0e7b5bb" name="Message_chargeMoneyBlock">
@@ -313,6 +312,11 @@
   <bpmn:message id="Message_16jv89u" name="Message_underMaintenance">
     <bpmn:extensionElements>
       <zeebe:subscription correlationKey="=vehicleId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_18nq0ac" name="Message_receiveBooking">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=userId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -400,16 +404,10 @@
       <bpmndi:BPMNShape id="Gateway_1ue01kr_di" bpmnElement="Gateway_06ct1j3">
         <dc:Bounds x="515" y="285" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_03dhdr5_di" bpmnElement="Event_03dhdr5">
-        <dc:Bounds x="802" y="142" width="36" height="36" />
+      <bpmndi:BPMNShape id="BPMNShape_1oipa0q" bpmnElement="Event_0bt38ne">
+        <dc:Bounds x="772" y="415" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="796" y="113" width="49" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_142q2h1_di" bpmnElement="Event_1d4oq6r">
-        <dc:Bounds x="812" y="335" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="807" y="313" width="49" height="14" />
+          <dc:Bounds x="757" y="453" width="25" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0jczf31" bpmnElement="Event_1wbz1l8">
@@ -418,10 +416,16 @@
           <dc:Bounds x="861" y="453" width="37" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1oipa0q" bpmnElement="Event_0bt38ne">
-        <dc:Bounds x="772" y="415" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_142q2h1_di" bpmnElement="Event_1d4oq6r">
+        <dc:Bounds x="812" y="335" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="757" y="453" width="25" height="14" />
+          <dc:Bounds x="807" y="313" width="49" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_03dhdr5_di" bpmnElement="Event_03dhdr5">
+        <dc:Bounds x="802" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="796" y="113" width="49" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0nairkv_di" bpmnElement="Flow_0nairkv">

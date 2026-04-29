@@ -10,13 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Punto di ingresso HTTP per le operazioni sui veicoli.
- *
- * GET /api/vehicles → risposta sincrona classica.
- * Nessun Zeebe coinvolto: è una semplice lettura, non un processo orchestrato.
- * Il processo Zeebe parte solo con POST /api/rental/scan (RentalController).
- */
+
 @Slf4j
 @RestController
 @RequestMapping("/api")
@@ -26,13 +20,6 @@ public class VehicleController {
 
     private final VehicleService vehicleService;
 
-    /**
-     * GET /api/vehicles
-     *
-     * Risposta sincrona: restituisce i veicoli disponibili direttamente come JSON.
-     * Nessun messaggio Zeebe, nessun WebSocket, nessun 202.
-     * Come una normale chiamata REST.
-     */
     @GetMapping("/vehicles")
     public ResponseEntity<Map<String, Object>> getAvailableVehicles() {
         log.info("[Controller] GET /api/vehicles");

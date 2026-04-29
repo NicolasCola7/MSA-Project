@@ -168,7 +168,6 @@ export class VehicleMapComponent implements AfterViewInit, OnDestroy {
       <div class="vehicle-popup">
         <div class="vp-title">${this.escapeHtml(v.model)}</div>
         <div class="vp-id">ID: ${this.escapeHtml(v.id)}</div>
-        <div class="vp-row">📍 ${this.escapeHtml(v.stationName)}</div>
         <div class="vp-row">🔋 Battery: ${v.batteryLevel}%</div>
       </div>
     `;

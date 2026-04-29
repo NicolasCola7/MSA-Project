@@ -16,33 +16,25 @@ import { WebSocketService, WsConnectionState } from './websocket.service';
 
 export type LoadingState =
   | 'idle'
-  | 'loading'        // HTTP GET in corso
+  | 'loading'
   | 'loaded'
   | 'error'
-  // ── stati asincroni Zeebe — usati dai flussi futuri (scan QR, noleggio, ecc.) ──
   | 'ws-connecting'
   | 'api-calling'
   | 'waiting-push';
 
 @Injectable({ providedIn: 'root' })
 export class VehicleService implements OnDestroy {
+
   private readonly http = inject(HttpClient);
   private readonly ws   = inject(WebSocketService);
-
-  // ── Public Signals ─────────────────────────────────────────────────────────
   readonly vehicles     = signal<Vehicle[]>([]);
   readonly stats        = computed<VehicleStats>(() => computeStats(this.vehicles()));
   readonly loadingState = signal<LoadingState>('idle');
   readonly errorMessage = signal<string | null>(null);
   readonly logs         = signal<TraceLog[]>([]);
-
-  // ── Re-export WS state (usato dai flussi Zeebe futuri) ────────────────────
   readonly wsState       = this.ws.connectionState;
   readonly isWsConnected = this.ws.isConnected;
-
-  // ── toObservable nel constructor (injection context) ──────────────────────
-  // Tenuto per i flussi futuri che richiedono WS → HTTP → push Zeebe.
-  // REGOLA: toObservable() usa inject() internamente, deve stare qui.
   private readonly wsState$: Observable<WsConnectionState>;
 
   private subs: Subscription[] = [];
@@ -52,12 +44,6 @@ export class VehicleService implements OnDestroy {
     this.listenToWsMessages();
   }
 
-  // ─────────────────────────────────────────────────────────────────────────
-  // FLUSSO ATTIVO — GET /api/vehicles (sincrono, senza Zeebe)
-  //
-  // Il backend risponde direttamente con i veicoli nel body (200 OK).
-  // Nessun userId richiesto, nessun WebSocket, nessun processo Zeebe.
-  // ─────────────────────────────────────────────────────────────────────────
   loadVehicles(): void {
     this.loadingState.set('loading');
     this.addLog('GET /api/vehicles…');

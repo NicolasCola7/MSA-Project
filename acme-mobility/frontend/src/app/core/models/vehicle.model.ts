@@ -10,7 +10,6 @@ export interface Vehicle {
   status: VehicleStatus;
   batteryLevel: number;     // 0–100
   stationId: string;
-  stationName: string;
   latitude?: number;
   longitude?: number;
 }

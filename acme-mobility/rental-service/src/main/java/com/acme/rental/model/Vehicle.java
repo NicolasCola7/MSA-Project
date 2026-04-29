@@ -1,40 +1,43 @@
 package com.acme.rental.model;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * Represents a vehicle in the ACMEMobility fleet.
- * Maps to the Vehicles table in DynamoDB (key-value store).
- * In this first draft the data is in-memory (mocked).
- */
+@Entity
+@Table(name = "vehicles")
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor 
 public class Vehicle {
 
+    @Id
+    @Column(name = "id")
     private String id;
 
-    /** Type: CAR | SCOOTER | KICK_SCOOTER */
+    @Column(name = "type")
     private String type;
 
+    @Column(name = "model")
     private String model;
 
-    /** Current status: AVAILABLE | RESERVED | IN_RENTAL | IN_MAINTENANCE | RECHARGING */
+    @Column(name = "status")
     private String status;
 
-    /** Battery level 0-100 (%) */
-    private int batteryLevel;
+    @Column(name = "battery_level")
+    private Integer batteryLevel;
 
-    private double latitude;
-    private double longitude;
+    @Column(name = "latitude")
+    private Double latitude;
 
-    /** Human-readable station name */
-    private String stationName;
-
-    /** Unique station identifier */
+    @Column(name = "longitude")
+    private Double longitude;
+    
+    @Column(name = "station_id")
     private String stationId;
 }

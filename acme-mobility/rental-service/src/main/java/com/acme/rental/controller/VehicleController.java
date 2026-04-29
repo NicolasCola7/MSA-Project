@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-
 @Slf4j
 @RestController
 @RequestMapping("/api")
@@ -27,20 +26,37 @@ public class VehicleController {
         List<Vehicle> vehicles = vehicleService.getAvailableVehicles();
 
         return ResponseEntity.ok(Map.of(
-            "status",   "ok",
-            "count",    vehicles.size(),
-            "vehicles", vehicles
+                "status", "ok",
+                "count", vehicles.size(),
+                "vehicles", vehicles));
+    }
+
+    @PostMapping("/rentals/init")
+    public ResponseEntity<Map<String, Object>> initSession() {
+        String mockUserId = "mock-user-123";
+        long processInstanceKey = vehicleService.initRentalProcess(mockUserId);
+        
+        log.info("[Controller] POST /api/rentals/init userId={}, processInstanceKey={}", mockUserId, processInstanceKey);
+        
+        return ResponseEntity.ok(Map.of(
+            "status", "success",
+            "userId", mockUserId,
+            "processInstanceKey", String.valueOf(processInstanceKey)
         ));
     }
 
     @PostMapping("/rental/scan")
     public ResponseEntity<Map<String, Object>> scanQr(@RequestBody Map<String, String> body) {
         String userId = body.get("userId");
-        log.info("[Controller] POST /api/rental/scan userId={}", userId);
-        vehicleService.scanQr(userId);
+        String vehicleId = body.get("vehicleId");
+        
+        log.info("[Controller] POST /api/rental/scan userId={}, vehicleId={}", userId, vehicleId);
+        
+        vehicleService.scanQr(userId, vehicleId);
+        
         return ResponseEntity.accepted().body(Map.of(
-            "status",  "accepted",
-            "message", "Scan avviato"
+                "status", "accepted",
+                "message", "Scan avviato e messaggio Zeebe pubblicato"
         ));
     }
 

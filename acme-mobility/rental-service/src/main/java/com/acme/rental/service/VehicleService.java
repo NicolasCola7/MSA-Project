@@ -17,33 +17,40 @@ import java.util.Map;
 public class VehicleService {
 
     private final VehicleRepository vehicleRepository;
-    private final ZeebeClient zeebeClient; 
-    
+    private final ZeebeClient zeebeClient;
+
     public List<Vehicle> getAvailableVehicles() {
         return vehicleRepository.findAll();
     }
 
-    public void scanQr(String userId) {
+    public long initRentalProcess(String userId) {
         log.info("[Zeebe] Creazione istanza per userId={}", userId);
 
-        // 1. Crea l'istanza passando userId come variabile "reservationId"
-        //    → Zeebe la usa per fare il match con la correlationKey del messaggio
-        zeebeClient.newCreateInstanceCommand()
-            .bpmnProcessId("rental-service-process")
-            .latestVersion()
-            .variables(Map.of("reservationId", userId))
-            .send()
-            .join();
+        // 1. Crea l'istanza passando userId come variabile (richiesta dall'Event Gateway)
+        var processInstanceResult = zeebeClient.newCreateInstanceCommand()
+                .bpmnProcessId("rental-service-process")
+                .latestVersion()
+                .variables(Map.of("userId", userId))
+                .send()
+                .join();
+                
+        long key = processInstanceResult.getProcessInstanceKey();
+        log.info("[Zeebe] Istanza creata con key={} per userId={}", key, userId);
+        return key;
+    }
 
-        log.info("[Zeebe] Istanza creata, invio Message_scanQr");
+    public void scanQr(String userId, String vehicleId) {
+        log.info("[Zeebe] Invio Message_scanQr per userId={}, vehicleId={}", userId, vehicleId);
 
-        // 2. Pubblica il messaggio — Zeebe trova l'istanza tramite reservationId
+        // 2. Pubblica il messaggio con TTL
         zeebeClient.newPublishMessageCommand()
-            .messageName("Message_scanQr")
-            .correlationKey(userId)
-            .send()
-            .join();
+                .messageName("Message_scanQr")
+                .correlationKey(userId)
+                .timeToLive(java.time.Duration.ofMinutes(1))
+                .variables(Map.of("vehicleId", vehicleId))
+                .send()
+                .join();
 
-        log.info("[Zeebe] Messaggio Message_scanQr inviato per userId={}", userId);
+        log.info("[Zeebe] Messaggio Message_scanQr inviato con successo per userId={}", userId);
     }
 }

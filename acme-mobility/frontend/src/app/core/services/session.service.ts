@@ -7,11 +7,21 @@ export class SessionService {
   readonly userId = signal<string>(this.resolveUserId());
 
   private resolveUserId(): string {
-    let id = sessionStorage.getItem(this.USER_ID_KEY);
+    const id = localStorage.getItem('currentUser');
     if (!id) {
-      id = 'user-' + Math.random().toString(36).slice(2, 7);
-      sessionStorage.setItem(this.USER_ID_KEY, id);
+      console.warn("Nessun utente loggato trovato nel localStorage! Reindirizzare al login.");
+      return '';
     }
     return id;
+  }
+
+  loginUser(id: string) {
+    localStorage.setItem('currentUser', id);
+    this.userId.set(id);
+  }
+
+  logout() {
+    localStorage.removeItem('currentUser');
+    this.userId.set('');
   }
 }

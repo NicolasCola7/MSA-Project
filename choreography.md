@@ -1,4 +1,4 @@
-# Coreografia del Sistema ACMEMobility
+# Coreografia del Sistema ACME Mobility
 ## Versione Aggiornata - Allineata al Diagramma BPMN
 
 ---

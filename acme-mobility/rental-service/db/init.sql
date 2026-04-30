@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS users (
-    id SERIAL PRIMARY KEY,
+    id VARCHAR(50) PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
     name VARCHAR(100) NOT NULL
 );
 
@@ -40,3 +41,8 @@ INSERT INTO vehicles (id, type, model, status, battery_level, latitude, longitud
     ('V003', 'CAR', 'Fiat 500e', 'AVAILABLE', 55, 44.5008, 11.3512, 'ST-003'),
     ('V004', 'SCOOTER', 'Vespa Elettrica', 'AVAILABLE', 88, 44.4901, 11.3303, 'ST-004'),
     ('V005', 'KICK_SCOOTER', 'Segway Ninebot Max', 'AVAILABLE', 41, 44.5045, 11.3489, 'ST-005');
+
+
+INSERT INTO users (id, email, password, name) VALUES 
+    ('mock-user-123', 'user@acme.com', 'password123', 'Test User')
+ON CONFLICT (id) DO NOTHING;

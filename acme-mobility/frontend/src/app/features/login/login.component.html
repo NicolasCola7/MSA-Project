@@ -1,0 +1,45 @@
+<div class="login-container"
+  style="max-width: 400px; margin: 100px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; font-family: sans-serif; background-color: #ffffff;">
+  <h2 style="text-align: center; color: #333; margin-bottom: 10px;">ACME Login</h2>
+  <form (ngSubmit)="onLogin()">
+    <div style="margin-bottom: 15px;">
+      <label style="color: #000;">Email</label><br>
+      <input type="email" [(ngModel)]="email" name="email" placeholder="Inserisci la tua email" required
+        style="width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box;">
+    </div>
+    <div style="margin-bottom: 15px;">
+      <label style="color: #000;">Password</label><br>
+      <div style="position: relative; width: 100%; display: flex; align-items: center;">
+        <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" name="password"
+          placeholder="Inserisci la tua password" required
+          style="width: 100%; padding: 8px; padding-right: 40px; margin-top: 5px; box-sizing: border-box;">
+        <button type="button" (click)="showPassword = !showPassword"
+          style="position: absolute; right: 8px; top: 13px; background: none; border: none; cursor: pointer; color: #666; display: flex; align-items: center; justify-content: center; padding: 0;">
+          <svg *ngIf="!showPassword" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path
+              d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+          </svg>
+          <svg *ngIf="showPassword" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path
+              d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z" />
+            <path
+              d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-4.792 3.39A7.157 7.157 0 0 1 8 12.5c2.12 0 3.879-1.168 5.168-2.457.154-.154.307-.313.453-.47l.702.701c-.165.174-.34.343-.526.508C11.879 11.332 10.119 12.5 8 12.5c-1.281 0-2.458-.43-3.468-1.144l.673-.673z" />
+            <path
+              d="M4.508 4.882a6.989 6.989 0 0 0-2.335 1.075C1.173 8 1.173 8 1.173 8s3 5.5 8 5.5c.34 0 .673-.016 1.002-.046l.708.708A8.024 8.024 0 0 1 8 14.5c-5 0-8-5.5-8-5.5s.94-1.72 2.408-3.238l.83.83zm.888 2.015a3.5 3.5 0 0 1 4.542 4.543l.84.84a4.5 4.5 0 0 0-6.222-6.223l.84.84z" />
+            <path d="M1 1l14 14" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" style="color: red; margin-bottom: 15px; text-align: center;">
+      {{ errorMessage }}
+    </div>
+
+    <button type="submit"
+      style="width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
+      Login
+    </button>
+  </form>
+</div>

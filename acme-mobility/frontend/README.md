@@ -1,6 +1,6 @@
-# ACMEMobility — Angular 21 Frontend
+# ACME Mobility — Angular 21 Frontend
 
-Single Page Application for the ACMEMobility microservices platform.
+Single Page Application for the ACME Mobility microservices platform.
 
 ## Tech Stack
 

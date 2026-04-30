@@ -16,8 +16,8 @@
   <groupId>com.acme</groupId>
   <artifactId>rental-service</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>ACMEMobility - Rental Service</name>
-  <description>Orchestratore BPMS per ACMEMobility</description>
+  <name>ACME Mobility - Rental Service</name>
+  <description>Orchestratore BPMS per ACME Mobility</description>
 
   <properties>
     <java.version>21</java.version>

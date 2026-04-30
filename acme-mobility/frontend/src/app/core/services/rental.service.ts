@@ -41,9 +41,20 @@ export class RentalService implements OnDestroy {
   // Triggers Zeebe message correlation on "Message_scanQR"
   // ─────────────────────────────────────────────────────────────────────────
   startRental(req: StartRentalRequest): void {
-    // TODO: implement when backend is ready
-    this.addLog(`[STUB] POST /api/rental/scan  vehicleId=${req.vehicleId}`);
     this.rentalState.set('starting');
+    
+    this.http.post<StartRentalResponse>(`${environment.apiBase}/api/rental/scan`, {
+      userId: req.userId,
+      vehicleId: req.vehicleId
+    }).subscribe({
+      next: (res) => {
+        this.addLog(`✅ Richiesta scan QR inviata per veicolo: ${req.vehicleId}`);
+      },
+      error: (err) => {
+        this.addLog(`❌ Errore durante lo scan del QR: ${err.message}`, 'error');
+        this.rentalState.set('error');
+      }
+    });
   }
 
   // ─────────────────────────────────────────────────────────────────────────

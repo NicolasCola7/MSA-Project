@@ -91,13 +91,6 @@ export class ScanQrComponent implements OnInit {
       userId: this.sessionService.userId(),
       vehicleId: this.vehicleId(),
     });
-
-    // Stub delay — replace with WS subscription on rentalService.rentalState()
-    await new Promise(r => setTimeout(r, 1600));
-
-    this.rentalId = this.rentalService.activeRental()?.id ?? `rental-${Date.now()}`;
-    this.vehicleService.addLog(`✅ Noleggio avviato: ${this.rentalId}`, 'ok');
-    this.phase.set('success');
   }
 
   goToActiveRide(): void {

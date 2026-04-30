@@ -49,7 +49,7 @@ export class VehicleService implements OnDestroy {
     this.addLog('GET /api/vehicles…');
 
     const sub = this.http
-      .get<VehiclesResponse>(`${environment.apiBase}/vehicles`)
+      .get<VehiclesResponse>(`${environment.apiBase}/api/vehicles`)
       .subscribe({
         next: res => {
           this.addLog(`✅ ${res.count} veicoli ricevuti`, 'ok');

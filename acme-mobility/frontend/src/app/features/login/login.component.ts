@@ -40,9 +40,10 @@ export class LoginComponent {
     ).subscribe(loginRes => {
       if (loginRes && loginRes.success) {
         const userId = loginRes.userId;
+        const userName = loginRes.userName;
         
         // Save to SessionService
-        this.sessionService.loginUser(userId);
+        this.sessionService.loginUser(userId, userName);
 
         // Call the endpoint to instantiate the Camunda process
         this.http.post<any>(`${environment.apiBase}/api/rentals/init`, {

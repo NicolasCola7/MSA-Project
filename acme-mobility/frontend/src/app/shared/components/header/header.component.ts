@@ -12,4 +12,8 @@ import { SessionService } from '@core/services/session.service';
 export class HeaderComponent {
   protected readonly session = inject(SessionService);
   protected readonly envTag = environment.envTag;
+
+  onLogout() {
+    this.session.logout();
+  }
 }

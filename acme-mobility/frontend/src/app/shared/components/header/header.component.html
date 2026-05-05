@@ -2,5 +2,10 @@
   <span class="logo" aria-hidden="true">🛴</span>
   <h1 class="title">ACME Mobility</h1>
   <span class="env-tag">{{ envTag }}</span>
-  <span class="user-tag">👤 {{ session.userId() }}</span>
+  <div class="user-container">
+    <span class="user-tag">👤 {{ session.userName() }}</span>
+    <button class="logout-btn" (click)="onLogout()" aria-label="Logout" title="Logout">
+      <span aria-hidden="true">🚪</span>
+    </button>
+  </div>
 </header>

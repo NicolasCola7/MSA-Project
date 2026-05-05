@@ -33,7 +33,7 @@ public class AuthController {
 
             if (user.getPassword().equals(request.password())) {
                 System.out.println("[DEBUG] Password match! Login successful.");
-                return ResponseEntity.ok(new LoginResponse(String.valueOf(user.getId()), true, "Login successful"));
+                return ResponseEntity.ok(new LoginResponse(String.valueOf(user.getId()), user.getName(), true, "Login successful"));
             } else {
                 System.out.println("[DEBUG] Password mismatch.");
             }
@@ -42,7 +42,7 @@ public class AuthController {
         }
         
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(new LoginResponse(null, false, "Invalid email or password"));
+                .body(new LoginResponse(null, null, false, "Invalid email or password"));
     }
 
     public record LoginRequest(
@@ -50,5 +50,5 @@ public class AuthController {
         @JsonProperty("password") String password
     ) {}
     
-    public record LoginResponse(String userId, boolean success, String message) {}
+    public record LoginResponse(String userId, String userName, boolean success, String message) {}
 }

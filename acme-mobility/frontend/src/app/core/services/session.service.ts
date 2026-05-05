@@ -23,6 +23,10 @@ export class SessionService {
     return localStorage.getItem(this.USER_NAME_KEY) || '';
   }
 
+  isLoggedIn(): boolean {
+    return !!this.userId() && this.userId() !== '';
+  }
+
   loginUser(id: string, name: string) {
     localStorage.setItem('currentUser', id);
     localStorage.setItem(this.USER_NAME_KEY, name);

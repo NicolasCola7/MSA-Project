@@ -105,7 +105,7 @@ services:
       - "5432:5432"
     volumes:
       - ./rental-service/db/:/docker-entrypoint-initdb.d # db initialization
-      - postgres-data:/var/lib/postgresql/ # db persistent named volumes
+      - rental-service-data:/var/lib/postgresql/ # db persistent named volumes
     networks:
       - acme-net
 
@@ -124,6 +124,43 @@ services:
     depends_on:
       - rental-service
 
+  bank-service:
+    build:
+      context: ./bank-service
+      dockerfile: Dockerfile.dev
+    container_name: acme-bank-service
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./bank-service:/app
+    restart: unless-stopped
+    depends_on:
+      bank-service-db:
+        condition: service_healthy
+    networks:
+      - acme-net
+
+  bank-service-db:
+    image: postgres:18
+    container_name: acme-bank-service-db
+    environment:
+        POSTGRES_DB: bank
+        POSTGRES_USER: user
+        POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+    restart: unless-stopped
+    volumes:
+      - ./bank-service/db/:/docker-entrypoint-initdb.d # db initialization
+      - bank-service-data:/var/lib/postgresql/ # db persistent named volumes
+    networks:
+      - acme-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d bank"] 
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
 networks:
   acme-net:
     driver: bridge
@@ -131,4 +168,5 @@ networks:
 volumes:
   elasticsearch-data:
   maven-cache:
-  postgres-data:
+  rental-service-data:
+  bank-service-data:

@@ -1,15 +1,22 @@
 import { Routes } from '@angular/router';
 
 import { LoginComponent } from './features/login/login.component';
+import { RegisterComponent } from './features/register/register.component';
 import { authGuard } from '@core/guards/auth.guard';
 
 export const routes: Routes = [
+  // ── Public routes (no guard) ──────────────────────────────────────────────
   {
     path: '',
     component: LoginComponent,
     pathMatch: 'full',
   },
+  {
+    path: 'register',
+    component: RegisterComponent,
+  },
 
+  // ── Protected routes ──────────────────────────────────────────────────────
   // ── Flow 1: Get available vehicles (IMPLEMENTED) ──────────────────────────
   {
     path: 'vehicles',
@@ -36,5 +43,5 @@ export const routes: Routes = [
       ),
   },
 
-  { path: '**', redirectTo: 'vehicles' },
+  { path: '**', redirectTo: '' },
 ];

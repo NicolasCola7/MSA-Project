@@ -45,10 +45,42 @@ public class AuthController {
                 .body(new LoginResponse(null, null, false, "Invalid email or password"));
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest request) {
+        System.out.println("[DEBUG] Register attempt: " + request.email());
+
+        // Check if email is already taken
+        if (userRepository.findByEmail(request.email()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(new RegisterResponse(false, "Email già registrata."));
+        }
+
+        User newUser = new User();
+        newUser.setName(request.name());
+        newUser.setEmail(request.email());
+        newUser.setPassword(request.password());
+
+        userRepository.save(newUser);
+        System.out.println("[DEBUG] User registered successfully: " + request.email());
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new RegisterResponse(true, "Registrazione completata con successo!"));
+    }
+
+    // ── DTOs ─────────────────────────────────────────────────────────────────────
+
     public record LoginRequest(
         @JsonProperty("email") String email, 
         @JsonProperty("password") String password
     ) {}
     
     public record LoginResponse(String userId, String userName, boolean success, String message) {}
+
+    public record RegisterRequest(
+        @JsonProperty("name") String name,
+        @JsonProperty("email") String email,
+        @JsonProperty("password") String password
+    ) {}
+
+    public record RegisterResponse(boolean success, String message) {}
 }

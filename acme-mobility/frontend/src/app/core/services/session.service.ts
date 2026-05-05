@@ -17,7 +17,7 @@ export class SessionService {
   private resolveUserId(): string {
     const id = localStorage.getItem('currentUser');
     if (!id) {
-      console.warn("Nessun utente loggato trovato nel localStorage! Reindirizzare al login.");
+      console.warn("No logged in user found in localStorage! Redirecting to login.");
       return '';
     }
     return id;

@@ -1,30 +1,28 @@
 <div class="register-container"
   style="max-width: 400px; margin: 80px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; font-family: sans-serif; background-color: #ffffff;">
 
-  <h2 style="text-align: center; color: #333; margin-bottom: 10px;">ACME Registrazione</h2>
+  <h2 style="text-align: center; color: #333; margin-bottom: 10px;">ACME Registration</h2>
 
   <!-- ── Form di Registrazione ────────────────────────── -->
   <form *ngIf="!successMessage" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
     <!-- Nome Utente -->
     <div style="margin-bottom: 15px;">
-      <label style="color: #000;">Nome Utente</label><br>
-      <input type="text" formControlName="name" placeholder="Inserisci il tuo nome"
+      <label style="color: #000;">Username</label><br>
+      <input type="text" formControlName="name" placeholder="Enter your name"
         style="width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box;">
-      <div *ngIf="submitted && f['name'].errors" style="color: red; font-size: 12px; margin-top: 4px;">
-        <span *ngIf="f['name'].errors['required']">Il nome è obbligatorio.</span>
-        <span *ngIf="f['name'].errors['minlength']">Il nome deve avere almeno 2 caratteri.</span>
+      <div *ngIf="submitted && f['name'].errors?.['required']" style="color: red; font-size: 12px; margin-top: 4px;">
+        Name is required.
       </div>
     </div>
 
     <!-- Email -->
     <div style="margin-bottom: 15px;">
       <label style="color: #000;">Email</label><br>
-      <input type="email" formControlName="email" placeholder="Inserisci la tua email"
+      <input type="email" formControlName="email" placeholder="Enter your email"
         style="width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box;">
-      <div *ngIf="submitted && f['email'].errors" style="color: red; font-size: 12px; margin-top: 4px;">
-        <span *ngIf="f['email'].errors['required']">L'email è obbligatoria.</span>
-        <span *ngIf="f['email'].errors['email']">Inserisci un'email valida.</span>
+      <div *ngIf="submitted && f['email'].errors?.['required']" style="color: red; font-size: 12px; margin-top: 4px;">
+        Email is required.
       </div>
     </div>
 
@@ -33,25 +31,24 @@
       <label style="color: #000;">Password</label><br>
       <div style="position: relative; width: 100%; display: flex; align-items: center;">
         <input [type]="showPassword ? 'text' : 'password'" formControlName="password"
-          placeholder="Inserisci una password"
+          placeholder="Enter a password"
           style="width: 100%; padding: 8px; padding-right: 40px; margin-top: 5px; box-sizing: border-box;">
         <button type="button" (click)="showPassword = !showPassword"
           style="position: absolute; right: 8px; top: 13px; background: none; border: none; cursor: pointer; color: #666; padding: 0;">
           {{ showPassword ? '🙈' : '👁️' }}
         </button>
       </div>
-      <div *ngIf="submitted && f['password'].errors" style="color: red; font-size: 12px; margin-top: 4px;">
-        <span *ngIf="f['password'].errors['required']">La password è obbligatoria.</span>
-        <span *ngIf="f['password'].errors['minlength']">La password deve avere almeno 6 caratteri.</span>
+      <div *ngIf="submitted && f['password'].errors?.['required']" style="color: red; font-size: 12px; margin-top: 4px;">
+        Password is required.
       </div>
     </div>
 
     <!-- Conferma Password -->
     <div style="margin-bottom: 15px;">
-      <label style="color: #000;">Conferma Password</label><br>
+      <label style="color: #000;">Confirm Password</label><br>
       <div style="position: relative; width: 100%; display: flex; align-items: center;">
         <input [type]="showConfirmPassword ? 'text' : 'password'" formControlName="confirmPassword"
-          placeholder="Ripeti la password"
+          placeholder="Repeat password"
           style="width: 100%; padding: 8px; padding-right: 40px; margin-top: 5px; box-sizing: border-box;">
         <button type="button" (click)="showConfirmPassword = !showConfirmPassword"
           style="position: absolute; right: 8px; top: 13px; background: none; border: none; cursor: pointer; color: #666; padding: 0;">
@@ -60,7 +57,7 @@
       </div>
       <div *ngIf="submitted && registerForm.errors?.['passwordMismatch']"
         style="color: red; font-size: 12px; margin-top: 4px;">
-        Le password non coincidono.
+        Passwords do not match.
       </div>
     </div>
 
@@ -70,9 +67,9 @@
     </div>
 
     <!-- Submit Button -->
-    <button type="submit" [disabled]="registerForm.invalid" [style.opacity]="registerForm.invalid ? '0.6' : '1'"
+    <button type="submit"
       style="width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
-      Registrati
+      Register
     </button>
   </form>
 
@@ -83,12 +80,12 @@
       {{ successMessage }}
     </p>
     <p style="color: #666; font-size: 14px;">
-      Ora puoi accedere con le tue credenziali.
+      You can now log in with your credentials.
     </p>
   </div>
 
   <!-- ── Link "Indietro" (sempre visibile) ────────────── -->
   <p style="text-align: center; margin-top: 16px; color: #666; font-size: 14px;">
-    <a routerLink="/" style="color: #007bff; text-decoration: none; font-weight: 500;">← Indietro al Login</a>
+    <a routerLink="/" style="color: #007bff; text-decoration: none; font-weight: 500;">← Back to Login</a>
   </p>
 </div>

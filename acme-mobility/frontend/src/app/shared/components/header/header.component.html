@@ -5,7 +5,7 @@
   <div class="user-container" *ngIf="session.isLoggedIn()">
     <span class="user-tag">👤 {{ session.userName() }}</span>
     <button class="logout-btn" (click)="onLogout()" aria-label="Logout" title="Logout">
-      <span aria-hidden="true">🚪 Esci</span>
+      <span aria-hidden="true">🚪 Logout</span>
     </button>
   </div>
 </header>

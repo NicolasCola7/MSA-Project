@@ -4,14 +4,14 @@
   <form (ngSubmit)="onLogin()">
     <div style="margin-bottom: 15px;">
       <label style="color: #000;">Email</label><br>
-      <input type="email" [(ngModel)]="email" name="email" placeholder="Inserisci la tua email" required
+      <input type="email" [(ngModel)]="email" name="email" placeholder="Enter your email" required
         style="width: 100%; padding: 8px; margin-top: 5px; box-sizing: border-box;">
     </div>
     <div style="margin-bottom: 15px;">
       <label style="color: #000;">Password</label><br>
       <div style="position: relative; width: 100%; display: flex; align-items: center;">
         <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" name="password"
-          placeholder="Inserisci la tua password" required
+          placeholder="Enter your password" required
           style="width: 100%; padding: 8px; padding-right: 40px; margin-top: 5px; box-sizing: border-box;">
         <button type="button" (click)="showPassword = !showPassword"
           style="position: absolute; right: 8px; top: 13px; background: none; border: none; cursor: pointer; color: #666; padding: 0;">
@@ -31,6 +31,6 @@
   </form>
 
   <p style="text-align: center; margin-top: 16px; color: #666; font-size: 14px;">
-    oppure registrati <a routerLink="/register" style="color: #007bff; text-decoration: none; font-weight: 500;">qui</a>
+    or register <a routerLink="/register" style="color: #007bff; text-decoration: none; font-weight: 500;">here</a>
   </p>
 </div>

@@ -49,12 +49,12 @@ export class LoginComponent {
 
           this.router.navigate(['/vehicles']);
         } else {
-          this.errorMessage.set(loginRes?.message ?? 'Errore sconosciuto.');
+          this.errorMessage.set(loginRes?.message ?? 'Unknown error.');
         }
       },
       error: (err) => {
         // 401 Unauthorized o errori di rete
-        this.errorMessage.set(err.error?.message ?? 'Credenziali non valide.');
+        this.errorMessage.set(err.error?.message ?? 'Invalid credentials.');
       }
     });
   }

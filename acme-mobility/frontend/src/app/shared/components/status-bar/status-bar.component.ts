@@ -20,14 +20,14 @@ export class StatusBarComponent {
   protected readonly config = computed<StatusConfig>(() => {
     const map: Record<LoadingState, StatusConfig> = {
       // ── stati flusso sincrono (attivo) ─────────────────────────────────────
-      idle:            { dotClass: '',        text: 'Inizializzazione…' },
-      loading:         { dotClass: 'loading', text: 'Caricamento veicoli…' },
-      loaded:          { dotClass: 'ok',      text: 'Dati ricevuti.' },
-      error:           { dotClass: 'error',   text: 'Errore connessione. Il backend è attivo?' },
+      idle:            { dotClass: '',        text: 'Initializing...' },
+      loading:         { dotClass: 'loading', text: 'Loading vehicles...' },
+      loaded:          { dotClass: 'ok',      text: 'Data received.' },
+      error:           { dotClass: 'error',   text: 'Connection error. Is the backend running?' },
       // ── stati flusso asincrono Zeebe (flussi futuri) ───────────────────────
-      'ws-connecting': { dotClass: 'loading', text: 'Apertura WebSocket…' },
-      'api-calling':   { dotClass: 'loading', text: 'Richiesta in corso…' },
-      'waiting-push':  { dotClass: 'loading', text: 'Attesa risposta Zeebe…' },
+      'ws-connecting': { dotClass: 'loading', text: 'Opening WebSocket...' },
+      'api-calling':   { dotClass: 'loading', text: 'Request in progress...' },
+      'waiting-push':  { dotClass: 'loading', text: 'Waiting for Zeebe response...' },
     };
     return map[this.state()];
   });

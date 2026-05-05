@@ -52,7 +52,7 @@ public class AuthController {
         // Check if email is already taken
         if (userRepository.findByEmail(request.email()).isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body(new RegisterResponse(false, "Email già registrata."));
+                    .body(new RegisterResponse(false, "Email already registered."));
         }
 
         User newUser = new User();
@@ -64,7 +64,7 @@ public class AuthController {
         System.out.println("[DEBUG] User registered successfully: " + request.email());
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(new RegisterResponse(true, "Registrazione completata con successo!"));
+                .body(new RegisterResponse(true, "Registration completed successfully!"));
     }
 
     // ── DTOs ─────────────────────────────────────────────────────────────────────

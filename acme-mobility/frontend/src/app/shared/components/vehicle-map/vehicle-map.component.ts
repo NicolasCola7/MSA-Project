@@ -212,7 +212,7 @@ export class VehicleMapComponent implements AfterViewInit, OnDestroy {
     // Buttons are enabled only for AVAILABLE vehicles.
     const canRent = v.status === 'AVAILABLE';
     const disabledAttr = canRent ? '' : 'disabled';
-    const disabledTitle = canRent ? '' : `title="Veicolo non disponibile (${statusLabel})"`;
+    const disabledTitle = canRent ? '' : `title="Vehicle not available (${statusLabel})"`;
 
     return `
       <div class="vehicle-popup">
@@ -228,13 +228,13 @@ export class VehicleMapComponent implements AfterViewInit, OnDestroy {
 
         <div class="vp-info">
           <div class="vp-row">
-            <span class="vp-label">Batteria</span>
+            <span class="vp-label">Battery</span>
             <span class="vp-value battery-${batteryClass}">
               🔋 ${v.batteryLevel}%
             </span>
           </div>
           <div class="vp-row">
-            <span class="vp-label">Stato</span>
+            <span class="vp-label">Status</span>
             <span class="vp-badge status-${statusClass}">${statusLabel}</span>
           </div>
         </div>
@@ -245,7 +245,7 @@ export class VehicleMapComponent implements AfterViewInit, OnDestroy {
             data-action="scan"
             data-vehicle-id="${this.escapeHtml(v.id)}"
             ${disabledAttr} ${disabledTitle}
-            aria-label="Scansiona QR per avviare noleggio">
+            aria-label="Scan QR to start rental">
             <span class="vp-btn-icon">📷</span> Scan QR
           </button>
           <button
@@ -253,23 +253,23 @@ export class VehicleMapComponent implements AfterViewInit, OnDestroy {
             data-action="book"
             data-vehicle-id="${this.escapeHtml(v.id)}"
             ${disabledAttr} ${disabledTitle}
-            aria-label="Prenota veicolo">
-            <span class="vp-btn-icon">📅</span> Prenota
+            aria-label="Book vehicle">
+            <span class="vp-btn-icon">📅</span> Book
           </button>
         </div>
 
-        ${!canRent ? `<div class="vp-unavailable-note">⚠ ${statusLabel} — non prenotabile ora</div>` : ''}
+        ${!canRent ? `<div class="vp-unavailable-note">⚠ ${statusLabel} — not bookable right now</div>` : ''}
       </div>
     `;
   }
 
   private formatStatus(status: string): string {
     const labels: Record<string, string> = {
-      AVAILABLE: 'Disponibile',
-      RESERVED: 'Prenotato',
-      RENTED: 'In noleggio',
-      MAINTENANCE: 'In manutenzione',
-      CHARGING: 'In ricarica',
+      AVAILABLE: 'Available',
+      RESERVED: 'Reserved',
+      RENTED: 'Rented',
+      MAINTENANCE: 'In Maintenance',
+      CHARGING: 'Charging',
     };
     return labels[status] ?? status;
   }

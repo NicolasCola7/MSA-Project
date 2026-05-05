@@ -61,9 +61,9 @@ export class RegisterComponent {
       },
       error: (err) => {
         if (err.status === 409) {
-          this.errorMessage = err.error?.message || 'Email già registrata.';
+          this.errorMessage = err.error?.message || 'Email already registered.';
         } else {
-          this.errorMessage = 'Errore di rete. Riprova più tardi.';
+          this.errorMessage = 'Network error. Please try again later.';
         }
       }
     });

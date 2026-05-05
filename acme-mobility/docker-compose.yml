@@ -2,7 +2,7 @@ services:
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.9.1
-    container_name: acme-elasticsearch
+    container_name: elasticsearch
     hostname: acme-elasticsearch
     environment:
       - discovery.type=single-node
@@ -29,7 +29,7 @@ services:
 
   zeebe:
     image: camunda/zeebe:8.4.6
-    container_name: acme-zeebe
+    container_name: zeebe
     environment:
       - ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_CLASSNAME=io.camunda.zeebe.exporter.ElasticsearchExporter
       - ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_ARGS_URL=http://elasticsearch:9200
@@ -52,9 +52,9 @@ services:
       retries: 20
       start_period: 120s 
 
-  operate:
+  operate-camunda:
     image: camunda/operate:8.4.6
-    container_name: acme-operate
+    container_name: operate-camunda
     environment:
       - CAMUNDA_OPERATE_ZEEBE_GATEWAYADDRESS=zeebe:26500
       - CAMUNDA_OPERATE_ELASTICSEARCH_URL=http://elasticsearch:9200
@@ -72,12 +72,12 @@ services:
     build:
       context: ./rental-service
       dockerfile: Dockerfile.dev
-    container_name: acme-rental-service
+    container_name: rental-service
     environment:
         ZEEBE_CLIENT_BROKER_GATEWAYADDRESS: zeebe:26500
         ZEEBE_CLIENT_SECURITY_PLAINTEXT: true
         SPRING_PROFILES_ACTIVE: docker
-        SPRING_DATASOURCE_URL: jdbc:postgresql://rental-service-db:5432/acme_mobility
+        SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/acme_mobility
         SPRING_DATASOURCE_USERNAME: user
         SPRING_DATASOURCE_PASSWORD: password
         SPRING_JPA_HIBERNATE_DDL_AUTO: validate
@@ -91,12 +91,12 @@ services:
     depends_on:
       zeebe:
         condition: service_healthy
-      rental-service-db:
+      db:
           condition: service_started
 
-  rental-service-db:
+  db:
     image: postgres:18
-    container_name: acme-rental-service-db
+    container_name: db
     environment:
         POSTGRES_DB: acme_mobility
         POSTGRES_USER: user
@@ -113,7 +113,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.dev
-    container_name: acme-frontend
+    container_name: frontend
     ports:
       - "4200:4200"
     volumes:

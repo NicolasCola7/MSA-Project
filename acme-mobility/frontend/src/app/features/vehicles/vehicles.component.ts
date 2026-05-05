@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { VehicleService } from '@core/services/vehicle.service';
+import { RentalService } from '@core/services/rental.service';
 import { Vehicle } from '@core/models/vehicle.model';
 import { StatusBarComponent } from '@shared/components/status-bar/status-bar.component';
 import { StatsBarComponent } from './components/stats-bar/stats-bar.component';
@@ -27,17 +27,17 @@ import { ProcessTraceComponent } from './components/process-trace/process-trace.
   styleUrl: './vehicles.component.scss',
 })
 export class VehiclesComponent implements OnInit {
-  protected readonly vehicleService = inject(VehicleService);
+  protected readonly rentalService = inject(RentalService);
   private  readonly router          = inject(Router);
 
   ngOnInit(): void {
-    this.vehicleService.loadVehicles();
+    this.rentalService.loadVehicles();
   }
 
   // ── Marker click (generic selection log) ──────────────────────────────────
 
   protected onVehicleSelected(vehicle: Vehicle): void {
-    this.vehicleService.addLog(
+    this.rentalService.addLog(
       `Veicolo selezionato: ${vehicle.id} (${vehicle.model})`,
       'ok',
     );
@@ -50,7 +50,7 @@ export class VehiclesComponent implements OnInit {
   //   WS push: RENTAL_STARTED
 
   protected onScanQr(vehicle: Vehicle): void {
-    this.vehicleService.addLog(
+    this.rentalService.addLog(
       `▶ Scan QR avviato per ${vehicle.model} (${vehicle.id})`,
       'info',
     );
@@ -64,7 +64,7 @@ export class VehiclesComponent implements OnInit {
   // BPMN: reservation branch (not focus of this sprint)
 
   protected onPrenota(vehicle: Vehicle): void {
-    this.vehicleService.addLog(
+    this.rentalService.addLog(
       `📅 Prenotazione avviata per ${vehicle.model} (${vehicle.id})`,
       'info',
     );

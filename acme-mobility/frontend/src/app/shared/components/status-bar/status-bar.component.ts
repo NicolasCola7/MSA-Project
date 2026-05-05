@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
-import { LoadingState } from '@core/services/vehicle.service';
+import { LoadingState } from '@core/services/rental.service';
 
 interface StatusConfig {
   dotClass: string;

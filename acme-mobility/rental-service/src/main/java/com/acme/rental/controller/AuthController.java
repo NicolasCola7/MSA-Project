@@ -33,7 +33,7 @@ public class AuthController {
 
             if (user.getPassword().equals(request.password())) {
                 System.out.println("[DEBUG] Password match! Login successful.");
-                return ResponseEntity.ok(new LoginResponse(user.getId(), true, "Login successful"));
+                return ResponseEntity.ok(new LoginResponse(String.valueOf(user.getId()), true, "Login successful"));
             } else {
                 System.out.println("[DEBUG] Password mismatch.");
             }

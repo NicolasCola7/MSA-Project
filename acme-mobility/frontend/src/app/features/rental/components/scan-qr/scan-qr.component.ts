@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 
 import { SessionService } from '@core/services/session.service';
 import { RentalService } from '@core/services/rental.service';
-import { VehicleService } from '@core/services/vehicle.service';
+
 import { Vehicle } from '@core/models/vehicle.model';
 
 type Phase = 'ready' | 'starting' | 'success' | 'error';
@@ -30,7 +30,7 @@ export class ScanQrComponent implements OnInit {
   private readonly router         = inject(Router);
   private readonly sessionService = inject(SessionService);
   private readonly rentalService  = inject(RentalService);
-  private readonly vehicleService = inject(VehicleService);
+
 
   readonly phase        = signal<Phase>('ready');
   readonly vehicleId    = signal<string>('');
@@ -40,7 +40,7 @@ export class ScanQrComponent implements OnInit {
   // ── Computed signals ──────────────────────────────────────────────────────
 
   readonly vehicle = computed<Vehicle | null>(() =>
-    this.vehicleService.vehicles().find(v => v.id === this.vehicleId()) ?? null,
+    this.rentalService.vehicles().find(v => v.id === this.vehicleId()) ?? null,
   );
 
   readonly canStart = computed(() =>
@@ -78,7 +78,7 @@ export class ScanQrComponent implements OnInit {
     this.vehicleId.set(
       this.route.snapshot.queryParamMap.get('vehicleId') ?? '',
     );
-    this.vehicleService.loadVehicles();
+    this.rentalService.loadVehicles();
   }
 
   // ── Actions ───────────────────────────────────────────────────────────────

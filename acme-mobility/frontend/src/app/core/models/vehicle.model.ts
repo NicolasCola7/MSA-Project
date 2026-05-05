@@ -1,7 +1,7 @@
 // ── Vehicle domain model ──────────────────────────────────────────────────────
 
 export type VehicleType = 'SCOOTER' | 'KICK_SCOOTER' | 'CAR';
-export type VehicleStatus = 'AVAILABLE' | 'RESERVED' | 'IN_RENTAL' | 'MAINTENANCE' | 'CHARGING';
+export type VehicleStatus = 'AVAILABLE' | 'RESERVED' | 'RENTED' | 'MAINTENANCE' | 'CHARGING';
 
 export interface Vehicle {
   id: string;

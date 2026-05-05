@@ -14,7 +14,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class VehicleService {
+public class RentalService {
 
     private final VehicleRepository vehicleRepository;
     private final ZeebeClient zeebeClient;

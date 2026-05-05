@@ -1,6 +1,7 @@
-import { Injectable, OnDestroy, inject, signal } from '@angular/core';
+import { Injectable, OnDestroy, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subscription, filter } from 'rxjs';
+import { Observable, Subscription, filter } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 import { environment } from '@env/environment';
 import {
@@ -11,34 +12,79 @@ import {
   EndRentalResponse,
 } from '@core/models/rental.model';
 import {
+  Vehicle,
+  VehiclesResponse,
+  VehicleStats,
+  computeStats,
+} from '@core/models/vehicle.model';
+import {
   WsRentalStartedMessage,
   WsStatusUpdateMessage,
   WsRideEndedMessage,
+  WsVehiclesAvailableMessage,
 } from '@core/models/ws-messages.model';
 import { TraceLog, createLog } from '@core/models/trace-log.model';
-import { WebSocketService } from './websocket.service';
+import { WebSocketService, WsConnectionState } from './websocket.service';
 
 export type RentalState = 'idle' | 'starting' | 'active' | 'ending' | 'completed' | 'error';
+export type LoadingState = 'idle' | 'loading' | 'loaded' | 'error' | 'ws-connecting' | 'api-calling' | 'waiting-push';
 
 @Injectable({ providedIn: 'root' })
 export class RentalService implements OnDestroy {
   private readonly http = inject(HttpClient);
   private readonly ws   = inject(WebSocketService);
 
-  // ── Signals ────────────────────────────────────────────────────────────────
+  // ── Signals Rental ────────────────────────────────────────────────────────
   readonly rentalState  = signal<RentalState>('idle');
   readonly activeRental = signal<Rental | null>(null);
   readonly logs         = signal<TraceLog[]>([]);
 
+  // ── Signals Vehicles ──────────────────────────────────────────────────────
+  readonly vehicles     = signal<Vehicle[]>([]);
+  readonly stats        = computed<VehicleStats>(() => computeStats(this.vehicles()));
+  readonly vehicleLoadingState = signal<LoadingState>('idle');
+  readonly vehicleErrorMessage = signal<string | null>(null);
+  
+  readonly wsState       = this.ws.connectionState;
+  readonly isWsConnected = this.ws.isConnected;
+  private readonly wsState$: Observable<WsConnectionState>;
+
   private subs: Subscription[] = [];
 
   constructor() {
+    this.wsState$ = toObservable(this.ws.connectionState);
     this.listenToWsMessages();
   }
 
   // ─────────────────────────────────────────────────────────────────────────
-  // POST /api/rental/scan  { vehicleId, userId }
-  // Triggers Zeebe message correlation on "Message_scanQR"
+  // VEHICLE LOGIC
+  // ─────────────────────────────────────────────────────────────────────────
+  loadVehicles(): void {
+    this.vehicleLoadingState.set('loading');
+    this.addLog('GET /api/vehicles…');
+
+    const sub = this.http
+      .get<VehiclesResponse>(`${environment.apiBase}/api/vehicles`)
+      .subscribe({
+        next: res => {
+          this.addLog(`✅ ${res.count} veicoli ricevuti`, 'ok');
+          this.vehicles.set(res.vehicles);
+          this.vehicleLoadingState.set('loaded');
+        },
+        error: err => this.handleVehicleError(`Errore API: ${err.message}`),
+      });
+
+    this.subs.push(sub);
+  }
+
+  private handleVehicleError(msg: string): void {
+    this.addLog(`❌ ${msg}`, 'error');
+    this.vehicleErrorMessage.set(msg);
+    this.vehicleLoadingState.set('error');
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // RENTAL LOGIC
   // ─────────────────────────────────────────────────────────────────────────
   startRental(req: StartRentalRequest): void {
     this.rentalState.set('starting');
@@ -57,11 +103,7 @@ export class RentalService implements OnDestroy {
     });
   }
 
-  // ─────────────────────────────────────────────────────────────────────────
-  // POST /api/rental/end  { rentalId, userId, stationId }
-  // ─────────────────────────────────────────────────────────────────────────
   endRental(req: EndRentalRequest): void {
-    // TODO: implement when backend is ready
     this.addLog(`[STUB] POST /api/rental/end  rentalId=${req.rentalId}`);
     this.rentalState.set('ending');
   }
@@ -96,7 +138,6 @@ export class RentalService implements OnDestroy {
         .pipe(filter((m): m is WsStatusUpdateMessage => m.type === 'STATUS_UPDATE'))
         .subscribe(msg => {
           this.addLog(`📍 Status update: battery ${msg.vehicleStatus.batteryLevel}%`);
-          // TODO: update map/live status panel
         }),
     );
 
@@ -108,6 +149,17 @@ export class RentalService implements OnDestroy {
           this.addLog(`✅ Ride ended. Total: €${msg.payment.totalCost}`, 'ok');
           this.activeRental.update(r => r ? { ...r, status: 'COMPLETED' } : r);
           this.rentalState.set('completed');
+        }),
+    );
+
+    // VEHICLES_AVAILABLE
+    this.subs.push(
+      this.ws.messages$
+        .pipe(filter((msg): msg is WsVehiclesAvailableMessage => msg.type === 'VEHICLES_AVAILABLE'))
+        .subscribe(msg => {
+          this.addLog(`✅ WebSocket push: ${msg.count} veicoli ricevuti`, 'ok');
+          this.vehicles.set(msg.vehicles);
+          this.vehicleLoadingState.set('loaded');
         }),
     );
   }

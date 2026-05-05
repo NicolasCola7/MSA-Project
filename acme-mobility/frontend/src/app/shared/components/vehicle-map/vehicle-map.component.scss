@@ -22,6 +22,17 @@
   border: none;
 }
 
+// Marker styles by type
+::ng-deep .acme-vehicle-marker.marker-type-car .marker-bubble {
+  border-color: #3b82f6; // Blue
+  color: #3b82f6;
+}
+
+::ng-deep .acme-vehicle-marker.marker-type-kick-scooter .marker-bubble {
+  border-color: #10b981; // Green
+  color: #10b981;
+}
+
 ::ng-deep .acme-vehicle-marker .marker-bubble {
   width: 40px;
   height: 40px;
@@ -136,9 +147,17 @@
 }
 
 // Battery colours
-::ng-deep .vehicle-popup .battery-high   { color: var(--color-success); }
-::ng-deep .vehicle-popup .battery-medium { color: var(--color-warning); }
-::ng-deep .vehicle-popup .battery-low    { color: var(--color-error);   }
+::ng-deep .vehicle-popup .battery-high {
+  color: var(--color-success);
+}
+
+::ng-deep .vehicle-popup .battery-medium {
+  color: var(--color-warning);
+}
+
+::ng-deep .vehicle-popup .battery-low {
+  color: var(--color-error);
+}
 
 // Status badge
 ::ng-deep .vehicle-popup .vp-badge {
@@ -150,11 +169,30 @@
   text-transform: uppercase;
 }
 
-::ng-deep .vehicle-popup .status-available    { background: rgba(34,197,94,.18);  color: var(--color-success); }
-::ng-deep .vehicle-popup .status-reserved     { background: rgba(245,158,11,.18); color: var(--color-warning); }
-::ng-deep .vehicle-popup .status-in-rental    { background: rgba(56,189,248,.18); color: var(--color-accent);  }
-::ng-deep .vehicle-popup .status-maintenance  { background: rgba(239,68,68,.18);  color: var(--color-error);   }
-::ng-deep .vehicle-popup .status-charging     { background: rgba(139,92,246,.18); color: #a78bfa;              }
+::ng-deep .vehicle-popup .status-available {
+  background: rgba(34, 197, 94, .18);
+  color: var(--color-success);
+}
+
+::ng-deep .vehicle-popup .status-reserved {
+  background: rgba(245, 158, 11, .18);
+  color: var(--color-warning);
+}
+
+::ng-deep .vehicle-popup .status-rented {
+  background: rgba(56, 189, 248, .18);
+  color: var(--color-accent);
+}
+
+::ng-deep .vehicle-popup .status-maintenance {
+  background: rgba(239, 68, 68, .18);
+  color: var(--color-error);
+}
+
+::ng-deep .vehicle-popup .status-charging {
+  background: rgba(139, 92, 246, .18);
+  color: #a78bfa;
+}
 
 // ── Action buttons ─────────────────────────────────────────────────────────
 

@@ -16,4 +16,4 @@ RUN --mount=type=cache,target=/root/.npm npm install
 EXPOSE 4200
 
 # Start the Angular dev server and bind it to all network interfaces, poll every 2 second to detect edits
-CMD ["npm", "start", "--", "--host=0.0.0.0", "--poll=2000"]
+CMD ["npm", "start", "--", "--poll=2000"]

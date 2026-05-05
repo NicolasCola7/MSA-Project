@@ -47,12 +47,12 @@ const FIT_BOUNDS_MAX_ZOOM = 15;
 })
 export class VehicleMapComponent implements AfterViewInit, OnDestroy {
 
-  readonly vehicles        = input<Vehicle[]>([]);
+  readonly vehicles = input<Vehicle[]>([]);
   readonly vehicleSelected = output<Vehicle>();
-  readonly scanQrSelected  = output<Vehicle>();
+  readonly scanQrSelected = output<Vehicle>();
   readonly prenotaSelected = output<Vehicle>();
 
-  private readonly zone         = inject(NgZone);
+  private readonly zone = inject(NgZone);
   private readonly mapContainer =
     viewChild.required<ElementRef<HTMLDivElement>>('mapContainer');
 
@@ -74,7 +74,14 @@ export class VehicleMapComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.initMap();
-    this.renderMarkers(this.vehicles());
+    
+    // Vector 1 Fix: Leaflet calcola le dimensioni in modo sincrono. Se il DOM
+    // Angular non ha ancora terminato il layout (es. flexbox), la mappa crede 
+    // di essere 0x0. Forziamo il ricalcolo al prossimo tick.
+    setTimeout(() => {
+      this.map?.invalidateSize();
+      this.renderMarkers(this.vehicles());
+    }, 100);
   }
 
   ngOnDestroy(): void {
@@ -117,14 +124,14 @@ export class VehicleMapComponent implements AfterViewInit, OnDestroy {
         btn.addEventListener('click', (ev) => {
           ev.stopPropagation();
           const vehicleId = btn.dataset['vehicleId'];
-          const action    = btn.dataset['action'];
-          const vehicle   = vehicleId ? this.vehicleById.get(vehicleId) : undefined;
+          const action = btn.dataset['action'];
+          const vehicle = vehicleId ? this.vehicleById.get(vehicleId) : undefined;
 
           if (!vehicle) return;
 
           this.zone.run(() => {
-            if (action === 'scan')  this.scanQrSelected.emit(vehicle);
-            if (action === 'book')  this.prenotaSelected.emit(vehicle);
+            if (action === 'scan') this.scanQrSelected.emit(vehicle);
+            if (action === 'book') this.prenotaSelected.emit(vehicle);
           });
 
           this.map?.closePopup();
@@ -141,17 +148,21 @@ export class VehicleMapComponent implements AfterViewInit, OnDestroy {
     this.markersLayer.clearLayers();
     this.vehicleById.clear();
 
+    // Vector 3 Fix: Tolleranza per le coordinate passate come stringhe.
+    // Un controllo stretto "typeof === 'number'" esclude i veicoli se il parser JSON 
+    // converte i Double in stringhe (comune con alcuni setup Spring/Postgres).
     const geoVehicles = vehicles.filter(
-      (v): v is Vehicle & { latitude: number; longitude: number } =>
-        typeof v.latitude === 'number' && typeof v.longitude === 'number',
+      (v) => v.latitude != null && v.longitude != null
     );
 
     if (geoVehicles.length === 0) return;
 
     for (const v of geoVehicles) {
-      this.vehicleById.set(v.id, v);
+      this.vehicleById.set(String(v.id), v);
 
-      const marker = L.marker([v.latitude, v.longitude], {
+      if (isNaN(Number(v.latitude)) || isNaN(Number(v.longitude))) continue;
+
+      const marker = L.marker([Number(v.latitude), Number(v.longitude)], {
         icon: this.buildVehicleIcon(v),
         title: `${v.model} — battery ${v.batteryLevel}%`,
       });
@@ -159,12 +170,14 @@ export class VehicleMapComponent implements AfterViewInit, OnDestroy {
       marker.bindPopup(this.buildPopupHtml(v), { minWidth: 200 });
       marker.on('click', () => this.vehicleSelected.emit(v));
 
+      // Vector 4 Fix: Usa solo il LayerGroup. Il LayerGroup è già agganciato alla mappa in initMap().
+      // Chiamare marker.addTo(this.map) crea una referenza fantasma non ripulibile da clearLayers().
       this.markersLayer.addLayer(marker);
     }
 
     if (!this.hasAutoFitted) {
       const bounds = L.latLngBounds(
-        geoVehicles.map(v => [v.latitude, v.longitude] as L.LatLngTuple),
+        geoVehicles.map(v => [Number(v.latitude), Number(v.longitude)] as L.LatLngTuple),
       );
       this.map.fitBounds(bounds, {
         padding: FIT_BOUNDS_PADDING,
@@ -177,16 +190,17 @@ export class VehicleMapComponent implements AfterViewInit, OnDestroy {
   // ── Presentation helpers ───────────────────────────────────────────────────
 
   private buildVehicleIcon(v: Vehicle): L.DivIcon {
-    const emoji = vehicleIcon(v.type);
+    let color = '#64748b'; // default gray
+    if (v.type === 'CAR') color = '#3b82f6';
+    if (v.type === 'SCOOTER') color = '#10b981';
+    if (v.type === 'KICK_SCOOTER') color = '#f59e0b';
+
     return L.divIcon({
-      className: 'acme-vehicle-marker',
-      html:
-        `<div class="marker-bubble" title="${this.escapeHtml(v.model)}">` +
-        `  <span aria-hidden="true">${emoji}</span>` +
-        `</div>`,
-      iconSize: [40, 40],
-      iconAnchor: [20, 20],
-      popupAnchor: [0, -22],
+      className: '',
+      html: `<div style="display: block; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; background-color: ${color}; box-shadow: 0 0 5px rgba(0,0,0,0.5);"></div>`,
+      iconSize: [20, 20],
+      iconAnchor: [10, 10],
+      popupAnchor: [0, -10],
     });
   }
 
@@ -251,11 +265,11 @@ export class VehicleMapComponent implements AfterViewInit, OnDestroy {
 
   private formatStatus(status: string): string {
     const labels: Record<string, string> = {
-      AVAILABLE:   'Disponibile',
-      RESERVED:    'Prenotato',
-      IN_RENTAL:   'In noleggio',
+      AVAILABLE: 'Disponibile',
+      RESERVED: 'Prenotato',
+      RENTED: 'In noleggio',
       MAINTENANCE: 'In manutenzione',
-      CHARGING:    'In ricarica',
+      CHARGING: 'In ricarica',
     };
     return labels[status] ?? status;
   }

@@ -1,6 +1,6 @@
 package com.acme.rental.controller;
 
-import com.acme.rental.service.VehicleService;
+import com.acme.rental.service.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ import java.util.Map;
 public class RentalController {
 
     @Autowired
-    private VehicleService vehicleService;
+    private RentalService rentalService;
 
     // Utilizzato durante il login per istanziare il processo Zeebe
     @PostMapping("/api/rentals/init")
@@ -21,7 +21,7 @@ public class RentalController {
         if (userId == null) {
             return ResponseEntity.badRequest().body(Map.of("error", "userId is required"));
         }
-        long processInstanceKey = vehicleService.initRentalProcess(userId);
+        long processInstanceKey = rentalService.initRentalProcess(userId);
         return ResponseEntity.ok(Map.of("processInstanceKey", processInstanceKey, "success", true));
     }
 
@@ -35,7 +35,7 @@ public class RentalController {
             return ResponseEntity.badRequest().body(Map.of("error", "userId and vehicleId are required"));
         }
         
-        vehicleService.scanQr(userId, vehicleId);
+        rentalService.scanQr(userId, vehicleId);
         return ResponseEntity.ok(Map.of("success", true, "message", "QR scanned and sent to Zeebe"));
     }
 }

@@ -133,7 +133,7 @@ main {
             
             updateQuery = "update accounts set balance = balance - :amount, blocked_amount = 0.00 where id = :id";
             updateQuery.id = request.accountId;
-            updateQuery.amount = request.amount;
+            updateQuery.amount = double(request.amount);
             update@Database( updateQuery )( rowsAffected );
 
             if ( rowsAffected > 0 ) {

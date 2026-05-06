@@ -160,6 +160,22 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+      
+  account-service:
+    build:
+      context: ./bank-account-registration-service
+      dockerfile: Dockerfile.dev
+    container_name: bank-account-registration-service
+    ports:
+      - "8082:8080" 
+    volumes:
+      - ./bank-account-registration-service:/app
+    restart: unless-stopped
+    depends_on:
+      bank-service-db:
+        condition: service_healthy
+    networks:
+      - acme-net
 
 networks:
   acme-net:

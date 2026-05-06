@@ -98,9 +98,7 @@ export class ScanQrComponent implements OnInit {
     this.router.navigate(['/map']);
   }
 
-  goBack(): void {
-    this.router.navigate(['/map']);
-  }
+
 
   formatVehicleType(type: string | undefined): string {
     return type ? type.replace(/_/g, ' ') : '';

@@ -89,9 +89,7 @@ export class BookingConfirmationComponent implements OnInit {
     });
   }
 
-  goBack(): void {
-    this.router.navigate(['/map']);
-  }
+
 
   formatVehicleType(type: string | undefined): string {
     return type ? type.replace(/_/g, ' ') : '';

@@ -24,7 +24,7 @@ export class WebSocketService implements OnDestroy {
 
   /**
    * Opens the WebSocket for the given userId.
-   * MUST be called BEFORE the HTTP /api/map request so that
+   * MUST be called BEFORE the HTTP /api/rentals/map request so that
    * the Zeebe Worker finds the session in the push registry.
    */
   connect(userId: string): void {

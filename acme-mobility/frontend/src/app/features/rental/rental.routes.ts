@@ -5,7 +5,7 @@ import { Routes } from '@angular/router';
  * Activate when the backend flow is implemented.
  *
  * Flow 2 — Scan QR:
- *   Browser POST /api/rental/scan  { vehicleId, userId }
+ *   Browser POST /api/rentals/scan  { vehicleId, userId }
  *   Zeebe correlates "Message_scanQR" on the open process instance
  *   Workers: BlockMoneyWorker → UnlockVehicleWorker → StartMonitoringWorker → RentalStartedWorker
  *   WS push: RENTAL_STARTED
@@ -15,7 +15,7 @@ import { Routes } from '@angular/router';
  *   WS push: STATUS_UPDATE  { latitude, longitude, batteryLevel }
  *
  * Flow 4 — End ride:
- *   Browser POST /api/rental/end  { rentalId, userId, stationId }
+ *   Browser POST /api/rentals/end  { rentalId, userId, stationId }
  *   Zeebe: LockVehicleWorker → StopMonitoringWorker → CalculateCostWorker → ChargeWorker
  *   WS push: RIDE_ENDED  { payment: { totalCost, penaltyApplied, … } }
  */

@@ -36,18 +36,7 @@ export class LoginComponent {
           const userName = loginRes.userName;
 
           this.sessionService.loginUser(userId, userName);
-
-          // Avvia processo Camunda (non bloccante: se fallisce, naviga comunque)
-          this.http.post<any>(`${environment.apiBase}/api/rentals/init`, { userId }).subscribe({
-            next: (camundaRes) => {
-              if (camundaRes?.processInstanceKey) {
-                localStorage.setItem('currentProcessInstance', camundaRes.processInstanceKey.toString());
-              }
-            },
-            error: () => { /* Camunda non critico, ignoriamo */ }
-          });
-
-          this.router.navigate(['/map']);
+          this.router.navigate(['/init']);
         } else {
           this.errorMessage.set(loginRes?.message ?? 'Unknown error.');
         }

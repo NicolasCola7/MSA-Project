@@ -95,7 +95,7 @@ export class ScanQrComponent implements OnInit {
   }
 
   goToActiveRide(): void {
-    this.router.navigate(['/rental/active', this.rentalId ?? 'unknown']);
+    this.router.navigate(['/map']);
   }
 
   goBack(): void {

@@ -25,8 +25,8 @@ export const routes: Routes = [
   {
     path: 'map',
     canActivate: [authGuard],
-    loadChildren: () =>
-      import('./features/vehicles/vehicles.routes').then(m => m.VEHICLES_ROUTES),
+    loadComponent: () =>
+      import('./features/vehicles/vehicles.component').then(m => m.VehiclesComponent),
   },
 
   {
@@ -39,29 +39,20 @@ export const routes: Routes = [
   },
 
   {
+    path: 'init',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/init/init-process.component').then(
+        m => m.InitProcessComponent,
+      ),
+  },
+
+  {
     path: 'book',
     canActivate: [authGuard],
     loadComponent: () =>
       import('./features/booking/booking-confirmation.component').then(
         m => m.BookingConfirmationComponent,
-      ),
-  },
-
-  // ── Flow 2–4: Rental (scan QR, active ride, end ride) — STUBS ─────────────
-  {
-    path: 'rental',
-    canActivate: [authGuard],
-    loadChildren: () =>
-      import('./features/rental/rental.routes').then(m => m.RENTAL_ROUTES),
-  },
-
-  // ── Flow 5–6: Reservation (book + cancel) — STUBS ─────────────────────────
-  {
-    path: 'reservation',
-    canActivate: [authGuard],
-    loadChildren: () =>
-      import('./features/reservation/reservation.routes').then(
-        m => m.RESERVATION_ROUTES,
       ),
   },
 

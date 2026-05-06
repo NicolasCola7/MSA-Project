@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Vehicle } from '@core/models/vehicle.model';
 import { RentalService } from '@core/services/rental.service';
+import { SessionService } from '@core/services/session.service';
 
 @Component({
   selector: 'acme-booking-confirmation',
@@ -24,6 +25,7 @@ export class BookingConfirmationComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly rentalService = inject(RentalService);
+  private readonly sessionService = inject(SessionService);
 
   readonly vehicleId = signal<string>('');
   isLoading = false;
@@ -71,10 +73,20 @@ export class BookingConfirmationComponent implements OnInit {
 
     this.isLoading = true;
 
-    setTimeout(() => {
-      this.isLoading = false;
-      this.router.navigate(['/map']);
-    }, 2000);
+    this.rentalService.bookVehicle({
+      userId: this.sessionService.userId(),
+      vehicleId: this.vehicleId(),
+    }).subscribe({
+      next: () => {
+        setTimeout(() => {
+          this.isLoading = false;
+          this.router.navigate(['/map']);
+        }, 2000);
+      },
+      error: () => {
+        this.isLoading = false;
+      },
+    });
   }
 
   goBack(): void {

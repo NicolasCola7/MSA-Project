@@ -45,7 +45,7 @@ export class VehiclesComponent implements OnInit {
 
   // ── Popup → "Scan QR" button ──────────────────────────────────────────────
   // BPMN: Message_scanQR correlation path
-  //   Browser → POST /api/rental/scan { vehicleId, userId }
+  //   Browser → POST /api/rentals/scan { vehicleId, userId }
   //   Zeebe:  BlockMoneyWorker → UnlockVehicleWorker → StartMonitoringWorker
   //   WS push: RENTAL_STARTED
 

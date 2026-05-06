@@ -12,7 +12,7 @@ import {
   viewChild,
 } from '@angular/core';
 import * as L from 'leaflet';
-import { Vehicle, vehicleDisplayName, vehicleIcon } from '@core/models/vehicle.model';
+import { Vehicle, vehicleDisplayName, vehicleIcon, VehicleType } from '@core/models/vehicle.model';
 
 /**
  * Reusable Leaflet map that displays a collection of vehicles as markers.
@@ -194,22 +194,46 @@ export class VehicleMapComponent implements AfterViewInit, OnDestroy {
   // ── Presentation helpers ───────────────────────────────────────────────────
 
   private buildVehicleIcon(v: Vehicle): L.DivIcon {
-    let color = '#64748b'; // default gray
-    if (v.type === 'CAR') color = '#3b82f6';
-    if (v.type === 'SCOOTER') color = '#10b981';
-    if (v.type === 'KICK_SCOOTER') color = '#f59e0b';
+    const icon = vehicleIcon(v.type);
+    const borderColor = this.getVehicleColor(v.type);
 
     return L.divIcon({
-      className: '',
-      html: `<div style="display: block; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; background-color: ${color}; box-shadow: 0 0 5px rgba(0,0,0,0.5);"></div>`,
-      iconSize: [20, 20],
-      iconAnchor: [10, 10],
-      popupAnchor: [0, -10],
+      className: 'acme-vehicle-marker',
+      html: `
+        <div style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          height: 30px;
+          background-color: #ffffff;
+          border: 2.5px solid ${borderColor};
+          border-radius: 50%;
+          box-shadow: 0 3px 8px rgba(0, 0, 0, 0.24);
+          font-size: 18px;
+          line-height: 1;
+          user-select: none;
+        ">
+          ${icon}
+        </div>
+      `,
+      iconSize: [30, 30],
+      iconAnchor: [15, 15],
+      popupAnchor: [0, -18],
     });
   }
 
+  private getVehicleColor(type: VehicleType): string {
+    const colors: Record<VehicleType, string> = {
+      CAR: '#ef4444',          // Vibrant Red
+      SCOOTER: '#eab308',      // Bright Yellow
+      KICK_SCOOTER: '#3b82f6', // Modern Blue
+    };
+    return colors[type] ?? '#94a3b8';
+  }
+
   private buildPopupHtml(v: Vehicle): string {
-    const displayName = vehicleDisplayName(v);
+    const title = v.model ?? this.formatVehicleType(v.type);
     const statusLabel = this.formatStatus(v.status);
     const statusClass = v.status.toLowerCase().replace('_', '-');
     const batteryClass = v.batteryLevel >= 50 ? 'high' : v.batteryLevel >= 20 ? 'medium' : 'low';
@@ -224,7 +248,7 @@ export class VehicleMapComponent implements AfterViewInit, OnDestroy {
         <div class="vp-header">
           <span class="vp-icon">${vehicleIcon(v.type)}</span>
           <div>
-            <div class="vp-title">${this.escapeHtml(displayName)}</div>
+            <div class="vp-title">${this.escapeHtml(title)}</div>
             <div class="vp-id">ID: ${this.escapeHtml(v.id)}</div>
           </div>
         </div>
@@ -277,6 +301,10 @@ export class VehicleMapComponent implements AfterViewInit, OnDestroy {
       CHARGING: 'Charging',
     };
     return labels[status] ?? status;
+  }
+
+  private formatVehicleType(type: string): string {
+    return type.replace(/_/g, ' ');
   }
 
   private escapeHtml(value: string | number): string {

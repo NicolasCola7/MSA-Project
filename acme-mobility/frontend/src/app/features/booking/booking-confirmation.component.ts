@@ -6,44 +6,33 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-
-import { SessionService } from '@core/services/session.service';
-import { RentalService } from '@core/services/rental.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Vehicle } from '@core/models/vehicle.model';
-
-type Phase = 'ready' | 'starting' | 'success' | 'error';
+import { RentalService } from '@core/services/rental.service';
 
 @Component({
-  selector: 'acme-scan-qr',
+  selector: 'acme-booking-confirmation',
   standalone: true,
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './scan-qr.component.html',
-  styleUrl: './scan-qr.component.scss',
+  templateUrl: './booking-confirmation.component.html',
+  styleUrl: './booking-confirmation.component.scss',
 })
-export class ScanQrComponent implements OnInit {
-
+export class BookingConfirmationComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly sessionService = inject(SessionService);
   private readonly rentalService = inject(RentalService);
 
-
-  readonly phase = signal<Phase>('ready');
   readonly vehicleId = signal<string>('');
-  readonly errorMessage = signal<string>('');
-  private rentalId?: string;
-
-  // ── Computed signals ──────────────────────────────────────────────────────
+  isLoading = false;
 
   readonly vehicle = computed<Vehicle | null>(() =>
     this.rentalService.vehicles().find(v => String(v.id) === this.vehicleId()) ?? null,
   );
 
-  readonly canStart = computed(() =>
+  readonly canBook = computed(() =>
     !this.vehicle() || this.vehicle()!.status === 'AVAILABLE',
   );
 
@@ -65,7 +54,6 @@ export class ScanQrComponent implements OnInit {
     const labels: Record<string, string> = {
       AVAILABLE: 'Available',
       RESERVED: 'Reserved',
-      IN_RENTAL: 'In rental',
       RENTED: 'Rented',
       MAINTENANCE: 'In maintenance',
       CHARGING: 'Charging',
@@ -73,29 +61,20 @@ export class ScanQrComponent implements OnInit {
     return labels[this.vehicle()?.status ?? 'AVAILABLE'] ?? '';
   });
 
-  // ── Lifecycle ─────────────────────────────────────────────────────────────
-
   ngOnInit(): void {
-    this.vehicleId.set(
-      this.route.snapshot.queryParamMap.get('vehicleId') ?? '',
-    );
+    this.vehicleId.set(this.route.snapshot.queryParamMap.get('vehicleId') ?? '');
     this.rentalService.loadVehicles();
   }
 
-  // ── Actions ───────────────────────────────────────────────────────────────
+  book(): void {
+    if (!this.canBook() || this.isLoading) return;
 
-  async startRental(): Promise<void> {
-    if (!this.canStart()) return;
-    this.phase.set('starting');
+    this.isLoading = true;
 
-    this.rentalService.startRental({
-      userId: this.sessionService.userId(),
-      vehicleId: this.vehicleId(),
-    });
-  }
-
-  goToActiveRide(): void {
-    this.router.navigate(['/rental/active', this.rentalId ?? 'unknown']);
+    setTimeout(() => {
+      this.isLoading = false;
+      this.router.navigate(['/map']);
+    }, 2000);
   }
 
   goBack(): void {

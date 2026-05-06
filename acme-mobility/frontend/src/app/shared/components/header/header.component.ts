@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { environment } from '@env/environment';
+
 import { SessionService } from '@core/services/session.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { SessionService } from '@core/services/session.service';
 })
 export class HeaderComponent {
   protected readonly session = inject(SessionService);
-  protected readonly envTag = environment.envTag;
+
 
   onLogout() {
     this.session.logout();

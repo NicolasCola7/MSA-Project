@@ -28,7 +28,7 @@ import { ProcessTraceComponent } from './components/process-trace/process-trace.
 })
 export class VehiclesComponent implements OnInit {
   protected readonly rentalService = inject(RentalService);
-  private  readonly router          = inject(Router);
+  private readonly router = inject(Router);
 
   ngOnInit(): void {
     this.rentalService.loadVehicles();
@@ -38,7 +38,7 @@ export class VehiclesComponent implements OnInit {
 
   protected onVehicleSelected(vehicle: Vehicle): void {
     this.rentalService.addLog(
-      `Veicolo selezionato: ${vehicle.id} (${vehicle.model})`,
+      `Veicolo selezionato: ${vehicle.type} #${vehicle.id}`,
       'ok',
     );
   }
@@ -51,11 +51,11 @@ export class VehiclesComponent implements OnInit {
 
   protected onScanQr(vehicle: Vehicle): void {
     this.rentalService.addLog(
-      `▶ Scan QR avviato per ${vehicle.model} (${vehicle.id})`,
+      `▶ Scan QR avviato per ${vehicle.type} #${vehicle.id} (Battery: ${vehicle.batteryLevel}%)`,
       'info',
     );
     // Pass the pre-selected vehicleId so the scanner can confirm the match.
-    this.router.navigate(['/rental/scan'], {
+    this.router.navigate(['/scan'], {
       queryParams: { vehicleId: vehicle.id },
     });
   }
@@ -65,10 +65,10 @@ export class VehiclesComponent implements OnInit {
 
   protected onPrenota(vehicle: Vehicle): void {
     this.rentalService.addLog(
-      `📅 Prenotazione avviata per ${vehicle.model} (${vehicle.id})`,
+      `📅 Prenotazione avviata per ${vehicle.type} #${vehicle.id} (Battery: ${vehicle.batteryLevel}%)`,
       'info',
     );
-    this.router.navigate(['/reservation/create'], {
+    this.router.navigate(['/book'], {
       queryParams: { vehicleId: vehicle.id },
     });
   }

@@ -8,8 +8,12 @@ export const routes: Routes = [
   // ── Public routes (no guard) ──────────────────────────────────────────────
   {
     path: '',
-    component: LoginComponent,
+    redirectTo: 'map',
     pathMatch: 'full',
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
   {
     path: 'register',
@@ -19,10 +23,28 @@ export const routes: Routes = [
   // ── Protected routes ──────────────────────────────────────────────────────
   // ── Flow 1: Get available vehicles (IMPLEMENTED) ──────────────────────────
   {
-    path: 'vehicles',
+    path: 'map',
     canActivate: [authGuard],
     loadChildren: () =>
       import('./features/vehicles/vehicles.routes').then(m => m.VEHICLES_ROUTES),
+  },
+
+  {
+    path: 'scan',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/rental/components/scan-qr/scan-qr.component').then(
+        m => m.ScanQrComponent,
+      ),
+  },
+
+  {
+    path: 'book',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/booking/booking-confirmation.component').then(
+        m => m.BookingConfirmationComponent,
+      ),
   },
 
   // ── Flow 2–4: Rental (scan QR, active ride, end ride) — STUBS ─────────────
@@ -43,5 +65,5 @@ export const routes: Routes = [
       ),
   },
 
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: 'map' },
 ];

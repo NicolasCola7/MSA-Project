@@ -26,13 +26,6 @@ export const RENTAL_ROUTES: Routes = [
       import('./rental.component').then(m => m.RentalComponent),
     children: [
       {
-        path: 'scan',
-        loadComponent: () =>
-          import('./components/scan-qr/scan-qr.component').then(
-            m => m.ScanQrComponent,
-          ),
-      },
-      {
         path: 'active/:id',
         loadComponent: () =>
           import('./components/active-ride/active-ride.component').then(

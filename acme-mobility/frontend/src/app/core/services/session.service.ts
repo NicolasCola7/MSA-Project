@@ -46,6 +46,6 @@ export class SessionService {
     localStorage.clear();
     this.userId.set('');
     this.userName.set('');
-    this.router.navigate(['/']);
+    this.router.navigate(['/login']);
   }
 }

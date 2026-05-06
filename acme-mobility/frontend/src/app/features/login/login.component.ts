@@ -47,7 +47,7 @@ export class LoginComponent {
             error: () => { /* Camunda non critico, ignoriamo */ }
           });
 
-          this.router.navigate(['/vehicles']);
+          this.router.navigate(['/map']);
         } else {
           this.errorMessage.set(loginRes?.message ?? 'Unknown error.');
         }

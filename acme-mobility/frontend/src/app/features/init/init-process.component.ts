@@ -10,8 +10,55 @@ import { SessionService } from '@core/services/session.service';
   standalone: true,
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: './init-process.component.html',
-  styleUrl: './init-process.component.css'
+  template: `
+    <main class="init-shell">
+      @if (errorMessage()) {
+        <p class="error">{{ errorMessage() }}</p>
+        <button type="button" (click)="startProcess()">Retry</button>
+      } @else {
+        <div class="spinner"></div>
+        <p>Initializing rental process...</p>
+      }
+    </main>
+  `,
+  styles: [`
+    .init-shell {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: var(--color-text);
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 3px solid var(--color-border);
+      border-top-color: var(--color-accent);
+      border-radius: 50%;
+      animation: spin 0.85s linear infinite;
+    }
+
+    .error {
+      color: var(--color-error);
+    }
+
+    button {
+      padding: 0.7rem 1.1rem;
+      border: 0;
+      border-radius: var(--radius-md);
+      background: var(--color-accent);
+      color: #0f172a;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  `],
 })
 export class InitProcessComponent implements OnInit {
   private readonly rentalService = inject(RentalService);

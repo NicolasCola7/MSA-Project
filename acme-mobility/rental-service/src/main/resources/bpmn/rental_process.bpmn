@@ -23,7 +23,7 @@
         <bpmn:flowNodeRef>Event_0jemu81</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1it8lrj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0j1tkcl</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_blockMoney</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_checkStatus</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_reserveVehicle</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1s4mk1a</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_06ct1j3</bpmn:flowNodeRef>
@@ -142,7 +142,7 @@
     <bpmn:sequenceFlow id="Flow_0ma9hsw" sourceRef="Event_1wbz1l8" targetRef="Activity_chargeMoneyBlock" />
     <bpmn:sequenceFlow id="Flow_1u1jt3m" sourceRef="Event_0bt38ne" targetRef="Gateway_0qnr0hr" />
     <bpmn:sequenceFlow id="Flow_080qkvc" sourceRef="Activity_reserveVehicle" targetRef="Gateway_0g1nzuk" />
-    <bpmn:sequenceFlow id="Flow_05bvlkz" sourceRef="Activity_blockMoney" targetRef="Gateway_0g1nzuk" />
+    <bpmn:sequenceFlow id="Flow_05bvlkz" sourceRef="Activity_checkStatus" targetRef="Gateway_0g1nzuk" />
     <bpmn:sequenceFlow id="Flow_0qewayg" sourceRef="Event_03dhdr5" targetRef="Event_0j1tkcl" />
     <bpmn:endEvent id="Event_0j1tkcl">
       <bpmn:incoming>Flow_0qewayg</bpmn:incoming>
@@ -150,14 +150,14 @@
       <bpmn:errorEventDefinition id="ErrorEventDefinition_0p495vj" errorRef="Error_0mqqvyf" />
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0c4g5zj" sourceRef="Event_1d4oq6r" targetRef="Event_0j1tkcl" />
-    <bpmn:serviceTask id="Activity_blockMoney" name="block money">
+    <bpmn:serviceTask id="Activity_checkStatus" name="block money and check status">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="checkStatus" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1nzh7h6</bpmn:incoming>
       <bpmn:outgoing>Flow_05bvlkz</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:boundaryEvent id="Event_03dhdr5" name="no money" attachedToRef="Activity_blockMoney">
+    <bpmn:boundaryEvent id="Event_03dhdr5" name="no money" attachedToRef="Activity_checkStatus">
       <bpmn:outgoing>Flow_0qewayg</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_1u364e8" />
     </bpmn:boundaryEvent>
@@ -182,7 +182,7 @@
       <bpmn:outgoing>Flow_1u1jt3m</bpmn:outgoing>
       <bpmn:signalEventDefinition id="SignalEventDefinition_1dr70by" signalRef="Signal_08nulrc" />
     </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="Flow_1nzh7h6" sourceRef="Event_0ptz4qe" targetRef="Activity_blockMoney" />
+    <bpmn:sequenceFlow id="Flow_1nzh7h6" sourceRef="Event_0ptz4qe" targetRef="Activity_checkStatus" />
     <bpmn:sequenceFlow id="Flow_0wvplz6" sourceRef="Event_0phdpjg" targetRef="Activity_reserveVehicle" />
     <bpmn:startEvent id="Event_1s4mk1a">
       <bpmn:outgoing>Flow_1icandq</bpmn:outgoing>
@@ -380,9 +380,8 @@
       <bpmndi:BPMNShape id="Event_1tu263i_di" bpmnElement="Event_0j1tkcl">
         <dc:Bounds x="922" y="112" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_15pnw9s_di" bpmnElement="Activity_blockMoney">
+      <bpmndi:BPMNShape id="Activity_15pnw9s_di" bpmnElement="Activity_checkStatus">
         <dc:Bounds x="750" y="160" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1yb0zmu_di" bpmnElement="Activity_reserveVehicle">
         <dc:Bounds x="750" y="353" width="100" height="80" />

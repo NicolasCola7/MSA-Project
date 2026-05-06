@@ -1,9 +1,0 @@
-<main class="init-shell">
-    @if (errorMessage()) {
-    <p class="error">{{ errorMessage() }}</p>
-    <button type="button" (click)="startProcess()">Retry</button>
-    } @else {
-    <div class="spinner"></div>
-    <p>Initializing rental process...</p>
-    }
-</main>

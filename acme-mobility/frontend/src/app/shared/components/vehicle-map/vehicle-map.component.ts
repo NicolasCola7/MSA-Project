@@ -12,7 +12,7 @@ import {
   viewChild,
 } from '@angular/core';
 import * as L from 'leaflet';
-import { Vehicle, vehicleIcon } from '@core/models/vehicle.model';
+import { Vehicle, vehicleDisplayName, vehicleIcon } from '@core/models/vehicle.model';
 
 /**
  * Reusable Leaflet map that displays a collection of vehicles as markers.
@@ -151,20 +151,24 @@ export class VehicleMapComponent implements AfterViewInit, OnDestroy {
     // Vector 3 Fix: Tolleranza per le coordinate passate come stringhe.
     // Un controllo stretto "typeof === 'number'" esclude i veicoli se il parser JSON 
     // converte i Double in stringhe (comune con alcuni setup Spring/Postgres).
-    const geoVehicles = vehicles.filter(
-      (v) => v.latitude != null && v.longitude != null
-    );
+    const geoVehicles = vehicles.filter((v) => {
+      if (v.latitude == null || v.longitude == null) return false;
+      const latitude = Number(v.latitude);
+      const longitude = Number(v.longitude);
+      return Number.isFinite(latitude) && Number.isFinite(longitude);
+    });
 
     if (geoVehicles.length === 0) return;
 
     for (const v of geoVehicles) {
       this.vehicleById.set(String(v.id), v);
 
-      if (isNaN(Number(v.latitude)) || isNaN(Number(v.longitude))) continue;
+      const latitude = Number(v.latitude);
+      const longitude = Number(v.longitude);
 
-      const marker = L.marker([Number(v.latitude), Number(v.longitude)], {
+      const marker = L.marker([latitude, longitude], {
         icon: this.buildVehicleIcon(v),
-        title: `${v.model} — battery ${v.batteryLevel}%`,
+        title: `${vehicleDisplayName(v)} - battery ${v.batteryLevel}%`,
       });
 
       marker.bindPopup(this.buildPopupHtml(v), { minWidth: 200 });
@@ -205,6 +209,7 @@ export class VehicleMapComponent implements AfterViewInit, OnDestroy {
   }
 
   private buildPopupHtml(v: Vehicle): string {
+    const displayName = vehicleDisplayName(v);
     const statusLabel = this.formatStatus(v.status);
     const statusClass = v.status.toLowerCase().replace('_', '-');
     const batteryClass = v.batteryLevel >= 50 ? 'high' : v.batteryLevel >= 20 ? 'medium' : 'low';
@@ -219,7 +224,7 @@ export class VehicleMapComponent implements AfterViewInit, OnDestroy {
         <div class="vp-header">
           <span class="vp-icon">${vehicleIcon(v.type)}</span>
           <div>
-            <div class="vp-title">${this.escapeHtml(v.model)}</div>
+            <div class="vp-title">${this.escapeHtml(displayName)}</div>
             <div class="vp-id">ID: ${this.escapeHtml(v.id)}</div>
           </div>
         </div>
@@ -274,8 +279,8 @@ export class VehicleMapComponent implements AfterViewInit, OnDestroy {
     return labels[status] ?? status;
   }
 
-  private escapeHtml(s: string): string {
-    return s
+  private escapeHtml(value: string | number): string {
+    return String(value)
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')

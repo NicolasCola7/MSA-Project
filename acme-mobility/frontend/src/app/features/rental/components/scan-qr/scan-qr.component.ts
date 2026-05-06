@@ -40,7 +40,7 @@ export class ScanQrComponent implements OnInit {
   // ── Computed signals ──────────────────────────────────────────────────────
 
   readonly vehicle = computed<Vehicle | null>(() =>
-    this.rentalService.vehicles().find(v => v.id === this.vehicleId()) ?? null,
+    this.rentalService.vehicles().find(v => String(v.id) === this.vehicleId()) ?? null,
   );
 
   readonly canStart = computed(() =>

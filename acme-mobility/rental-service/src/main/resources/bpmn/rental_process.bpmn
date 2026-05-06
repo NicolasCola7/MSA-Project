@@ -23,7 +23,7 @@
         <bpmn:flowNodeRef>Event_0jemu81</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1it8lrj</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0j1tkcl</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_checkStatus</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_blockMoney</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_reserveVehicle</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_1s4mk1a</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_06ct1j3</bpmn:flowNodeRef>
@@ -53,7 +53,6 @@
       <bpmn:incoming>Flow_0l11gdm</bpmn:incoming>
       <bpmn:outgoing>Flow_04sddp2</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_start_to_blockMoney" sourceRef="Event_0ptz4qe" targetRef="Activity_blockMoney" />
     <bpmn:sequenceFlow id="Flow_0nairkv" sourceRef="Gateway_0qnr0hr" targetRef="Activity_chargeMoneyBlock" />
     <bpmn:sequenceFlow id="Flow_1syjbug" name="more than 5 minutes ealrty" sourceRef="Gateway_0qnr0hr" targetRef="Activity_17rmkkh">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=diffMinutes &gt; 5</bpmn:conditionExpression>
@@ -143,7 +142,7 @@
     <bpmn:sequenceFlow id="Flow_0ma9hsw" sourceRef="Event_1wbz1l8" targetRef="Activity_chargeMoneyBlock" />
     <bpmn:sequenceFlow id="Flow_1u1jt3m" sourceRef="Event_0bt38ne" targetRef="Gateway_0qnr0hr" />
     <bpmn:sequenceFlow id="Flow_080qkvc" sourceRef="Activity_reserveVehicle" targetRef="Gateway_0g1nzuk" />
-    <bpmn:sequenceFlow id="Flow_05bvlkz" sourceRef="Activity_checkStatus" targetRef="Gateway_0g1nzuk" />
+    <bpmn:sequenceFlow id="Flow_05bvlkz" sourceRef="Activity_blockMoney" targetRef="Gateway_0g1nzuk" />
     <bpmn:sequenceFlow id="Flow_0qewayg" sourceRef="Event_03dhdr5" targetRef="Event_0j1tkcl" />
     <bpmn:endEvent id="Event_0j1tkcl">
       <bpmn:incoming>Flow_0qewayg</bpmn:incoming>
@@ -151,14 +150,14 @@
       <bpmn:errorEventDefinition id="ErrorEventDefinition_0p495vj" errorRef="Error_0mqqvyf" />
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0c4g5zj" sourceRef="Event_1d4oq6r" targetRef="Event_0j1tkcl" />
-    <bpmn:serviceTask id="Activity_checkStatus" name="block money and check status">
+    <bpmn:serviceTask id="Activity_blockMoney" name="block money">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="checkStatus" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1nzh7h6</bpmn:incoming>
       <bpmn:outgoing>Flow_05bvlkz</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:boundaryEvent id="Event_03dhdr5" name="no money" attachedToRef="Activity_checkStatus">
+    <bpmn:boundaryEvent id="Event_03dhdr5" name="no money" attachedToRef="Activity_blockMoney">
       <bpmn:outgoing>Flow_0qewayg</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_1u364e8" />
     </bpmn:boundaryEvent>
@@ -183,7 +182,7 @@
       <bpmn:outgoing>Flow_1u1jt3m</bpmn:outgoing>
       <bpmn:signalEventDefinition id="SignalEventDefinition_1dr70by" signalRef="Signal_08nulrc" />
     </bpmn:boundaryEvent>
-    <bpmn:sequenceFlow id="Flow_1nzh7h6" sourceRef="Event_0ptz4qe" targetRef="Activity_checkStatus" />
+    <bpmn:sequenceFlow id="Flow_1nzh7h6" sourceRef="Event_0ptz4qe" targetRef="Activity_blockMoney" />
     <bpmn:sequenceFlow id="Flow_0wvplz6" sourceRef="Event_0phdpjg" targetRef="Activity_reserveVehicle" />
     <bpmn:startEvent id="Event_1s4mk1a">
       <bpmn:outgoing>Flow_1icandq</bpmn:outgoing>
@@ -197,7 +196,7 @@
     <bpmn:intermediateCatchEvent id="Event_0phdpjg" name="receive booking">
       <bpmn:incoming>Flow_0qc0p5z</bpmn:incoming>
       <bpmn:outgoing>Flow_0wvplz6</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0n0n4xt" messageRef="Message_2c3jt0r" />
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0n0n4xt" messageRef="Message_18nq0ac" />
     </bpmn:intermediateCatchEvent>
     <bpmn:eventBasedGateway id="Gateway_06ct1j3">
       <bpmn:incoming>Flow_1icandq</bpmn:incoming>
@@ -238,7 +237,7 @@
   <bpmn:signal id="Signal_08nulrc" name="Signal_undoReservation" />
   <bpmn:message id="Message_2c3jt0r" name="Message_scanQr">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="=reservationId" />
+      <zeebe:subscription correlationKey="=userId" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_0e7b5bb" name="Message_chargeMoneyBlock">
@@ -315,6 +314,11 @@
       <zeebe:subscription correlationKey="=vehicleId" />
     </bpmn:extensionElements>
   </bpmn:message>
+  <bpmn:message id="Message_18nq0ac" name="Message_receiveBooking">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=userId" />
+    </bpmn:extensionElements>
+  </bpmn:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0ds0fu0">
       <bpmndi:BPMNShape id="Participant_15lur6u_di" bpmnElement="Participant_15lur6u" isHorizontal="true" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
@@ -376,8 +380,9 @@
       <bpmndi:BPMNShape id="Event_1tu263i_di" bpmnElement="Event_0j1tkcl">
         <dc:Bounds x="922" y="112" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_15pnw9s_di" bpmnElement="Activity_checkStatus">
+      <bpmndi:BPMNShape id="Activity_15pnw9s_di" bpmnElement="Activity_blockMoney">
         <dc:Bounds x="750" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1yb0zmu_di" bpmnElement="Activity_reserveVehicle">
         <dc:Bounds x="750" y="353" width="100" height="80" />
@@ -400,16 +405,10 @@
       <bpmndi:BPMNShape id="Gateway_1ue01kr_di" bpmnElement="Gateway_06ct1j3">
         <dc:Bounds x="515" y="285" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_03dhdr5_di" bpmnElement="Event_03dhdr5">
-        <dc:Bounds x="802" y="142" width="36" height="36" />
+      <bpmndi:BPMNShape id="BPMNShape_1oipa0q" bpmnElement="Event_0bt38ne">
+        <dc:Bounds x="772" y="415" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="796" y="113" width="49" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_142q2h1_di" bpmnElement="Event_1d4oq6r">
-        <dc:Bounds x="812" y="335" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="807" y="313" width="49" height="14" />
+          <dc:Bounds x="757" y="453" width="25" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0jczf31" bpmnElement="Event_1wbz1l8">
@@ -418,10 +417,16 @@
           <dc:Bounds x="861" y="453" width="37" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1oipa0q" bpmnElement="Event_0bt38ne">
-        <dc:Bounds x="772" y="415" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_142q2h1_di" bpmnElement="Event_1d4oq6r">
+        <dc:Bounds x="812" y="335" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="757" y="453" width="25" height="14" />
+          <dc:Bounds x="807" y="313" width="49" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_03dhdr5_di" bpmnElement="Event_03dhdr5">
+        <dc:Bounds x="802" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="796" y="113" width="49" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0nairkv_di" bpmnElement="Flow_0nairkv">

@@ -1,15 +1,17 @@
 <main class="vehicles-shell">
   <acme-status-bar
-    [state]="vehicleService.loadingState()"
-    [vehicleCount]="vehicleService.stats().total" />
+    [state]="rentalService.vehicleLoadingState()"
+    [vehicleCount]="rentalService.stats().total" />
 
   <acme-stats-bar
-    [stats]="vehicleService.stats()" />
+    [stats]="rentalService.stats()" />
 
   <acme-vehicle-map
-    [vehicles]="vehicleService.vehicles()"
-    (vehicleSelected)="onVehicleSelected($event)" />
+    [vehicles]="rentalService.vehicles()"
+    (vehicleSelected)="onVehicleSelected($event)"
+    (scanQrSelected)="onScanQr($event)"
+    (prenotaSelected)="onPrenota($event)" />
 
   <acme-process-trace
-    [logs]="vehicleService.logs()" />
+    [logs]="rentalService.logs()" />
 </main>

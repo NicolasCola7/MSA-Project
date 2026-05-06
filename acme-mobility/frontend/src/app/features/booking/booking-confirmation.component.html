@@ -1,0 +1,47 @@
+<div class="scan-shell">
+
+
+
+  <!-- READY ──────────────────────────────────────────────────────────── -->
+  @if (!isLoading) {
+  <div class="card">
+    <div class="card-icon">{{ emoji() }}</div>
+
+    <div class="card-body">
+      <h2 class="model">{{ formatVehicleType(vehicle()?.type) | titlecase }}</h2>
+      <span class="vehicle-id">ID: {{ vehicleId() }}</span>
+
+      <div class="info-row">
+        <span class="info-label">Battery</span>
+        <span class="battery {{ batteryClass() }}">🔋 {{ vehicle()?.batteryLevel ?? '—' }}%</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Status</span>
+        <span class="badge {{ statusClass() }}">{{ statusLabel() }}</span>
+      </div>
+    </div>
+
+    <div class="qr-hint">
+      <span>A €10 deposit is required to confirm the reservation</span>
+    </div>
+
+    <button class="start-btn" (click)="book()" [disabled]="!canBook()">
+      Book
+    </button>
+
+    @if (!canBook() && vehicle()) {
+    <p class="unavailable-note">⚠ Vehicle {{ statusLabel().toLowerCase() }} — not bookable</p>
+    }
+  </div>
+  }
+
+  <!-- STARTING ────────────────────────────────────────────────────────── -->
+  @if (isLoading) {
+  <div class="centered">
+    <div class="spinner"></div>
+    <p class="waiting-text">Booking in progress...</p>
+    <span class="waiting-sub">Mock confirmation in progress</span>
+  </div>
+  }
+
+</div>

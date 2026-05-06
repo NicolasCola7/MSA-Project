@@ -5,7 +5,6 @@ import { RouterOutlet } from '@angular/router';
  * Rental feature shell.
  *
  * Child routes (all stubs — activated when backend implements them):
- *   /rental/scan          ← Scan QR → immediate rental start
  *   /rental/active/:id    ← Live ride (battery, GPS, timer)
  *   /rental/end/:id       ← Return vehicle + payment summary
  */

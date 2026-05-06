@@ -6,11 +6,11 @@ import com.acme.rental.model.Vehicle;
 import java.util.List;
 
 @Repository
-public interface VehicleRepository extends JpaRepository<Vehicle, String> {
+public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     
-    List<Vehicle> findByStatus(String status);
-
-    List<Vehicle> findByStationId(String stationId);
+    List<Vehicle> findByStationId(Long stationId);
     
     List<Vehicle> findByTypeAndBatteryLevelGreaterThan(String type, Integer batteryLevel);
+    
+    List<Vehicle> findByStatus(String status);
 }

@@ -1,34 +1,60 @@
 import { Routes } from '@angular/router';
 
+import { LoginComponent } from './features/login/login.component';
+import { RegisterComponent } from './features/register/register.component';
+import { authGuard } from '@core/guards/auth.guard';
+
 export const routes: Routes = [
+  // ── Public routes (no guard) ──────────────────────────────────────────────
   {
     path: '',
-    redirectTo: 'vehicles',
+    redirectTo: 'map',
     pathMatch: 'full',
   },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+  },
 
+  // ── Protected routes ──────────────────────────────────────────────────────
   // ── Flow 1: Get available vehicles (IMPLEMENTED) ──────────────────────────
   {
-    path: 'vehicles',
-    loadChildren: () =>
-      import('./features/vehicles/vehicles.routes').then(m => m.VEHICLES_ROUTES),
+    path: 'map',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/vehicles/vehicles.component').then(m => m.VehiclesComponent),
   },
 
-  // ── Flow 2–4: Rental (scan QR, active ride, end ride) — STUBS ─────────────
   {
-    path: 'rental',
-    loadChildren: () =>
-      import('./features/rental/rental.routes').then(m => m.RENTAL_ROUTES),
-  },
-
-  // ── Flow 5–6: Reservation (book + cancel) — STUBS ─────────────────────────
-  {
-    path: 'reservation',
-    loadChildren: () =>
-      import('./features/reservation/reservation.routes').then(
-        m => m.RESERVATION_ROUTES,
+    path: 'scan',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/rental/components/scan-qr/scan-qr.component').then(
+        m => m.ScanQrComponent,
       ),
   },
 
-  { path: '**', redirectTo: 'vehicles' },
+  {
+    path: 'init',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/init/init-process.component').then(
+        m => m.InitProcessComponent,
+      ),
+  },
+
+  {
+    path: 'book',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/booking/booking-confirmation.component').then(
+        m => m.BookingConfirmationComponent,
+      ),
+  },
+
+  { path: '**', redirectTo: 'map' },
 ];

@@ -1,5 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { VehicleService } from '@core/services/vehicle.service';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
+import { Router } from '@angular/router';
+
+import { RentalService } from '@core/services/rental.service';
 import { Vehicle } from '@core/models/vehicle.model';
 import { StatusBarComponent } from '@shared/components/status-bar/status-bar.component';
 import { StatsBarComponent } from './components/stats-bar/stats-bar.component';
@@ -20,20 +27,49 @@ import { ProcessTraceComponent } from './components/process-trace/process-trace.
   styleUrl: './vehicles.component.scss',
 })
 export class VehiclesComponent implements OnInit {
-  protected readonly vehicleService = inject(VehicleService);
+  protected readonly rentalService = inject(RentalService);
+  private readonly router = inject(Router);
 
   ngOnInit(): void {
-    this.vehicleService.loadVehicles();
+    this.rentalService.loadVehicles();
   }
 
+  // ── Marker click (generic selection log) ──────────────────────────────────
+
   protected onVehicleSelected(vehicle: Vehicle): void {
-    this.vehicleService.addLog(
-      `Veicolo selezionato: ${vehicle.id} (${vehicle.model}) — prossimo step: scan QR o prenota`,
+    this.rentalService.addLog(
+      `Vehicle selected: ${vehicle.type} #${vehicle.id}`,
       'ok',
     );
-    alert(
-      `Veicolo ${vehicle.model} selezionato!\n\n` +
-      `Prossimo step: scan QR o scelta fascia oraria.\n(Non ancora implementato)`,
+  }
+
+  // ── Popup → "Scan QR" button ──────────────────────────────────────────────
+  // BPMN: Message_scanQR correlation path
+  //   Browser → POST /api/rentals/scan { vehicleId, userId }
+  //   Zeebe:  BlockMoneyWorker → UnlockVehicleWorker → StartMonitoringWorker
+  //   WS push: RENTAL_STARTED
+
+  protected onScanQr(vehicle: Vehicle): void {
+    this.rentalService.addLog(
+      `▶ Sent scan QR for vehicle ${vehicle.type} #${vehicle.id} (Battery: ${vehicle.batteryLevel}%)`,
+      'info',
     );
+    // Pass the pre-selected vehicleId so the scanner can confirm the match.
+    this.router.navigate(['/scan'], {
+      queryParams: { vehicleId: vehicle.id },
+    });
+  }
+
+  // ── Popup → "Prenota" button ──────────────────────────────────────────────
+  // BPMN: reservation branch (not focus of this sprint)
+
+  protected onPrenota(vehicle: Vehicle): void {
+    this.rentalService.addLog(
+      `▶ Sent reservation for vehicle ${vehicle.type} #${vehicle.id} (Battery: ${vehicle.batteryLevel}%)`,
+      'info',
+    );
+    this.router.navigate(['/book'], {
+      queryParams: { vehicleId: vehicle.id },
+    });
   }
 }

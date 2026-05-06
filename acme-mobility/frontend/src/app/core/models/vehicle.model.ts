@@ -1,23 +1,23 @@
 // ── Vehicle domain model ──────────────────────────────────────────────────────
 
 export type VehicleType = 'SCOOTER' | 'KICK_SCOOTER' | 'CAR';
-export type VehicleStatus = 'AVAILABLE' | 'RESERVED' | 'IN_RENTAL' | 'MAINTENANCE' | 'CHARGING';
+export type VehicleStatus = 'AVAILABLE' | 'RESERVED' | 'RENTED' | 'MAINTENANCE' | 'CHARGING';
 
 export interface Vehicle {
-  id: string;
-  model: string;
+  id: number;
+  model?: string;
   type: VehicleType;
   status: VehicleStatus;
   batteryLevel: number;     // 0–100
-  stationId: string;
-  latitude?: number;
-  longitude?: number;
+  stationId: number | null;
+  latitude: number | null;
+  longitude: number | null;
 }
 
 // ── API responses ─────────────────────────────────────────────────────────────
 
 /**
- * GET /api/vehicles — risposta sincrona
+ * GET /api/rentals/map — risposta sincrona
  * Il controller restituisce direttamente i veicoli nel body (200 OK).
  * Nessun Zeebe coinvolto: è una semplice lettura REST.
  */
@@ -69,6 +69,10 @@ export function vehicleIcon(type: VehicleType): string {
     CAR: '🚗',
   };
   return icons[type] ?? '🚗';
+}
+
+export function vehicleDisplayName(vehicle: Pick<Vehicle, 'id' | 'model' | 'type'>): string {
+  return vehicle.model ?? `${vehicle.type} #${vehicle.id}`;
 }
 
 export function batteryClass(level: number): 'high' | 'medium' | 'low' {

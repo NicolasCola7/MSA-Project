@@ -24,7 +24,7 @@ export class WebSocketService implements OnDestroy {
 
   /**
    * Opens the WebSocket for the given userId.
-   * MUST be called BEFORE the HTTP /api/vehicles request so that
+   * MUST be called BEFORE the HTTP /api/rentals/map request so that
    * the Zeebe Worker finds the session in the push registry.
    */
   connect(userId: string): void {
@@ -35,7 +35,7 @@ export class WebSocketService implements OnDestroy {
 
     this.wsSubject = webSocket<WsInboundMessage>({
       url,
-      openObserver:  { next: () => this.connectionState.set('connected') },
+      openObserver: { next: () => this.connectionState.set('connected') },
       closeObserver: { next: () => this.connectionState.set('closed') },
     });
 

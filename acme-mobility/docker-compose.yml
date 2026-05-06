@@ -77,7 +77,7 @@ services:
         ZEEBE_CLIENT_BROKER_GATEWAYADDRESS: zeebe:26500
         ZEEBE_CLIENT_SECURITY_PLAINTEXT: true
         SPRING_PROFILES_ACTIVE: docker
-        SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/acme_mobility
+        SPRING_DATASOURCE_URL: jdbc:postgresql://rental-service-db:5432/acme_mobility
         SPRING_DATASOURCE_USERNAME: user
         SPRING_DATASOURCE_PASSWORD: password
         SPRING_JPA_HIBERNATE_DDL_AUTO: validate
@@ -91,12 +91,12 @@ services:
     depends_on:
       zeebe:
         condition: service_healthy
-      db:
+      rental-service-db:
           condition: service_started
 
-  db:
+  rental-service-db:
     image: postgres:18
-    container_name: db
+    container_name: rental-service-db
     environment:
         POSTGRES_DB: acme_mobility
         POSTGRES_USER: user
@@ -105,7 +105,7 @@ services:
       - "5432:5432"
     volumes:
       - ./rental-service/db/:/docker-entrypoint-initdb.d # db initialization
-      - postgres-data:/var/lib/postgresql/ # db persistent named volumes
+      - rental-service-db-data:/var/lib/postgresql/ # db persistent named volumes
     networks:
       - acme-net
 
@@ -131,4 +131,4 @@ networks:
 volumes:
   elasticsearch-data:
   maven-cache:
-  postgres-data:
+  rental-service-db-data:

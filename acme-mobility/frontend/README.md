@@ -93,7 +93,7 @@ services:
             ├─ WebSocketService.connect(userId)   ← STEP 1: open WS first
             │     ws://host/ws/vehicles?userId=…
             │
-            └─ (on WS open) HTTP GET /api/vehicles?userId=…   ← STEP 2
+            └─ (on WS open) HTTP GET /api/map?userId=…   ← STEP 2
                   └─ Zeebe starts process instance
                         └─ Worker pushes via WS: { type: "VEHICLES_AVAILABLE", … }
                               └─ vehicles signal updated → UI re-renders

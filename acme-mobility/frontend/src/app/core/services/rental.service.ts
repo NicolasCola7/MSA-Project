@@ -32,20 +32,20 @@ export type LoadingState = 'idle' | 'loading' | 'loaded' | 'error' | 'ws-connect
 @Injectable({ providedIn: 'root' })
 export class RentalService implements OnDestroy {
   private readonly http = inject(HttpClient);
-  private readonly ws   = inject(WebSocketService);
+  private readonly ws = inject(WebSocketService);
 
   // ── Signals Rental ────────────────────────────────────────────────────────
-  readonly rentalState  = signal<RentalState>('idle');
+  readonly rentalState = signal<RentalState>('idle');
   readonly activeRental = signal<Rental | null>(null);
-  readonly logs         = signal<TraceLog[]>([]);
+  readonly logs = signal<TraceLog[]>([]);
 
   // ── Signals Vehicles ──────────────────────────────────────────────────────
-  readonly vehicles     = signal<Vehicle[]>([]);
-  readonly stats        = computed<VehicleStats>(() => computeStats(this.vehicles()));
+  readonly vehicles = signal<Vehicle[]>([]);
+  readonly stats = computed<VehicleStats>(() => computeStats(this.vehicles()));
   readonly vehicleLoadingState = signal<LoadingState>('idle');
   readonly vehicleErrorMessage = signal<string | null>(null);
-  
-  readonly wsState       = this.ws.connectionState;
+
+  readonly wsState = this.ws.connectionState;
   readonly isWsConnected = this.ws.isConnected;
   private readonly wsState$: Observable<WsConnectionState>;
 
@@ -61,17 +61,17 @@ export class RentalService implements OnDestroy {
   // ─────────────────────────────────────────────────────────────────────────
   loadVehicles(): void {
     this.vehicleLoadingState.set('loading');
-    this.addLog('GET /api/vehicles…');
+    this.addLog('GET /api/map…');
 
     const sub = this.http
-      .get<VehiclesResponse>(`${environment.apiBase}/api/vehicles`)
+      .get<VehiclesResponse>(`${environment.apiBase}/api/map`)
       .subscribe({
         next: res => {
-          this.addLog(`✅ ${res.count} veicoli ricevuti`, 'ok');
+          this.addLog(`✅ ${res.count} vehicles received`, 'ok');
           this.vehicles.set(res.vehicles);
           this.vehicleLoadingState.set('loaded');
         },
-        error: err => this.handleVehicleError(`Errore API: ${err.message}`),
+        error: err => this.handleVehicleError(`API Error: ${err.message}`),
       });
 
     this.subs.push(sub);
@@ -88,16 +88,16 @@ export class RentalService implements OnDestroy {
   // ─────────────────────────────────────────────────────────────────────────
   startRental(req: StartRentalRequest): void {
     this.rentalState.set('starting');
-    
+
     this.http.post<StartRentalResponse>(`${environment.apiBase}/api/rental/scan`, {
       userId: req.userId,
       vehicleId: req.vehicleId
     }).subscribe({
       next: (res) => {
-        this.addLog(`✅ Richiesta scan QR inviata per veicolo: ${req.vehicleId}`);
+        this.addLog(`✅ QR code scan request sent for vehicle: ${req.vehicleId}`);
       },
       error: (err) => {
-        this.addLog(`❌ Errore durante lo scan del QR: ${err.message}`, 'error');
+        this.addLog(`❌ Error while sending QR code scan request: ${err.message}`, 'error');
         this.rentalState.set('error');
       }
     });
@@ -157,7 +157,7 @@ export class RentalService implements OnDestroy {
       this.ws.messages$
         .pipe(filter((msg): msg is WsVehiclesAvailableMessage => msg.type === 'VEHICLES_AVAILABLE'))
         .subscribe(msg => {
-          this.addLog(`✅ WebSocket push: ${msg.count} veicoli ricevuti`, 'ok');
+          this.addLog(`✅ WebSocket push: ${msg.count} vehicles received`, 'ok');
           this.vehicles.set(msg.vehicles);
           this.vehicleLoadingState.set('loaded');
         }),

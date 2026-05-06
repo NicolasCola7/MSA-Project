@@ -39,7 +39,7 @@ docker-compose up --build
 curl http://localhost:8080/api/health
 
 # Get available vehicles (also triggers Zeebe process)
-curl "http://localhost:8080/api/vehicles?userId=user-test"
+curl "http://localhost:8080/api/map?userId=user-test"
 
 # Open the frontend
 open http://localhost:3000
@@ -50,11 +50,11 @@ open http://localhost:8081   # login: demo / demo
 
 ---
 
-## Flow triggered by GET /api/vehicles
+## Flow triggered by GET /api/map
 
 ```
 User opens app
-  → GET /api/vehicles?userId=user-xyz
+  → GET /api/map?userId=user-xyz
   → VehicleService returns vehicle list (REST)
   → publishMessage("Message_openingMap", correlationKey=userId)
   → Zeebe starts rental-service-process instance

@@ -17,7 +17,7 @@ export interface Vehicle {
 // ── API responses ─────────────────────────────────────────────────────────────
 
 /**
- * GET /api/vehicles — risposta sincrona
+ * GET /api/map — risposta sincrona
  * Il controller restituisce direttamente i veicoli nel body (200 OK).
  * Nessun Zeebe coinvolto: è una semplice lettura REST.
  */

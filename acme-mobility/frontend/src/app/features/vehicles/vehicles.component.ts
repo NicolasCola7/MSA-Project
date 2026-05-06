@@ -38,7 +38,7 @@ export class VehiclesComponent implements OnInit {
 
   protected onVehicleSelected(vehicle: Vehicle): void {
     this.rentalService.addLog(
-      `Veicolo selezionato: ${vehicle.type} #${vehicle.id}`,
+      `Vehicle selected: ${vehicle.type} #${vehicle.id}`,
       'ok',
     );
   }
@@ -51,7 +51,7 @@ export class VehiclesComponent implements OnInit {
 
   protected onScanQr(vehicle: Vehicle): void {
     this.rentalService.addLog(
-      `▶ Scan QR avviato per ${vehicle.type} #${vehicle.id} (Battery: ${vehicle.batteryLevel}%)`,
+      `▶ Sent scan QR for vehicle ${vehicle.type} #${vehicle.id} (Battery: ${vehicle.batteryLevel}%)`,
       'info',
     );
     // Pass the pre-selected vehicleId so the scanner can confirm the match.
@@ -65,7 +65,7 @@ export class VehiclesComponent implements OnInit {
 
   protected onPrenota(vehicle: Vehicle): void {
     this.rentalService.addLog(
-      `📅 Prenotazione avviata per ${vehicle.type} #${vehicle.id} (Battery: ${vehicle.batteryLevel}%)`,
+      `▶ Sent reservation for vehicle ${vehicle.type} #${vehicle.id} (Battery: ${vehicle.batteryLevel}%)`,
       'info',
     );
     this.router.navigate(['/book'], {

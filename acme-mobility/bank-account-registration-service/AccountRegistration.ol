@@ -2,20 +2,21 @@ include "database.iol"
 include "console.iol"
 include "AccountRegistrationInterface.iol"
 
-inputPort RestAccountPort {
+inputPort AccountRegistration {
     Location: "socket://localhost:8080"
     Protocol: http {
         format = "json"
-        /*osc << {
+        osc << {
             createAccount << {
-                template = "/api/createAccount"
+                template = "/createAccount"
                 method = "post"
                 statusCodes = 201 // Created
                 statusCodes.TypeMismatch = 400
                 statusCodes.InternalError = 500
+                allowCORS = true
                 response.headers -> responseHeaders
             }
-        }*/
+        }
     }
     Interfaces: AccountRegistrationInterface
 }
@@ -41,7 +42,7 @@ init {
 main {
 
     [ createAccount( request )( response ) {
-        println@Console( "[createAccount] Incoming REST request. Account ID: " + request.accountId + " | Initial deposit: " + request.amount )();
+        println@Console( "[createAccount] Incoming REST request. Account ID: " + request.accountId + " | Initial deposit: " + request.balance )();
 
         checkQuery = "SELECT id FROM accounts WHERE id = :id";
         checkQuery.id = request.accountId;
@@ -56,7 +57,7 @@ main {
             
             insertQuery = "INSERT INTO accounts (id, balance, blocked_amount) VALUES (:id, :balance, 0.00)";
             insertQuery.id = request.accountId;
-            insertQuery.balance = request.amount;
+            insertQuery.balance = request.balance;
             
             update@Database( insertQuery )( rowsAffected );
 

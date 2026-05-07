@@ -2,7 +2,7 @@
 
 type CreateAccountRequest: void {
     .accountId: string
-    .amount: double
+    .balance: double
 }
 
 type CreateAccountResponse: void {

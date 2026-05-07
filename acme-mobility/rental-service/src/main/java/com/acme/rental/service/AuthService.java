@@ -60,6 +60,7 @@ public class AuthService {
         newUser.setName(request.name());
         newUser.setEmail(request.email());
         newUser.setPassword(request.password());
+        newUser.setAccountId(request.accountId());
 
         userRepository.save(newUser);
         System.out.println("[DEBUG] User registered successfully: " + request.email());

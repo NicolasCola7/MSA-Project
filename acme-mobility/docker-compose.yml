@@ -92,7 +92,7 @@ services:
       zeebe:
         condition: service_healthy
       rental-service-db:
-          condition: service_started
+          condition: service_healthy
 
   rental-service-db:
     image: postgres:18
@@ -108,6 +108,11 @@ services:
       - rental-service-data:/var/lib/postgresql/ # db persistent named volumes
     networks:
       - acme-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d acme_mobility"] 
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   frontend:
     build:
@@ -128,7 +133,7 @@ services:
     build:
       context: ./bank-service
       dockerfile: Dockerfile.dev
-    container_name: acme-bank-service
+    container_name: bank-service
     ports:
       - "8000:8000"
     volumes:
@@ -142,7 +147,7 @@ services:
 
   bank-service-db:
     image: postgres:18
-    container_name: acme-bank-service-db
+    container_name: bank-service-db
     environment:
         POSTGRES_DB: bank
         POSTGRES_USER: user
@@ -161,7 +166,7 @@ services:
       timeout: 5s
       retries: 10
       
-  account-service:
+  bank-account-registration-service:
     build:
       context: ./bank-account-registration-service
       dockerfile: Dockerfile.dev

@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractContro
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { SessionService } from '@core/services/session.service';
+import { v4 } from 'uuid';
 
 @Component({
   selector: 'acme-register',
@@ -15,6 +16,8 @@ import { SessionService } from '@core/services/session.service';
 export class RegisterComponent {
   private readonly fb = inject(FormBuilder);
   private readonly sessionService = inject(SessionService);
+  
+  private readonly INITIAL_BALANCE = 100.00;
 
   registerForm: FormGroup;
   showPassword = false;
@@ -50,11 +53,26 @@ export class RegisterComponent {
     if (this.registerForm.invalid) return;
 
     const { name, email, password } = this.registerForm.value;
+    const accountId = v4();
 
-    this.sessionService.register({ name, email, password }).subscribe({
+    this.sessionService.register({ name, email, password, accountId }).subscribe({
       next: (res: any) => {
         if (res.success) {
           this.successMessage = res.message;
+          console.log(res.message);
+          //if registration is successful, create a bank account with the initial balance
+          this.sessionService.createBankAccount({ accountId: accountId, balance: this.INITIAL_BALANCE }).subscribe({
+            next: (res: any) => {
+              console.log(res.message);
+              alert('Registration successful! Your account has been created with an initial balance of $100. Please log in to continue.');
+              this.registerForm.reset();
+              this.submitted = false;
+            },
+            error: (err) => {
+              console.log(err.error?.message);
+              this.errorMessage = err.error?.message || 'Error creating bank account.';
+            }
+          });
         } else {
           this.errorMessage = res.message;
         }

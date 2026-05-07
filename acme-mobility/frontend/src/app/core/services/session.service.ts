@@ -38,8 +38,12 @@ export class SessionService {
     this.userName.set(name);
   }
 
-  register(data: { name: string; email: string; password: string }): Observable<any> {
-    return this.http.post(`${environment.apiBase}/api/auth/register`, data);
+  register(data: { name: string; email: string; password: string; accountId: string }): Observable<any> {
+    return this.http.post(`${environment.apiBase}/auth/register`, data);
+  }
+
+  createBankAccount(data: { accountId: string, balance: number }): Observable<any> {
+    return this.http.post(environment.createAccountEndpoint, data);
   }
 
   logout() {

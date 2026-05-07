@@ -26,7 +26,7 @@ export class LoginComponent {
   onLogin() {
     this.errorMessage.set('');
 
-    this.http.post<any>(`${environment.apiBase}/api/auth/login`, {
+    this.http.post<any>(`${environment.apiBase}/auth/login`, {
       email: this.email,
       password: this.password
     }).subscribe({

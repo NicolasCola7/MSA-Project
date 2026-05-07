@@ -83,7 +83,7 @@ export class RentalService implements OnDestroy {
     this.addLog('GET /api/rentals/map…');
 
     const sub = this.http
-      .get<VehiclesResponse>(`${environment.apiBase}/api/rentals/map`)
+      .get<VehiclesResponse>(`${environment.apiBase}/rentals/map`)
       .subscribe({
         next: res => {
           this.addLog(`✅ ${res.count} vehicles received`, 'ok');
@@ -106,13 +106,13 @@ export class RentalService implements OnDestroy {
   // RENTAL LOGIC
   // ─────────────────────────────────────────────────────────────────────────
   initRentalProcess(userId: string): Observable<InitRentalResponse> {
-    return this.http.post<InitRentalResponse>(`${environment.apiBase}/api/rentals/init`, { userId });
+    return this.http.post<InitRentalResponse>(`${environment.apiBase}/rentals/init`, { userId });
   }
 
   startRental(req: StartRentalRequest): void {
     this.rentalState.set('starting');
 
-    this.http.post<StartRentalResponse>(`${environment.apiBase}/api/rentals/scan`, {
+    this.http.post<StartRentalResponse>(`${environment.apiBase}/rentals/scan`, {
       userId: req.userId,
       vehicleId: req.vehicleId
     }).subscribe({
@@ -127,7 +127,7 @@ export class RentalService implements OnDestroy {
   }
 
   bookVehicle(req: BookVehicleRequest): Observable<BookVehicleResponse> {
-    return this.http.post<BookVehicleResponse>(`${environment.apiBase}/api/rentals/book`, req);
+    return this.http.post<BookVehicleResponse>(`${environment.apiBase}/rentals/book`, req);
   }
 
   endRental(req: EndRentalRequest): void {

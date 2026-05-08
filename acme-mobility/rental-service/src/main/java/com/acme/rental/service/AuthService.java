@@ -14,9 +14,11 @@ import java.util.Optional;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final RentalService rentalService;
 
-    public AuthService(UserRepository userRepository) {
+    public AuthService(UserRepository userRepository, RentalService rentalService) {
         this.userRepository = userRepository;
+        this.rentalService = rentalService;
     }
 
     public LoginResponse authenticateUser(LoginRequest request) {
@@ -33,11 +35,16 @@ public class AuthService {
 
             if (user.getPassword().equals(request.password())) {
                 System.out.println("[DEBUG] Password match! Login successful.");
+                String userId = String.valueOf(user.getId());
+                RentalService.ProcessResume processResume = rentalService.getActiveProcessResume(userId);
+
                 return new LoginResponse(
-                        String.valueOf(user.getId()),
+                        userId,
                         user.getName(),
                         true,
-                        "Login successful"
+                        "Login successful",
+                        processResume.targetRoute(),
+                        processResume.vehicleId()
                 );
             }
 
@@ -46,7 +53,7 @@ public class AuthService {
             System.out.println("[DEBUG] User NOT found in DB for email: " + request.email());
         }
 
-        return new LoginResponse(null, null, false, "Invalid email or password");
+        return new LoginResponse(null, null, false, "Invalid email or password", null, null);
     }
 
     public RegisterResponse registerNewUser(RegisterRequest request) {

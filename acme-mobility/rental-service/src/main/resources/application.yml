@@ -1,6 +1,10 @@
 server:
   port: 8080
 
+camunda:
+  operate:
+    base-url: http://localhost:8081
+
 spring:
   application:
     name: rental-service
@@ -52,3 +56,7 @@ zeebe:
     broker:
       gateway-address: zeebe:26500
       rest-address: http://zeebe:8080
+
+camunda:
+  operate:
+    base-url: http://operate-camunda:8080

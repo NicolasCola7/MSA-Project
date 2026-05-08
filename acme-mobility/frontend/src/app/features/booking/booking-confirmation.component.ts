@@ -7,7 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { Vehicle } from '@core/models/vehicle.model';
 import { RentalService } from '@core/services/rental.service';
@@ -23,7 +23,6 @@ import { SessionService } from '@core/services/session.service';
 })
 export class BookingConfirmationComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
   private readonly rentalService = inject(RentalService);
   private readonly sessionService = inject(SessionService);
 
@@ -73,16 +72,10 @@ export class BookingConfirmationComponent implements OnInit {
 
     this.isLoading = true;
 
-    this.rentalService.bookVehicle({
-      userId: this.sessionService.userId(),
-      vehicleId: this.vehicleId(),
-    }).subscribe({
-      next: () => {
-        setTimeout(() => {
-          this.isLoading = false;
-          this.router.navigate(['/map']);
-        }, 2000);
-      },
+    this.rentalService.bookVehicle(
+      this.sessionService.userId(),
+      this.vehicleId(),
+    ).subscribe({
       error: () => {
         this.isLoading = false;
       },

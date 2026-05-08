@@ -34,11 +34,6 @@ export interface InitRentalResponse {
   success: boolean;
 }
 
-export interface BookVehicleRequest {
-  userId: string;
-  vehicleId: string;
-}
-
 export interface BookVehicleResponse {
   success: boolean;
   message: string;
@@ -126,8 +121,11 @@ export class RentalService implements OnDestroy {
     });
   }
 
-  bookVehicle(req: BookVehicleRequest): Observable<BookVehicleResponse> {
-    return this.http.post<BookVehicleResponse>(`${environment.apiBase}/api/rentals/book`, req);
+  bookVehicle(userId: string, vehicleId: string): Observable<BookVehicleResponse> {
+    return this.http.post<BookVehicleResponse>(`${environment.apiBase}/api/rentals/book`, {
+      userId,
+      vehicleId,
+    });
   }
 
   endRental(req: EndRentalRequest): void {

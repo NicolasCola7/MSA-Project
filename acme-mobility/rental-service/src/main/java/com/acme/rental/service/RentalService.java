@@ -61,9 +61,10 @@ public class RentalService {
             return new BookVehicleResponse(false, "userId and vehicleId are required", request.vehicleId(), request.userId());
         }
 
+        bookVehicle(request.userId(), request.vehicleId());
         return new BookVehicleResponse(
                 true,
-                "Vehicle booking request accepted",
+                "Vehicle booking sent to Zeebe",
                 request.vehicleId(),
                 request.userId()
         );
@@ -98,5 +99,20 @@ public class RentalService {
                 .join();
 
         log.info("[Zeebe] Messaggio Message_scanQr inviato con successo per userId={}", userId);
+    }
+
+    private void bookVehicle(String userId, String vehicleId) {
+
+        log.info("[Zeebe] Invio Message_receiveBooking per userId={}, vehicleId={}", userId, vehicleId);
+
+        zeebeClient.newPublishMessageCommand()
+                .messageName("Message_receiveBooking")
+                .correlationKey(userId)
+                .timeToLive(java.time.Duration.ofMinutes(1))
+                .variables(Map.of("vehicleId", vehicleId))
+                .send()
+                .join();
+
+        log.info("[Zeebe] Messaggio Message_receiveBooking inviato con successo per userId={}", userId);
     }
 }

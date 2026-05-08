@@ -6,31 +6,31 @@ spring:
     name: rental-service
 
 # ─────────────────────────────────────────────────────────────────
-# Camunda / Zeebe client  (io.camunda.spring:spring-boot-starter-camunda)
-# Gateway address is overridden in the 'docker' profile below.
+# Camunda 8 Client Configuration
 # ─────────────────────────────────────────────────────────────────
-zeebe:
+camunda:
   client:
-    broker:
+    mode: simple
+    zeebe:
       gateway-address: localhost:26500
-      rest-address: http://localhost:8088
-    security:
-      plaintext: true
-    worker:
-      default-name: rental-service-worker
+      rest-address: http://localhost:8083
+      security:
+        plaintext: true
+      defaults:
+        default-name: rental-service-worker
     message:
       time-to-live: PT1H
 
 management:
   health:
-    zeebe:
+    camunda:
       enabled: false
 
 # ─────────────────────────────────────────────────────────────────
-# BPMN auto-deployment
+# BPMN auto-deployment (Moved to root level!)
 # ─────────────────────────────────────────────────────────────────
-  deployment:
-    resources: "classpath:bpmn/*.bpmn"
+deployment:
+  resources: "classpath:bpmn/*.bpmn"
 
 # ─────────────────────────────────────────────────────────────────
 # Logging
@@ -47,8 +47,8 @@ spring:
     activate:
       on-profile: docker
 
-zeebe:
+camunda:
   client:
-    broker:
-      gateway-address: zeebe:26500
-      rest-address: http://zeebe:8080
+    zeebe:
+      gateway-address: orchestration:26500
+      rest-address: http://orchestration:8080

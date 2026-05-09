@@ -4,8 +4,6 @@ public record LoginResponse(
         String userId,
         String userName,
         boolean success,
-        String message,
-        String targetRoute,
-        String vehicleId
+        String message
 ) {
 }

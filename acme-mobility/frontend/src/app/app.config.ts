@@ -3,15 +3,17 @@ import { provideRouter, withComponentInputBinding, withViewTransitions } from '@
 import {
   provideHttpClient,
   withFetch,
+  withInterceptors,
   withInterceptorsFromDi,
 } from '@angular/common/http';
 
 import { routes } from './app.routes';
+import { authSessionInterceptor } from '@core/interceptors/auth-session.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding(), withViewTransitions()),
-    provideHttpClient(withFetch(), withInterceptorsFromDi()),
+    provideHttpClient(withFetch(), withInterceptors([authSessionInterceptor]), withInterceptorsFromDi()),
   ],
 };

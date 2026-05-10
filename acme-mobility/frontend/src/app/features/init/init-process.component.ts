@@ -77,7 +77,7 @@ export class InitProcessComponent implements OnInit {
     this.rentalService.initRentalProcess(this.sessionService.userId()).subscribe({
       next: (res) => {
         if (res?.processInstanceKey) {
-          localStorage.setItem('currentProcessInstance', res.processInstanceKey.toString());
+          sessionStorage.setItem('currentProcessInstance', res.processInstanceKey.toString());
         }
         this.router.navigate(['/map']);
       },

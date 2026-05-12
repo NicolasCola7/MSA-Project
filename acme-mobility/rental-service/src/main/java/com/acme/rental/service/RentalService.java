@@ -1,22 +1,25 @@
 package com.acme.rental.service;
 
-import com.acme.rental.dto.rental.BookVehicleRequest;
 import com.acme.rental.dto.rental.BookVehicleResponse;
 import com.acme.rental.dto.rental.InitRentalRequest;
 import com.acme.rental.dto.rental.InitRentalResponse;
-import com.acme.rental.dto.rental.MapVehiclesResponse;
 import com.acme.rental.dto.rental.ScanQrRequest;
 import com.acme.rental.dto.rental.ScanQrResponse;
 import com.acme.rental.model.Vehicle;
 import com.acme.rental.repository.VehicleRepository;
-
+import com.acme.rental.dto.rental.BookByTypeRequest;
+import com.acme.rental.dto.rental.StationWithVehiclesDTO;
+import com.acme.rental.dto.rental.MapStationsResponse;
+import com.acme.rental.model.Station;
+import com.acme.rental.repository.StationRepository;
 import io.camunda.zeebe.client.ZeebeClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,11 +27,27 @@ import java.util.Map;
 public class RentalService {
 
     private final VehicleRepository vehicleRepository;
+    private final StationRepository stationRepository;
     private final ZeebeClient zeebeClient;
 
-    public MapVehiclesResponse getMapVehicles() {
-        List<Vehicle> vehicles = vehicleRepository.findAll();
-        return new MapVehiclesResponse(vehicles.size(), vehicles);
+    public MapStationsResponse getMapStations() {
+        List<Station> stations = stationRepository.findAll();
+
+        // Itero su ogni stazione per costruire l'oggetto di risposta
+        List<StationWithVehiclesDTO> stationDTOs = stations.stream().map(station -> {
+
+            // Recupero tutti i veicoli collegati a questa specifica stazione
+            List<Vehicle> vehicles = vehicleRepository.findByStationId(station.getId());
+
+            // costruisco il dto da ritornare sottoforma di json
+            return new StationWithVehiclesDTO(
+                    station.getId(),
+                    station.getName(),
+                    station.getLatitude(),
+                    station.getLongitude(),
+                    vehicles);
+        }).collect(Collectors.toList());
+        return new MapStationsResponse(stationDTOs);
     }
 
     public InitRentalResponse initializeRentalProcess(InitRentalRequest request) {
@@ -51,36 +70,41 @@ public class RentalService {
         return new ScanQrResponse(true, "QR scanned and sent to Zeebe");
     }
 
-    public BookVehicleResponse bookVehicle(BookVehicleRequest request) {
-        if (request == null) {
-            return new BookVehicleResponse(false, "userId and vehicleId are required", null, null);
+    // TODO: da controllare meglio prossimamente quando si implementerà la
+    // prenotazione
+    @Transactional
+    public BookVehicleResponse bookVehicleByType(BookByTypeRequest request) {
+        if (request == null || request.userId() == null || request.userId().isBlank()
+                || request.stationId() == null || request.vehicleType() == null || request.vehicleType().isBlank()) {
+            return new BookVehicleResponse(false, "userId, stationId and vehicleType are required", null,
+                    request != null ? request.userId() : null);
         }
 
-        if (request.userId() == null || request.userId().isBlank()
-                || request.vehicleId() == null || request.vehicleId().isBlank()) {
-            return new BookVehicleResponse(false, "userId and vehicleId are required", request.vehicleId(), request.userId());
-        }
+        // --- INIZIO MOCK LOGIC ---
+        // Al momento non interroghiamo il DB, non blocchiamo il veicolo e non chiamiamo
+        // Zeebe.
+        // Simuliamo direttamente il successo assegnando un ID fittizio.
 
-        bookVehicle(request.userId(), request.vehicleId());
+        String dummyAssignedVehicleId = "MOCK-123";
+
         return new BookVehicleResponse(
                 true,
-                "Vehicle booking sent to Zeebe",
-                request.vehicleId(),
-                request.userId()
-        );
+                "Vehicle booking simulated (Business Logic pending)",
+                dummyAssignedVehicleId,
+                request.userId());
+        // --- FINE MOCK LOGIC ---
     }
 
     private long initRentalProcess(String userId) {
         log.info("[Zeebe] Creazione istanza per userId={}", userId);
 
-        // 1. Crea l'istanza passando userId come variabile (richiesta dall'Event Gateway)
         var processInstanceResult = zeebeClient.newCreateInstanceCommand()
                 .bpmnProcessId("rental-service-process")
                 .latestVersion()
                 .variables(Map.of("userId", userId))
                 .send()
                 .join();
-                
+
         long key = processInstanceResult.getProcessInstanceKey();
         log.info("[Zeebe] Istanza creata con key={} per userId={}", key, userId);
         return key;
@@ -99,20 +123,5 @@ public class RentalService {
                 .join();
 
         log.info("[Zeebe] Messaggio Message_scanQr inviato con successo per userId={}", userId);
-    }
-
-    private void bookVehicle(String userId, String vehicleId) {
-
-        log.info("[Zeebe] Invio Message_receiveBooking per userId={}, vehicleId={}", userId, vehicleId);
-
-        zeebeClient.newPublishMessageCommand()
-                .messageName("Message_receiveBooking")
-                .correlationKey(userId)
-                .timeToLive(java.time.Duration.ofMinutes(1))
-                .variables(Map.of("vehicleId", vehicleId))
-                .send()
-                .join();
-
-        log.info("[Zeebe] Messaggio Message_receiveBooking inviato con successo per userId={}", userId);
     }
 }

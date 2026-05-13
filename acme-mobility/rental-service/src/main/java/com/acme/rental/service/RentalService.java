@@ -72,18 +72,14 @@ public class RentalService {
     public BookVehicleResponse bookVehicleByType(BookByTypeRequest request) {
         if (request == null || request.userId() == null || request.userId().isBlank()
                 || request.stationId() == null || request.vehicleType() == null || request.vehicleType().isBlank()) {
-            return new BookVehicleResponse(false, "Mancano parametri", null, request != null ? request.userId() : null);
+            return new BookVehicleResponse(false, "Mancano parametri", request != null ? request.userId() : null);
         }
 
-        // Invio SOLO il messaggio a Zeebe
         bookVehicle(request.userId(), request.stationId(), request.vehicleType());
 
-        // Restituisco null (o "PENDING") come vehicleId, perché non è ancora stato
-        // assegnato
         return new BookVehicleResponse(
                 true,
                 "Booking request sent to bank/Zeebe",
-                null,
                 request.userId());
     }
 

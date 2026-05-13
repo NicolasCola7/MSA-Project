@@ -16,7 +16,6 @@ import io.camunda.zeebe.client.ZeebeClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -70,34 +69,29 @@ public class RentalService {
         return new ScanQrResponse(true, "QR scanned and sent to Zeebe");
     }
 
-    // TODO: da controllare meglio prossimamente quando si implementerà la
-    // prenotazione
-    @Transactional
     public BookVehicleResponse bookVehicleByType(BookByTypeRequest request) {
         if (request == null || request.userId() == null || request.userId().isBlank()
                 || request.stationId() == null || request.vehicleType() == null || request.vehicleType().isBlank()) {
-            return new BookVehicleResponse(false, "userId, stationId and vehicleType are required", null,
-                    request != null ? request.userId() : null);
+            return new BookVehicleResponse(false, "Mancano parametri", null, request != null ? request.userId() : null);
         }
 
-        // --- INIZIO MOCK LOGIC ---
-        // Al momento non interroghiamo il DB, non blocchiamo il veicolo e non chiamiamo
-        // Zeebe.
-        // Simuliamo direttamente il successo assegnando un ID fittizio.
+        // Invio SOLO il messaggio a Zeebe
+        bookVehicle(request.userId(), request.stationId(), request.vehicleType());
 
-        String dummyAssignedVehicleId = "MOCK-123";
-
+        // Restituisco null (o "PENDING") come vehicleId, perché non è ancora stato
+        // assegnato
         return new BookVehicleResponse(
                 true,
-                "Vehicle booking simulated (Business Logic pending)",
-                dummyAssignedVehicleId,
+                "Booking request sent to bank/Zeebe",
+                null,
                 request.userId());
-        // --- FINE MOCK LOGIC ---
     }
 
     private long initRentalProcess(String userId) {
         log.info("[Zeebe] Creazione istanza per userId={}", userId);
 
+        // 1. Crea l'istanza passando userId come variabile (richiesta
+        // dall'EventGateway)
         var processInstanceResult = zeebeClient.newCreateInstanceCommand()
                 .bpmnProcessId("rental-service-process")
                 .latestVersion()
@@ -123,5 +117,22 @@ public class RentalService {
                 .join();
 
         log.info("[Zeebe] Messaggio Message_scanQr inviato con successo per userId={}", userId);
+    }
+
+    private void bookVehicle(String userId, Long stationId, String vehicleType) {
+        log.info("[Zeebe] Invio Message_receiveBooking per userId={}, stationId={}, type={}", userId, stationId,
+                vehicleType);
+
+        zeebeClient.newPublishMessageCommand()
+                .messageName("Message_receiveBooking")
+                .correlationKey(userId)
+                .timeToLive(java.time.Duration.ofMinutes(1))
+                // Passiamo le variabili che serviranno ai worker futuri per assegnare il
+                // veicolo
+                .variables(Map.of(
+                        "requestedStationId", stationId,
+                        "requestedVehicleType", vehicleType))
+                .send()
+                .join();
     }
 }

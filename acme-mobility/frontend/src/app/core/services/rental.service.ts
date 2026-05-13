@@ -9,11 +9,11 @@ import {
   StartRentalRequest,
   StartRentalResponse,
   EndRentalRequest,
-  EndRentalResponse,
 } from '@core/models/rental.model';
 import {
   Vehicle,
-  VehiclesResponse,
+  StationWithVehicles,
+  MapStationsResponse,
   VehicleStats,
   computeStats,
 } from '@core/models/vehicle.model';
@@ -51,11 +51,12 @@ export class RentalService implements OnDestroy {
   readonly activeRental = signal<Rental | null>(null);
   readonly logs = signal<TraceLog[]>([]);
 
-  // ── Signals Vehicles ──────────────────────────────────────────────────────
-  readonly vehicles = signal<Vehicle[]>([]);
+  // ── Signals Stations ──────────────────────────────────────────────────────
+  readonly stations = signal<StationWithVehicles[]>([]);
+  readonly vehicles = computed<Vehicle[]>(() => this.stations().flatMap(s => s.vehicles));
   readonly stats = computed<VehicleStats>(() => computeStats(this.vehicles()));
-  readonly vehicleLoadingState = signal<LoadingState>('idle');
-  readonly vehicleErrorMessage = signal<string | null>(null);
+  readonly stationLoadingState = signal<LoadingState>('idle');
+  readonly stationErrorMessage = signal<string | null>(null);
 
   readonly wsState = this.ws.connectionState;
   readonly isWsConnected = this.ws.isConnected;
@@ -69,32 +70,32 @@ export class RentalService implements OnDestroy {
   }
 
   // ─────────────────────────────────────────────────────────────────────────
-  // VEHICLE LOGIC
+  // STATION LOGIC
   // ─────────────────────────────────────────────────────────────────────────
-  loadVehicles(): void {
-    if (this.vehicleLoadingState() === 'loading') return;
+  loadStations(): void {
+    if (this.stationLoadingState() === 'loading') return;
 
-    this.vehicleLoadingState.set('loading');
+    this.stationLoadingState.set('loading');
     this.addLog('GET /api/rentals/map…');
 
     const sub = this.http
-      .get<VehiclesResponse>(`${environment.apiBase}/api/rentals/map`)
+      .get<MapStationsResponse>(`${environment.apiBase}/api/rentals/map`)
       .subscribe({
         next: res => {
-          this.addLog(`✅ ${res.count} vehicles received`, 'ok');
-          this.vehicles.set(res.vehicles);
-          this.vehicleLoadingState.set('loaded');
+          this.addLog(`✅ ${res.stations.length} stations received`, 'ok');
+          this.stations.set(res.stations);
+          this.stationLoadingState.set('loaded');
         },
-        error: err => this.handleVehicleError(`API Error: ${err.message}`),
+        error: err => this.handleStationError(`API Error: ${err.message}`),
       });
 
     this.subs.push(sub);
   }
 
-  private handleVehicleError(msg: string): void {
+  private handleStationError(msg: string): void {
     this.addLog(`❌ ${msg}`, 'error');
-    this.vehicleErrorMessage.set(msg);
-    this.vehicleLoadingState.set('error');
+    this.stationErrorMessage.set(msg);
+    this.stationLoadingState.set('error');
   }
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -121,10 +122,11 @@ export class RentalService implements OnDestroy {
     });
   }
 
-  bookVehicle(userId: string, vehicleId: string): Observable<BookVehicleResponse> {
+  bookByType(userId: string, stationId: number, vehicleType: string): Observable<BookVehicleResponse> {
     return this.http.post<BookVehicleResponse>(`${environment.apiBase}/api/rentals/book`, {
       userId,
-      vehicleId,
+      stationId,
+      vehicleType
     });
   }
 
@@ -183,8 +185,15 @@ export class RentalService implements OnDestroy {
         .pipe(filter((msg): msg is WsVehiclesAvailableMessage => msg.type === 'VEHICLES_AVAILABLE'))
         .subscribe(msg => {
           this.addLog(`✅ WebSocket push: ${msg.count} vehicles received`, 'ok');
-          this.vehicles.set(msg.vehicles);
-          this.vehicleLoadingState.set('loaded');
+          
+          // Aggiorna i veicoli all'interno delle rispettive stazioni
+          this.stations.update(stations => 
+            stations.map(station => ({
+              ...station,
+              vehicles: msg.vehicles.filter(v => v.stationId === station.id)
+            }))
+          );
+          this.stationLoadingState.set('loaded');
         }),
     );
   }

@@ -8,6 +8,7 @@ type BlockMoneyResponse: void {
     .token?: string
     .success: bool
     .message: string
+    .errorStatus?: string
 }
 
 // Unlock Money
@@ -21,6 +22,7 @@ type UnlockMoneyResponse: void {
     .success: bool
     .token: string
     .message: string
+    .errorStatus?: string
 }
 
 // Charge money block
@@ -34,6 +36,7 @@ type ChargeMoneyBlockResponse: void {
     .success: bool
     .token: string
     .message: string
+    .errorStatus?: string
 } 
 
 // Charge money
@@ -48,6 +51,7 @@ type ChargeMoneyResponse: void {
     .success: bool
     .message: string
     .token: string
+    .errorStatus?: string
 }
 
 interface BankInterface {

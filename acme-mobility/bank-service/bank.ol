@@ -75,13 +75,14 @@ main {
                 println@Console( "[blockMoney] SUCCESS: Block applied. Session token generated: " + response.token )()
                 
             } else if ( balance >= 10.00 && blockedAmount > 0.00) {
-                response.success = false;
+                response.success = true;
                 response.message = "Money already blocked";
                 
-                println@Console( "[blockMoney] REJECTED: Money already blocked.")()
+                println@Console( "[blockMoney] SUCCESS: Money already blocked.")()
             } else {
                 response.success = false;
                 response.message = "Insufficient funds";
+                resposnse.errorStatus = "INSUFFICIENT_FUNDS";
                 
                 println@Console( "[blockMoney] REJECTED: Insufficient funds." )()
             }
@@ -89,6 +90,7 @@ main {
         } else {
             response.success = false;
             response.message = "Account not found";
+            response.errorStatus = "ACCOUNT_NOT_FOUND";
             println@Console( "[blockMoney] REJECTED: Account not found." )()
         }
     }
@@ -97,7 +99,7 @@ main {
         [ chargeMoneyBlock ( request ) ( response ) {
             println@Console( "[chargeMoneyBlock] Request received for token: " + request.token )();
             
-            updateQuery = "update accounts set balance = balance - 10.0, blocked_amount = 0.00 where id = :id";
+            updateQuery = "update accounts set balance = balance - 10.0, blocked_amount = 0.00 where id = :id and blocked_amount >= 10.0 and balance >= 10.0";
             updateQuery.id = request.accountId;
             update@Database( updateQuery )( rowsAffected );
 
@@ -109,6 +111,7 @@ main {
             } else {
                 response.success = false;
                 response.message = "Charge failed: Insufficient funds or invalid account ID";
+                response.errorStatus = "BLOCK_CHARGE_FAILED";
                 println@Console( "[chargeMoneyBlock] FAILED: Update affected 0 rows." )()
             }
         }]
@@ -117,7 +120,7 @@ main {
         [ unlockMoney ( request ) ( response ) {
             println@Console( "[unlockMoney] Request received for token: " + request.token )();
             
-            updateQuery = "update accounts set blocked_amount = 0.00 where id = :id";
+            updateQuery = "update accounts set blocked_amount = 0.00 where id = :id and blocked_amount == 10.0";
             updateQuery.id = request.accountId;
             update@Database( updateQuery )( rowsAffected );
 
@@ -129,6 +132,7 @@ main {
             } else {
                 response.success = false;
                 response.message = "Unlock failed: Invalid account ID";
+                response.errorStatus = "UNLOCK_FAILED";
                 println@Console( "[unlockMoney] FAILED: Update affected 0 rows." )()
             }
         }]
@@ -149,6 +153,7 @@ main {
             } else {
                 response.success = false;
                 response.message = "Charge failed: Insufficient funds or invalid account ID";
+                response.errorStatus = "CHARGE_FAILED";
                 println@Console( "[chargeMoney] FAILED: Update affected 0 rows." )()
             }
         }]

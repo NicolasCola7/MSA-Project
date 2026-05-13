@@ -114,7 +114,8 @@ export class RentalService implements OnDestroy {
 
     this.http.post<StartRentalResponse>(`${environment.apiBase}/rentals/scan`, {
       userId: req.userId,
-      vehicleId: req.vehicleId
+      vehicleId: req.vehicleId,
+      accountId: req.accountId
     }).subscribe({
       next: (res) => {
         this.addLog(`✅ QR code scan request sent for vehicle: ${req.vehicleId}`);

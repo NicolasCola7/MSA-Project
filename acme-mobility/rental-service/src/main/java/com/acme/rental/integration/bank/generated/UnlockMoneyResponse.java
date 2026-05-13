@@ -28,6 +28,7 @@ import jakarta.xml.bind.annotation.XmlType;
  *         &lt;element name="success" type="{http://www.w3.org/2001/XMLSchema}boolean"/&gt;
  *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *         &lt;element name="token" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
+ *         &lt;element name="errorStatus" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -40,7 +41,8 @@ import jakarta.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "success",
     "message",
-    "token"
+    "token",
+    "errorStatus"
 })
 @XmlRootElement(name = "unlockMoneyResponse")
 public class UnlockMoneyResponse {
@@ -50,7 +52,7 @@ public class UnlockMoneyResponse {
     protected String message;
     @XmlElement(required = true)
     protected String token;
-
+    protected String errorStatus;
     /**
      * Recupera il valore della proprietà success.
      * 
@@ -113,6 +115,30 @@ public class UnlockMoneyResponse {
      */
     public void setToken(String value) {
         this.token = value;
+    }
+
+        /**
+     * Recupera il valore della proprietà errorStatus.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getErrorStatus() {
+        return errorStatus;
+    }
+
+    /**
+     * Imposta il valore della proprietà errorStatus.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setErrorStatus(String value) {
+        this.errorStatus = value;
     }
 
 }

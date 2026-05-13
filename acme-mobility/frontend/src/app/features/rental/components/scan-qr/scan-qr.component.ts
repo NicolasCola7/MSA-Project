@@ -39,9 +39,11 @@ export class ScanQrComponent implements OnInit {
 
   // ── Computed signals ──────────────────────────────────────────────────────
 
-  readonly vehicle = computed<Vehicle | null>(() =>
-    this.rentalService.vehicles().find(v => String(v.id) === this.vehicleId()) ?? null,
-  );
+  readonly vehicle = computed<Vehicle | null>(() => {
+    const id = this.vehicleId();
+    if (!id) return null;
+    return this.rentalService.vehicles().find(v => String(v.id) === id) ?? null;
+  });
 
   readonly canStart = computed(() =>
     !this.vehicle() || this.vehicle()!.status === 'AVAILABLE',
@@ -76,10 +78,14 @@ export class ScanQrComponent implements OnInit {
   // ── Lifecycle ─────────────────────────────────────────────────────────────
 
   ngOnInit(): void {
-    this.vehicleId.set(
-      this.route.snapshot.queryParamMap.get('vehicleId') ?? '',
-    );
-    this.rentalService.loadVehicles();
+    if (this.rentalService.stations().length === 0) {
+      this.rentalService.loadStations();
+    }
+  }
+
+  updateVehicleId(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.vehicleId.set(input.value.trim());
   }
 
   // ── Actions ───────────────────────────────────────────────────────────────

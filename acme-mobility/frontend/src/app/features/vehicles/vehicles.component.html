@@ -1,16 +1,20 @@
 <main class="vehicles-shell">
   <acme-status-bar
-    [state]="rentalService.vehicleLoadingState()"
+    [state]="rentalService.stationLoadingState()"
     [vehicleCount]="rentalService.stats().total" />
 
   <acme-stats-bar
     [stats]="rentalService.stats()" />
 
-  <acme-vehicle-map
-    [vehicles]="rentalService.vehicles()"
-    (vehicleSelected)="onVehicleSelected($event)"
-    (scanQrSelected)="onScanQr($event)"
-    (prenotaSelected)="onPrenota($event)" />
+  <div class="map-wrapper">
+    <acme-vehicle-map
+      [stations]="rentalService.stations()"
+      (bookAtStation)="onBookAtStation($event)" />
+
+    <button class="fab-scan-btn" (click)="goToScan()" aria-label="Scan QR Code">
+      <span class="fab-icon">📷</span>
+    </button>
+  </div>
 
   <acme-process-trace
     [logs]="rentalService.logs()" />

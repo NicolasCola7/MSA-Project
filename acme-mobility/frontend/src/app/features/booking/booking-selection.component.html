@@ -1,0 +1,58 @@
+<div class="booking-shell">
+  <button class="back-btn" [disabled]="isBooking()" (click)="goToMap()">← Back to map</button>
+
+  <div class="header">
+    <h1 class="title">Book at</h1>
+    <h2 class="station-name">{{ stationName() }}</h2>
+  </div>
+
+  @if (isBookingSuccess()) {
+  <div class="success-toast">
+    <div class="toast-icon">⏳</div>
+    <div class="toast-content">
+      <h3>Richiesta Inviata!</h3>
+      <p>Stiamo verificando i dati con la banca...</p>
+      <p class="toast-sub">Riceverai l'ID del veicolo non appena confermato.</p>
+    </div>
+  </div>
+  }
+
+
+  @if (errorMessage()) {
+  <div class="error-toast">
+    ⚠️ {{ errorMessage() }}
+  </div>
+  }
+
+  <div class="cards-container">
+    @for (opt of options(); track opt.type) {
+    <div class="vehicle-card" [class.disabled]="opt.count === 0" [class.selected]="selectedType() === opt.type"
+      (click)="selectType(opt)">
+
+      <div class="card-icon">{{ opt.icon }}</div>
+      <div class="card-title">{{ opt.label }}</div>
+      <div class="card-count" [class.empty]="opt.count === 0">
+        {{ opt.count }} available
+      </div>
+    </div>
+    }
+  </div>
+
+  <div class="action-footer">
+    @if (isBooking()) {
+    <div class="centered">
+      <div class="spinner"></div>
+      <p class="waiting-text">Communication with the bank in progress</p>
+    </div>
+    } @else if (!assignedVehicleId()) {
+    <button class="confirm-btn" [disabled]="!selectedType()" (click)="confirmBooking()">
+      Confirm Booking
+    </button>
+    } @else {
+    <button class="confirm-btn" (click)="goToMap()">
+      Return to Map
+    </button>
+    }
+  </div>
+
+</div>

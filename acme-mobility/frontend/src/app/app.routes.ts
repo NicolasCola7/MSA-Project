@@ -48,11 +48,11 @@ export const routes: Routes = [
   },
 
   {
-    path: 'book',
+    path: 'book-at-station',
     canActivate: [authGuard],
     loadComponent: () =>
-      import('./features/booking/booking-confirmation.component').then(
-        m => m.BookingConfirmationComponent,
+      import('./features/booking/booking-selection.component').then(
+        m => m.BookingSelectionComponent,
       ),
   },
 

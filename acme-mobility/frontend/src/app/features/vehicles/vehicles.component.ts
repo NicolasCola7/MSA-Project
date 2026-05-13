@@ -7,7 +7,7 @@ import {
 import { Router } from '@angular/router';
 
 import { RentalService } from '@core/services/rental.service';
-import { Vehicle } from '@core/models/vehicle.model';
+import { StationWithVehicles } from '@core/models/vehicle.model';
 import { StatusBarComponent } from '@shared/components/status-bar/status-bar.component';
 import { StatsBarComponent } from './components/stats-bar/stats-bar.component';
 import { VehicleMapComponent } from '@shared/components/vehicle-map/vehicle-map.component';
@@ -31,45 +31,23 @@ export class VehiclesComponent implements OnInit {
   private readonly router = inject(Router);
 
   ngOnInit(): void {
-    this.rentalService.loadVehicles();
+    this.rentalService.loadStations();
   }
 
-  // ── Marker click (generic selection log) ──────────────────────────────────
-
-  protected onVehicleSelected(vehicle: Vehicle): void {
+  protected onBookAtStation(station: StationWithVehicles): void {
     this.rentalService.addLog(
-      `Vehicle selected: ${vehicle.type} #${vehicle.id}`,
-      'ok',
-    );
-  }
-
-  // ── Popup → "Scan QR" button ──────────────────────────────────────────────
-  // BPMN: Message_scanQR correlation path
-  //   Browser → POST /api/rentals/scan { vehicleId, userId }
-  //   Zeebe:  BlockMoneyWorker → UnlockVehicleWorker → StartMonitoringWorker
-  //   WS push: RENTAL_STARTED
-
-  protected onScanQr(vehicle: Vehicle): void {
-    this.rentalService.addLog(
-      `▶ Sent scan QR for vehicle ${vehicle.type} #${vehicle.id} (Battery: ${vehicle.batteryLevel}%)`,
+      `▶ Navigating to booking selection for station: ${station.name}`,
       'info',
     );
-    // Pass the pre-selected vehicleId so the scanner can confirm the match.
-    this.router.navigate(['/scan'], {
-      queryParams: { vehicleId: vehicle.id },
+    this.router.navigate(['/book-at-station'], {
+      queryParams: {
+        stationId: station.id,
+        stationName: station.name,
+      },
     });
   }
 
-  // ── Popup → "Prenota" button ──────────────────────────────────────────────
-  // BPMN: reservation branch (not focus of this sprint)
-
-  protected onPrenota(vehicle: Vehicle): void {
-    this.rentalService.addLog(
-      `▶ Sent reservation for vehicle ${vehicle.type} #${vehicle.id} (Battery: ${vehicle.batteryLevel}%)`,
-      'info',
-    );
-    this.router.navigate(['/book'], {
-      queryParams: { vehicleId: vehicle.id },
-    });
+  protected goToScan(): void {
+    this.router.navigate(['/scan']);
   }
 }

@@ -1,10 +1,10 @@
 package com.acme.rental.controller;
 
-import com.acme.rental.dto.rental.BookVehicleRequest;
+import com.acme.rental.dto.rental.MapStationsResponse;
+import com.acme.rental.dto.rental.BookByTypeRequest;
 import com.acme.rental.dto.rental.BookVehicleResponse;
 import com.acme.rental.dto.rental.InitRentalRequest;
 import com.acme.rental.dto.rental.InitRentalResponse;
-import com.acme.rental.dto.rental.MapVehiclesResponse;
 import com.acme.rental.dto.rental.ScanQrRequest;
 import com.acme.rental.dto.rental.ScanQrResponse;
 import com.acme.rental.service.RentalService;
@@ -24,8 +24,8 @@ public class RentalController {
     }
 
     @GetMapping("/map")
-    public ResponseEntity<MapVehiclesResponse> getMapVehicles() {
-        return ResponseEntity.ok(rentalService.getMapVehicles());
+    public ResponseEntity<MapStationsResponse> getMapStations() {
+        return ResponseEntity.ok(rentalService.getMapStations());
     }
 
     @PostMapping("/init")
@@ -43,8 +43,8 @@ public class RentalController {
     }
 
     @PostMapping("/book")
-    public ResponseEntity<BookVehicleResponse> bookVehicle(@RequestBody BookVehicleRequest request) {
-        BookVehicleResponse response = rentalService.bookVehicle(request);
+    public ResponseEntity<BookVehicleResponse> bookVehicle(@RequestBody BookByTypeRequest request) {
+        BookVehicleResponse response = rentalService.bookVehicleByType(request);
         HttpStatus status = response.success() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         return ResponseEntity.status(status).body(response);
     }

@@ -10,21 +10,23 @@ export interface Vehicle {
   status: VehicleStatus;
   batteryLevel: number;     // 0–100
   stationId: number | null;
-  latitude: number | null;
-  longitude: number | null;
 }
 
 // ── API responses ─────────────────────────────────────────────────────────────
 
 /**
- * GET /api/rentals/map — risposta sincrona
- * Il controller restituisce direttamente i veicoli nel body (200 OK).
- * Nessun Zeebe coinvolto: è una semplice lettura REST.
+ * GET /api/rentals/map
  */
-export interface VehiclesResponse {
-  status: string;        // "ok"
-  count: number;
+export interface StationWithVehicles {
+  id: number;
+  name: string;
+  latitude: number;
+  longitude: number;
   vehicles: Vehicle[];
+}
+
+export interface MapStationsResponse {
+  stations: StationWithVehicles[];
 }
 
 /**

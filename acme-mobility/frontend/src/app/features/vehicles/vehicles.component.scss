@@ -9,8 +9,48 @@
   width: 100%;
 }
 
+.map-wrapper {
+  position: relative;
+  flex: 1;
+  display: flex;
+  min-height: 500px;
+}
+
 // Let the map take whatever vertical space is left after the bars.
 acme-vehicle-map {
   flex: 1;
-  min-height: 500px;
+  width: 100%;
+}
+
+.fab-scan-btn {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #0f172a;
+  border: none;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: transform 0.2s ease, filter 0.2s ease;
+
+  &:hover {
+    transform: scale(1.08) translateY(-2px);
+    filter: brightness(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  .fab-icon {
+    font-size: 28px;
+    line-height: 1;
+  }
 }

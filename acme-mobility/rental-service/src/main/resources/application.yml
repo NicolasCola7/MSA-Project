@@ -52,3 +52,9 @@ camunda:
     zeebe:
       gateway-address: orchestration:26500
       rest-address: http://orchestration:8080
+
+
+bank:
+  service:
+    soap:
+      url: "http://bank-service:8000"

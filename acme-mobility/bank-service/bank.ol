@@ -6,8 +6,9 @@ inputPort BankPort {
     Location: "socket://localhost:8000"
     Protocol: soap {
         .wsdl = "./BankWsdl.wsdl";
-        .wsdl.port = "BankPort";
-        .dropRootValue = true
+        .wsdl.port = "BankPortServicePort";
+        .dropRootValue = true;
+        .namespace = "bank.xsd"
     }
     Interfaces: BankInterface
 }
@@ -19,7 +20,11 @@ cset {
         ChargeMoneyBlockRequest.token
         UnlockMoneyRequest.token
         ChargeMoneyRequest.token
-        BankResponse.token  
+        ChargeMoneyBlockResponse.token
+        BlockMoneyResponse.token
+        UnlockMoneyResponse.token
+        ChargeMoneyResponse.token
+            
 }
 
 init {
@@ -70,10 +75,10 @@ main {
                 println@Console( "[blockMoney] SUCCESS: Block applied. Session token generated: " + response.token )()
                 
             } else if ( balance >= 10.00 && blockedAmount > 0.00) {
-                response.success = true;
+                response.success = false;
                 response.message = "Money already blocked";
                 
-                println@Console( "[blockMoney] SUCCESS: Money already blocked. Reusing session token: " + response.token )()
+                println@Console( "[blockMoney] REJECTED: Money already blocked.")()
             } else {
                 response.success = false;
                 response.message = "Insufficient funds";

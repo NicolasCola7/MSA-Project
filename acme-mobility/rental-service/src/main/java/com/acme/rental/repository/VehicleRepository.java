@@ -13,4 +13,5 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     List<Vehicle> findByTypeAndBatteryLevelGreaterThan(String type, Integer batteryLevel);
     
     List<Vehicle> findByStatus(String status);
+
 }

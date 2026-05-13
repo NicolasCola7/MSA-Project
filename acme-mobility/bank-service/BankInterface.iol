@@ -3,12 +3,12 @@ type BlockMoneyRequest: void {
     .accountId: string
 }
 
-/*
+
 type BlockMoneyResponse: void {
     .token?: string
     .success: bool
     .message: string
-} */
+}
 
 // Unlock Money
 type UnlockMoneyRequest: void {
@@ -16,11 +16,12 @@ type UnlockMoneyRequest: void {
     .token: string
 }
 
-/*
+
 type UnlockMoneyResponse: void {
     .success: bool
+    .token: string
     .message: string
-}*/
+}
 
 // Charge money block
 type ChargeMoneyBlockRequest: void {
@@ -28,11 +29,12 @@ type ChargeMoneyBlockRequest: void {
     .token: string
 }
 
-/*
+
 type ChargeMoneyBlockResponse: void {
     .success: bool
+    .token: string
     .message: string
-} */
+} 
 
 // Charge money
 type ChargeMoneyRequest: void {
@@ -41,26 +43,19 @@ type ChargeMoneyRequest: void {
     .amount: double
 }
 
-/*
+
 type ChargeMoneyResponse: void {
     .success: bool
     .message: string
     .token: string
-} */
-
-type BankResponse: void {
-    .success: bool
-    .message: string
-    .token?: string
 }
-
 
 interface BankInterface {
     
     RequestResponse:
-        blockMoney ( BlockMoneyRequest ) ( BankResponse ),
-        unlockMoney ( UnlockMoneyRequest ) ( BankResponse ),
-        chargeMoneyBlock ( ChargeMoneyBlockRequest ) ( BankResponse ),
-        chargeMoney ( ChargeMoneyRequest ) ( BankResponse )
+        blockMoney ( BlockMoneyRequest ) ( BlockMoneyResponse ),
+        unlockMoney ( UnlockMoneyRequest ) ( UnlockMoneyResponse ),
+        chargeMoneyBlock ( ChargeMoneyBlockRequest ) ( ChargeMoneyBlockResponse ),
+        chargeMoney ( ChargeMoneyRequest ) ( ChargeMoneyResponse )
 
 }

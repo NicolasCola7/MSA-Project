@@ -34,8 +34,9 @@ export class LoginComponent {
         if (loginRes?.success) {
           const userId = loginRes.userId;
           const userName = loginRes.userName;
+          const accountId = loginRes.accountId;
 
-          this.sessionService.loginUser(userId, userName);
+          this.sessionService.loginUser(userId, userName, accountId);
           this.router.navigate(['/init']);
         } else {
           this.errorMessage.set(loginRes?.message ?? 'Unknown error.');

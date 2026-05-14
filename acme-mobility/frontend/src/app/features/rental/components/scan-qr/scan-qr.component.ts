@@ -91,14 +91,13 @@ export class ScanQrComponent implements OnInit {
     this.rentalService.startRental({
       userId: this.sessionService.userId(),
       vehicleId: this.vehicleId(),
+      accountId: this.sessionService.accountId(),
     });
   }
 
   goToActiveRide(): void {
     this.router.navigate(['/map']);
   }
-
-
 
   formatVehicleType(type: string | undefined): string {
     return type ? type.replace(/_/g, ' ') : '';

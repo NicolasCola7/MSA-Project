@@ -12,6 +12,7 @@ export class SessionService {
   private readonly http = inject(HttpClient);
 
   readonly userId = signal<string>(this.resolveUserId());
+  readonly accountId = signal<string>(this.resolveAccountId());
   readonly userName = signal<string>(this.resolveUserName());
 
   private resolveUserId(): string {
@@ -23,6 +24,12 @@ export class SessionService {
     return id;
   }
 
+
+  private resolveAccountId(): string {
+    const accountId = localStorage.getItem('accountId');
+    return accountId || '';
+  }
+
   private resolveUserName(): string {
     return localStorage.getItem(this.USER_NAME_KEY) || '';
   }
@@ -31,11 +38,13 @@ export class SessionService {
     return !!this.userId() && this.userId() !== '';
   }
 
-  loginUser(id: string, name: string) {
+  loginUser(id: string, name: string, accountId: string) {
     localStorage.setItem('currentUser', id);
     localStorage.setItem(this.USER_NAME_KEY, name);
+    localStorage.setItem('accountId', accountId);
     this.userId.set(id);
     this.userName.set(name);
+    this.accountId.set(accountId);
   }
 
   register(data: { name: string; email: string; password: string; accountId: string }): Observable<any> {
@@ -50,6 +59,7 @@ export class SessionService {
     localStorage.clear();
     this.userId.set('');
     this.userName.set('');
+    this.accountId.set('');
     this.router.navigate(['/login']);
   }
 }

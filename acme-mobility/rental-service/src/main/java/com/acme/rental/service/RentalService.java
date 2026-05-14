@@ -49,7 +49,7 @@ public class RentalService {
         }
 
         try {
-            scanQr(request.userId(), request.vehicleId());
+            scanQr(request.userId(), request.vehicleId(), request.accountId());
             return new ScanQrResponse(true, "QR scanned and sent to Zeebe");
         } catch (RuntimeException e) {
             return new ScanQrResponse(false, e.getMessage());
@@ -90,7 +90,7 @@ public class RentalService {
         return key;
     }
 
-    private void scanQr(Long userId, Long vehicleId) {
+    private void scanQr(Long userId, Long vehicleId, String accountId) {
 
         // check vehicle existence and availability  
         Vehicle vehicle = vehicleRepository.findById(vehicleId)
@@ -100,13 +100,13 @@ public class RentalService {
             throw new RuntimeException("Vehicle with id " + vehicleId + " is not available");
         }
 
-
+     
         // publish message to Zeebe to correlate with the waiting process instance
         zeebeClient.newPublishMessageCommand()
                 .messageName("Message_scanQr")
                 .correlationKey(Long.toString(userId))
                 .timeToLive(java.time.Duration.ofMinutes(1))
-                .variables(Map.of("vehicleId", vehicleId))
+                .variables(Map.of("vehicleId", vehicleId, "accountId", accountId))
                 .send()
                 .join();
 

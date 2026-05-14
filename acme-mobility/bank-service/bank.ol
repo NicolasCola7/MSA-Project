@@ -90,7 +90,7 @@ main {
         } else {
             response.success = false;
             response.message = "Account not found";
-            response.errorStatus = "ACCOUNT_NOT_FOUND";
+            response.errorStatus = "BANK_ACCOUNT_NOT_FOUND";
             println@Console( "[blockMoney] REJECTED: Account not found." )()
         }
     }

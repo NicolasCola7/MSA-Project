@@ -79,7 +79,7 @@ export class RentalService implements OnDestroy {
     this.addLog('GET /api/rentals/map…');
 
     const sub = this.http
-      .get<MapStationsResponse>(`${environment.apiBase}/api/rentals/map`)
+      .get<MapStationsResponse>(`${environment.apiBase}/rentals/map`)
       .subscribe({
         next: res => {
           this.addLog(`✅ ${res.stations.length} stations received`, 'ok');
@@ -124,7 +124,7 @@ export class RentalService implements OnDestroy {
   }
 
   bookByType(userId: string, stationId: number, vehicleType: string): Observable<BookVehicleResponse> {
-    return this.http.post<BookVehicleResponse>(`${environment.apiBase}/api/rentals/book`, {
+    return this.http.post<BookVehicleResponse>(`${environment.apiBase}/rentals/book`, {
       userId,
       stationId,
       vehicleType

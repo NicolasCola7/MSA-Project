@@ -27,6 +27,12 @@ CREATE TABLE IF NOT EXISTS vehicles (
         ON DELETE SET NULL
 );
 
+CREATE TABLE IF NOT EXISTS sessions (
+    user_id VARCHAR(255) NOT NULL,
+    process_instance_key BIGINT NOT NULL,
+    PRIMARY KEY (user_id, process_instance_key)
+);
+
 
 -- 7 stazioni a Bologna
 INSERT INTO stations (name, latitude, longitude) VALUES 

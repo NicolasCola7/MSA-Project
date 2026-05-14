@@ -5,7 +5,9 @@ import com.acme.rental.dto.rental.InitRentalRequest;
 import com.acme.rental.dto.rental.InitRentalResponse;
 import com.acme.rental.dto.rental.ScanQrRequest;
 import com.acme.rental.dto.rental.ScanQrResponse;
+import com.acme.rental.model.Session;
 import com.acme.rental.model.Vehicle;
+import com.acme.rental.repository.SessionRepository;
 import com.acme.rental.repository.VehicleRepository;
 import com.acme.rental.dto.rental.BookByTypeRequest;
 import com.acme.rental.dto.rental.StationWithVehiclesDTO;
@@ -27,6 +29,7 @@ public class RentalService {
 
     private final VehicleRepository vehicleRepository;
     private final StationRepository stationRepository;
+    private final SessionRepository sessionRepository;
     private final ZeebeClient zeebeClient;
 
     public MapStationsResponse getMapStations() {
@@ -100,6 +103,14 @@ public class RentalService {
                 .join();
 
         long key = processInstanceResult.getProcessInstanceKey();
+        String sessionUserId = String.valueOf(userId);
+        sessionRepository.deleteByUserId(sessionUserId);
+
+        Session session = new Session();
+        session.setUserId(sessionUserId);
+        session.setProcessInstanceKey(key);
+        sessionRepository.save(session);
+
         log.info("[Zeebe] Istanza creata con key={} per userId={}", key, userId);
         return key;
     }

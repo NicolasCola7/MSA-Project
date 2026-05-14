@@ -1,0 +1,8 @@
+ARG CAMUNDA_VERSION=8.9.1
+FROM camunda/camunda:${CAMUNDA_VERSION}
+
+USER root
+RUN mkdir -p /usr/local/camunda/camunda-data \
+    && chown -R 1001:1001 /usr/local/camunda/camunda-data \
+    && chmod 775 /usr/local/camunda/camunda-data
+USER 1001:1001

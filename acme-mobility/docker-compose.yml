@@ -1,15 +1,12 @@
 services:
 
-  camunda-data-init:
-    image: camunda/camunda:${CAMUNDA_VERSION}
-    user: "0:0"
-    entrypoint: ["/bin/sh", "-c", "chown -R 1001:1001 /usr/local/camunda/camunda-data && chmod 775 /usr/local/camunda/camunda-data"]
-    volumes:
-      - camunda-data:/usr/local/camunda/camunda-data
-    restart: "no"
-
   orchestration:
-    image: camunda/camunda:${CAMUNDA_VERSION}
+    build:
+      context: .
+      dockerfile: Dockerfile.camunda
+      args:
+        CAMUNDA_VERSION: ${CAMUNDA_VERSION}
+    image: acme-mobility-camunda:${CAMUNDA_VERSION}
     container_name: orchestration
     ports:
       - "26500:26500"
@@ -34,9 +31,6 @@ services:
     networks:
       - camunda
       - acme-net
-    depends_on:
-      camunda-data-init:
-        condition: service_completed_successfully
   
   connectors:
     image: camunda/connectors-bundle:${CAMUNDA_CONNECTORS_VERSION}

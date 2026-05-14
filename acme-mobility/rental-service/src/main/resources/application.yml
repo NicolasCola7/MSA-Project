@@ -18,8 +18,6 @@ camunda:
         plaintext: true
       defaults:
         default-name: rental-service-worker
-    operate:
-      base-url: http://localhost:8083
     message:
       time-to-live: PT1H
 
@@ -29,7 +27,7 @@ management:
       enabled: false
 
 # ─────────────────────────────────────────────────────────────────
-# BPMN auto-deployment (Moved to root level!)
+# BPMN auto-deployment
 # ─────────────────────────────────────────────────────────────────
 deployment:
   resources: "classpath:bpmn/*.bpmn"
@@ -51,12 +49,9 @@ spring:
 
 camunda:
   client:
-    operate:
-      base-url: http://orchestration:8080
     zeebe:
       gateway-address: orchestration:26500
       rest-address: http://orchestration:8080
-
 
 bank:
   service:

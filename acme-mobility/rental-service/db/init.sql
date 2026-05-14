@@ -120,6 +120,6 @@ ON CONFLICT DO NOTHING;
 
 
 INSERT INTO users (name, email, password, account_id) VALUES 
-    ('Test User', 'user@acme.com', 'password123', 'account-67890'),
-    ('Admin', 'a@a.a', 'aaaaaaaa', 'account-12345')
+    ('Test User', 'user@acme.com', 'password123', 'TEST'),
+    ('Admin', 'a@a.a', 'aaaaaaaa', 'TEST2')
 ON CONFLICT DO NOTHING;

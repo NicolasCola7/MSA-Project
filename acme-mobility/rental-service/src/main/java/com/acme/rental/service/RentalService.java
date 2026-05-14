@@ -1,23 +1,24 @@
 package com.acme.rental.service;
 
-import com.acme.rental.dto.rental.BookVehicleRequest;
 import com.acme.rental.dto.rental.BookVehicleResponse;
 import com.acme.rental.dto.rental.InitRentalRequest;
 import com.acme.rental.dto.rental.InitRentalResponse;
-import com.acme.rental.dto.rental.MapVehiclesResponse;
 import com.acme.rental.dto.rental.ScanQrRequest;
 import com.acme.rental.dto.rental.ScanQrResponse;
 import com.acme.rental.model.Vehicle;
 import com.acme.rental.repository.VehicleRepository;
-
+import com.acme.rental.dto.rental.BookByTypeRequest;
+import com.acme.rental.dto.rental.StationWithVehiclesDTO;
+import com.acme.rental.dto.rental.MapStationsResponse;
+import com.acme.rental.model.Station;
+import com.acme.rental.repository.StationRepository;
 import io.camunda.zeebe.client.ZeebeClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Map;
-
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,11 +26,27 @@ import java.util.Map;
 public class RentalService {
 
     private final VehicleRepository vehicleRepository;
+    private final StationRepository stationRepository;
     private final ZeebeClient zeebeClient;
 
-    public MapVehiclesResponse getMapVehicles() {
-        List<Vehicle> vehicles = vehicleRepository.findAll();
-        return new MapVehiclesResponse(vehicles.size(), vehicles);
+    public MapStationsResponse getMapStations() {
+        List<Station> stations = stationRepository.findAll();
+
+        // Itero su ogni stazione per costruire l'oggetto di risposta
+        List<StationWithVehiclesDTO> stationDTOs = stations.stream().map(station -> {
+
+            // Recupero tutti i veicoli collegati a questa specifica stazione
+            List<Vehicle> vehicles = vehicleRepository.findByStationId(station.getId());
+
+            // costruisco il dto da ritornare sottoforma di json
+            return new StationWithVehiclesDTO(
+                    station.getId(),
+                    station.getName(),
+                    station.getLatitude(),
+                    station.getLongitude(),
+                    vehicles);
+        }).collect(Collectors.toList());
+        return new MapStationsResponse(stationDTOs);
     }
 
     public InitRentalResponse initializeRentalProcess(InitRentalRequest request) {
@@ -56,35 +73,32 @@ public class RentalService {
         }
     }
 
-    public BookVehicleResponse bookVehicle(BookVehicleRequest request) {
-        if (request == null) {
-            return new BookVehicleResponse(false, "userId and vehicleId are required", null, null);
+    public BookVehicleResponse bookVehicleByType(BookByTypeRequest request) {
+        if (request == null || request.userId() == null || request.userId().isBlank()
+                || request.stationId() == null || request.vehicleType() == null || request.vehicleType().isBlank()) {
+            return new BookVehicleResponse(false, "Mancano parametri", request != null ? request.userId() : null);
         }
 
-        if (request.userId() == null || request.userId() == null
-                || request.vehicleId() == null || request.vehicleId() == null) {
-            return new BookVehicleResponse(false, "userId and vehicleId are required", request.vehicleId(), request.userId());
-        }
+        bookVehicle(request.userId(), request.stationId(), request.vehicleType());
 
         return new BookVehicleResponse(
                 true,
-                "Vehicle booking request accepted",
-                request.vehicleId(),
-                request.userId()
-        );
+                "Booking request sent to bank/Zeebe",
+                request.userId());
     }
 
     private long initRentalProcess(Long userId) {
         log.info("[Zeebe] Creazione istanza per userId={}", userId);
 
-        // 1. Crea l'istanza passando userId come variabile (richiesta dall'Event Gateway)
+        // 1. Crea l'istanza passando userId come variabile (richiesta
+        // dall'EventGateway)
         var processInstanceResult = zeebeClient.newCreateInstanceCommand()
                 .bpmnProcessId("rental-service-process")
                 .latestVersion()
                 .variables(Map.of("userId", userId))
                 .send()
                 .join();
-                
+
         long key = processInstanceResult.getProcessInstanceKey();
         log.info("[Zeebe] Istanza creata con key={} per userId={}", key, userId);
         return key;
@@ -111,5 +125,22 @@ public class RentalService {
                 .join();
 
         log.info("[Zeebe] Message_scanQr sent for userId={}", userId);
+    }
+
+    private void bookVehicle(String userId, Long stationId, String vehicleType) {
+        log.info("[Zeebe] Invio Message_receiveBooking per userId={}, stationId={}, type={}", userId, stationId,
+                vehicleType);
+
+        zeebeClient.newPublishMessageCommand()
+                .messageName("Message_receiveBooking")
+                .correlationKey(userId)
+                .timeToLive(java.time.Duration.ofMinutes(1))
+                // Passiamo le variabili che serviranno ai worker futuri per assegnare il
+                // veicolo
+                .variables(Map.of(
+                        "requestedStationId", stationId,
+                        "requestedVehicleType", vehicleType))
+                .send()
+                .join();
     }
 }

@@ -4,35 +4,52 @@
 
   <!-- READY ──────────────────────────────────────────────────────────── -->
   @if (phase() === 'ready') {
-  <div class="card">
-    <div class="card-icon">{{ emoji() }}</div>
-
-    <div class="card-body">
-      <h2 class="model">{{ formatVehicleType(vehicle()?.type) | titlecase }}</h2>
-      <span class="vehicle-id">ID: {{ vehicleId() }}</span>
-
-      <div class="info-row">
-        <span class="info-label">Battery</span>
-        <span class="battery {{ batteryClass() }}">🔋 {{ vehicle()?.batteryLevel ?? '—' }}%</span>
-      </div>
-      <div class="info-row">
-        <span class="info-label">Status</span>
-        <span class="badge {{ statusClass() }}">{{ statusLabel() }}</span>
-      </div>
+    <div class="manual-input-container">
+      <label for="vehicleIdInput">Enter Vehicle ID manually:</label>
+      <input 
+        id="vehicleIdInput" 
+        type="text" 
+        placeholder="e.g. 1" 
+        [value]="vehicleId()"
+        (input)="updateVehicleId($event)"
+        class="vehicle-input" />
     </div>
 
-    <div class="qr-hint">
-      <span>QR Verified</span>
-    </div>
+    @if (vehicle()) {
+      <div class="card">
+        <div class="card-icon">{{ emoji() }}</div>
 
-    <button class="start-btn" (click)="startRental()" [disabled]="!canStart()">
-      Start Rental
-    </button>
+        <div class="card-body">
+          <h2 class="model">{{ formatVehicleType(vehicle()?.type) | titlecase }}</h2>
+          <span class="vehicle-id">ID: {{ vehicleId() }}</span>
 
-    @if (!canStart() && vehicle()) {
-    <p class="unavailable-note">⚠ Vehicle {{ statusLabel().toLowerCase() }} — not rentable</p>
+          <div class="info-row">
+            <span class="info-label">Battery</span>
+            <span class="battery {{ batteryClass() }}">🔋 {{ vehicle()?.batteryLevel ?? '—' }}%</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Status</span>
+            <span class="badge {{ statusClass() }}">{{ statusLabel() }}</span>
+          </div>
+        </div>
+
+        <div class="qr-hint">
+          <span>Vehicle Found</span>
+        </div>
+
+        <button class="start-btn" (click)="startRental()" [disabled]="!canStart()">
+          Start Rental
+        </button>
+
+        @if (!canStart()) {
+          <p class="unavailable-note">⚠ Vehicle {{ statusLabel().toLowerCase() }} — not rentable</p>
+        }
+      </div>
+    } @else if (vehicleId()) {
+      <div class="not-found-card">
+        <p>No vehicle found with ID: <strong>{{ vehicleId() }}</strong></p>
+      </div>
     }
-  </div>
   }
 
   <!-- STARTING ────────────────────────────────────────────────────────── -->
@@ -40,7 +57,7 @@
   <div class="centered">
     <div class="spinner"></div>
     <p class="waiting-text">Starting rental...</p>
-    <span class="waiting-sub">Communicating with Zeebe</span>
+    <span class="waiting-sub">Message sent to Zeebe</span>
   </div>
   }
 

@@ -34,11 +34,7 @@ public class Vehicle {
     @Column(name = "battery_level")
     private Integer batteryLevel;
 
-    @Column(name = "latitude")
-    private Double latitude;
 
-    @Column(name = "longitude")
-    private Double longitude;
 
     @Column(name = "station_id")
     private Long stationId;

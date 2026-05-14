@@ -19,8 +19,6 @@ CREATE TABLE IF NOT EXISTS vehicles (
     type VARCHAR(50) NOT NULL CHECK (type IN ('CAR', 'SCOOTER', 'KICK_SCOOTER')),
     status VARCHAR(20) NOT NULL DEFAULT 'AVAILABLE' CHECK (status IN ('AVAILABLE', 'RESERVED', 'RENTED', 'MAINTENANCE', 'CHARGING')),
     battery_level INT CHECK (battery_level >= 0 AND battery_level <= 100),
-    latitude DOUBLE PRECISION,
-    longitude DOUBLE PRECISION,
     station_id BIGINT,
     
     CONSTRAINT fk_vehicle_station 
@@ -30,21 +28,94 @@ CREATE TABLE IF NOT EXISTS vehicles (
 );
 
 
+-- 7 stazioni a Bologna
 INSERT INTO stations (name, latitude, longitude) VALUES 
-    ('Stazione Centrale', 44.5058, 11.3432),
-    ('Piazza Maggiore', 44.4939, 11.3428),
-    ('Via Irnerio', 44.4998, 11.3499),
-    ('Porta San Felice', 44.4981, 11.3283),
-    ('Via delle Lame', 44.5015, 11.3361)
+    ('Stazione Centrale',   44.5058, 11.3432),
+    ('Piazza Maggiore',     44.4939, 11.3428),
+    ('Via Irnerio',         44.4998, 11.3499),
+    ('Porta San Felice',    44.4981, 11.3283),
+    ('Via delle Lame',      44.5015, 11.3361),
+    ('Porta Saragozza',     44.4895, 11.3345),
+    ('Fiera District',      44.5115, 11.3480)
 ON CONFLICT DO NOTHING;
 
 
-INSERT INTO vehicles (type, status, battery_level, latitude, longitude, station_id) VALUES 
-    ('SCOOTER', 'AVAILABLE', 92, 44.4949, 11.3426, 1),
-    ('KICK_SCOOTER', 'AVAILABLE', 78, 44.4968, 11.3396, 2),
-    ('CAR', 'AVAILABLE', 55, 44.5008, 11.3512, 3),
-    ('SCOOTER', 'AVAILABLE', 88, 44.4901, 11.3303, 4),
-    ('KICK_SCOOTER', 'AVAILABLE', 41, 44.5045, 11.3489, 5)
+-- Stazione 1: Stazione Centrale (8 veicoli)
+INSERT INTO vehicles (type, status, battery_level, station_id) VALUES 
+    ('CAR',          'AVAILABLE', 95, 1),
+    ('CAR',          'AVAILABLE', 72, 1),
+    ('CAR',          'RENTED',    40, 1),
+    ('SCOOTER',      'AVAILABLE', 88, 1),
+    ('SCOOTER',      'AVAILABLE', 65, 1),
+    ('SCOOTER',      'CHARGING',  12, 1),
+    ('KICK_SCOOTER', 'AVAILABLE', 91, 1),
+    ('KICK_SCOOTER', 'AVAILABLE', 54, 1)
+ON CONFLICT DO NOTHING;
+
+-- Stazione 2: Piazza Maggiore (7 veicoli)
+INSERT INTO vehicles (type, status, battery_level, station_id) VALUES 
+    ('CAR',          'AVAILABLE', 80, 2),
+    ('CAR',          'MAINTENANCE', 30, 2),
+    ('SCOOTER',      'AVAILABLE', 99, 2),
+    ('SCOOTER',      'AVAILABLE', 73, 2),
+    ('KICK_SCOOTER', 'AVAILABLE', 85, 2),
+    ('KICK_SCOOTER', 'AVAILABLE', 62, 2),
+    ('KICK_SCOOTER', 'AVAILABLE', 44, 2)
+ON CONFLICT DO NOTHING;
+
+-- Stazione 3: Via Irnerio (6 veicoli)
+INSERT INTO vehicles (type, status, battery_level, station_id) VALUES 
+    ('CAR',          'AVAILABLE', 55, 3),
+    ('SCOOTER',      'AVAILABLE', 92, 3),
+    ('SCOOTER',      'AVAILABLE', 47, 3),
+    ('SCOOTER',      'RENTED',    33, 3),
+    ('KICK_SCOOTER', 'AVAILABLE', 78, 3),
+    ('KICK_SCOOTER', 'AVAILABLE', 60, 3)
+ON CONFLICT DO NOTHING;
+
+-- Stazione 4: Porta San Felice (8 veicoli)
+INSERT INTO vehicles (type, status, battery_level, station_id) VALUES 
+    ('CAR',          'AVAILABLE', 100, 4),
+    ('CAR',          'AVAILABLE', 88,  4),
+    ('CAR',          'AVAILABLE', 62,  4),
+    ('SCOOTER',      'AVAILABLE', 77,  4),
+    ('SCOOTER',      'AVAILABLE', 55,  4),
+    ('KICK_SCOOTER', 'AVAILABLE', 90,  4),
+    ('KICK_SCOOTER', 'AVAILABLE', 68,  4),
+    ('KICK_SCOOTER', 'CHARGING',  15,  4)
+ON CONFLICT DO NOTHING;
+
+-- Stazione 5: Via delle Lame (7 veicoli)
+INSERT INTO vehicles (type, status, battery_level, station_id) VALUES 
+    ('CAR',          'AVAILABLE', 82, 5),
+    ('CAR',          'RENTED',    25, 5),
+    ('SCOOTER',      'AVAILABLE', 96, 5),
+    ('SCOOTER',      'AVAILABLE', 71, 5),
+    ('SCOOTER',      'AVAILABLE', 48, 5),
+    ('KICK_SCOOTER', 'AVAILABLE', 87, 5),
+    ('KICK_SCOOTER', 'AVAILABLE', 39, 5)
+ON CONFLICT DO NOTHING;
+
+-- Stazione 6: Porta Saragozza (6 veicoli)
+INSERT INTO vehicles (type, status, battery_level, station_id) VALUES 
+    ('CAR',          'AVAILABLE',    75, 6),
+    ('CAR',          'MAINTENANCE',  20, 6),
+    ('SCOOTER',      'AVAILABLE',    83, 6),
+    ('SCOOTER',      'AVAILABLE',    58, 6),
+    ('KICK_SCOOTER', 'AVAILABLE',    94, 6),
+    ('KICK_SCOOTER', 'AVAILABLE',    41, 6)
+ON CONFLICT DO NOTHING;
+
+-- Stazione 7: Fiera District (8 veicoli)
+INSERT INTO vehicles (type, status, battery_level, station_id) VALUES 
+    ('CAR',          'AVAILABLE', 97, 7),
+    ('CAR',          'AVAILABLE', 66, 7),
+    ('SCOOTER',      'AVAILABLE', 89, 7),
+    ('SCOOTER',      'AVAILABLE', 74, 7),
+    ('SCOOTER',      'AVAILABLE', 52, 7),
+    ('KICK_SCOOTER', 'AVAILABLE', 81, 7),
+    ('KICK_SCOOTER', 'AVAILABLE', 63, 7),
+    ('KICK_SCOOTER', 'RENTED',    28, 7)
 ON CONFLICT DO NOTHING;
 
 

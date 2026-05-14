@@ -16,9 +16,9 @@ export class SessionService {
   readonly userName = signal<string>(this.resolveUserName());
 
   private resolveUserId(): string {
-    const id = localStorage.getItem('currentUser');
+    const id = sessionStorage.getItem(this.USER_ID_KEY);
     if (!id) {
-      console.warn("No logged in user found in localStorage! Redirecting to login.");
+      console.warn("No logged in user found in sessionStorage! Redirecting to login.");
       return '';
     }
     return id;
@@ -31,7 +31,7 @@ export class SessionService {
   }
 
   private resolveUserName(): string {
-    return localStorage.getItem(this.USER_NAME_KEY) || '';
+    return sessionStorage.getItem(this.USER_NAME_KEY) || '';
   }
 
   isLoggedIn(): boolean {
@@ -56,7 +56,11 @@ export class SessionService {
   }
 
   logout() {
-    localStorage.clear();
+    this.clearSession();
+  }
+
+  clearSession() {
+    sessionStorage.clear();
     this.userId.set('');
     this.userName.set('');
     this.accountId.set('');

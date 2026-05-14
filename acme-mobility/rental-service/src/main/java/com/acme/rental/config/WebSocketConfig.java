@@ -1,6 +1,6 @@
 package com.acme.rental.config;
 
-import com.acme.rental.service.WebSocketSessionRegistry;
+import com.acme.rental.websocket.WebSocketSessionRegistry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;

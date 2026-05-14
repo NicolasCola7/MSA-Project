@@ -1,4 +1,4 @@
-package com.acme.rental.service;
+package com.acme.rental.websocket;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

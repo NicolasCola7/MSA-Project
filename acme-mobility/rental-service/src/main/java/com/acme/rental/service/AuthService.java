@@ -18,6 +18,7 @@ import java.util.Optional;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final SessionResumeService sessionResumeService;
 
     public LoginResponse authenticateUser(LoginRequest request) {
         System.out.println("[DEBUG] Login attempt received");
@@ -33,10 +34,13 @@ public class AuthService {
 
             if (user.getPassword().equals(request.password())) {
                 System.out.println("[DEBUG] Password match! Login successful.");
+                String userId = String.valueOf(user.getId());
+                String targetRoute = sessionResumeService.determineTargetRoute(userId);
                 return new LoginResponse(
-                        String.valueOf(user.getId()),
+                        userId,
                         user.getName(),
                         user.getAccountId(),
+                        targetRoute,
                         true,
                         "Login successful"
                 );
@@ -47,7 +51,7 @@ public class AuthService {
             System.out.println("[DEBUG] User NOT found in DB for email: " + request.email());
         }
 
-        return new LoginResponse(null, null, null, false, "Invalid email or password");
+        return new LoginResponse(null, null, null, null, false, "Invalid email or password");
     }
 
     public RegisterResponse registerNewUser(RegisterRequest request) {

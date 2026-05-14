@@ -26,7 +26,7 @@ export class LoginComponent {
   onLogin() {
     this.errorMessage.set('');
 
-    this.http.post<any>(`${environment.apiBase}/api/auth/login`, {
+    this.http.post<any>(`${environment.apiBase}/auth/login`, {
       email: this.email,
       password: this.password
     }).subscribe({
@@ -34,8 +34,9 @@ export class LoginComponent {
         if (loginRes?.success) {
           const userId = loginRes.userId;
           const userName = loginRes.userName;
+          const accountId = loginRes.accountId;
 
-          this.sessionService.loginUser(userId, userName);
+          this.sessionService.loginUser(userId, userName, accountId);
           this.router.navigate(['/init']);
         } else {
           this.errorMessage.set(loginRes?.message ?? 'Unknown error.');

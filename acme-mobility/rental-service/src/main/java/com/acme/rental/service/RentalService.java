@@ -50,7 +50,7 @@ public class RentalService {
     }
 
     public InitRentalResponse initializeRentalProcess(InitRentalRequest request) {
-        if (request == null || request.userId() == null || request.userId().isBlank()) {
+        if (request == null || request.userId() == null || request.userId() == null) {
             return new InitRentalResponse(null, false, "userId is required");
         }
 
@@ -60,13 +60,17 @@ public class RentalService {
 
     public ScanQrResponse scanQr(ScanQrRequest request) {
         if (request == null
-                || request.userId() == null || request.userId().isBlank()
-                || request.vehicleId() == null || request.vehicleId().isBlank()) {
+                || request.userId() == null || request.userId() == null
+                || request.vehicleId() == null || request.vehicleId() == null) {
             return new ScanQrResponse(false, "userId and vehicleId are required");
         }
 
-        scanQr(request.userId(), request.vehicleId());
-        return new ScanQrResponse(true, "QR scanned and sent to Zeebe");
+        try {
+            scanQr(request.userId(), request.vehicleId(), request.accountId());
+            return new ScanQrResponse(true, "QR scanned and sent to Zeebe");
+        } catch (RuntimeException e) {
+            return new ScanQrResponse(false, e.getMessage());
+        }
     }
 
     public BookVehicleResponse bookVehicleByType(BookByTypeRequest request) {
@@ -83,7 +87,7 @@ public class RentalService {
                 request.userId());
     }
 
-    private long initRentalProcess(String userId) {
+    private long initRentalProcess(Long userId) {
         log.info("[Zeebe] Creazione istanza per userId={}", userId);
 
         // 1. Crea l'istanza passando userId come variabile (richiesta
@@ -100,19 +104,27 @@ public class RentalService {
         return key;
     }
 
-    private void scanQr(String userId, String vehicleId) {
-        log.info("[Zeebe] Invio Message_scanQr per userId={}, vehicleId={}", userId, vehicleId);
+    private void scanQr(Long userId, Long vehicleId, String accountId) {
 
-        // 2. Pubblica il messaggio con TTL
+        // check vehicle existence and availability  
+        Vehicle vehicle = vehicleRepository.findById(vehicleId)
+                .orElseThrow(() -> new RuntimeException("Vehicle not found with id: " + vehicleId));
+           
+        if (!"AVAILABLE".equalsIgnoreCase(vehicle.getStatus())) {
+            throw new RuntimeException("Vehicle with id " + vehicleId + " is not available");
+        }
+
+     
+        // publish message to Zeebe to correlate with the waiting process instance
         zeebeClient.newPublishMessageCommand()
                 .messageName("Message_scanQr")
-                .correlationKey(userId)
+                .correlationKey(Long.toString(userId))
                 .timeToLive(java.time.Duration.ofMinutes(1))
-                .variables(Map.of("vehicleId", vehicleId))
+                .variables(Map.of("vehicleId", vehicleId, "accountId", accountId))
                 .send()
                 .join();
 
-        log.info("[Zeebe] Messaggio Message_scanQr inviato con successo per userId={}", userId);
+        log.info("[Zeebe] Message_scanQr sent for userId={}", userId);
     }
 
     private void bookVehicle(String userId, Long stationId, String vehicleType) {

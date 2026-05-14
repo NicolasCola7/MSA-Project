@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb" if-exists="true" version="2.1">
+      
+    <!--
+
+Questo file è stato generato dall'Eclipse Implementation of JAXB, v2.3.7 
+Vedere https://eclipse-ee4j.github.io/jaxb-ri 
+Qualsiasi modifica a questo file andrà persa durante la ricompilazione dello schema di origine. 
+Generato il: 2026.05.11 alle 05:06:42 PM CEST 
+
+  -->
+      
+    <bindings xmlns:tns="bank.xsd" if-exists="true" scd="x-schema::tns">
+            
+        <schemaBindings map="false">
+                  
+            <package name="com.acme.rental.integration.bank.generated"/>
+                
+        </schemaBindings>
+            
+        <bindings if-exists="true" scd="tns:unlockMoney">
+                  
+            <class ref="com.acme.rental.integration.bank.generated.UnlockMoney"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="tns:unlockMoneyResponse">
+                  
+            <class ref="com.acme.rental.integration.bank.generated.UnlockMoneyResponse"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="tns:chargeMoneyBlock">
+                  
+            <class ref="com.acme.rental.integration.bank.generated.ChargeMoneyBlock"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="tns:chargeMoneyBlockResponse">
+                  
+            <class ref="com.acme.rental.integration.bank.generated.ChargeMoneyBlockResponse"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="tns:chargeMoney">
+                  
+            <class ref="com.acme.rental.integration.bank.generated.ChargeMoney"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="tns:chargeMoneyResponse">
+                  
+            <class ref="com.acme.rental.integration.bank.generated.ChargeMoneyResponse"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="tns:blockMoney">
+                  
+            <class ref="com.acme.rental.integration.bank.generated.BlockMoney"/>
+                
+        </bindings>
+            
+        <bindings if-exists="true" scd="tns:blockMoneyResponse">
+                  
+            <class ref="com.acme.rental.integration.bank.generated.BlockMoneyResponse"/>
+                
+        </bindings>
+          
+    </bindings>
+    
+</bindings>

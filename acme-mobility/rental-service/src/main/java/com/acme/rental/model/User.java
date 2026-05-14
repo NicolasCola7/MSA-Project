@@ -22,6 +22,9 @@ public class User {
     @Column(unique = true, nullable = false)
     private String name;
 
+    @Column(unique = true, nullable = false)
+    private String accountId;
+
     public User() {
     }
 
@@ -55,5 +58,13 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 }

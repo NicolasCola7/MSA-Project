@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="bank.wsdl" xmlns:xsd1="bank.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="bank.wsdl" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <xs:schema targetNamespace="bank.xsd" xmlns:sch="bank.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema"><xs:element name="unlockMoney"><xs:complexType><xs:sequence><xs:element maxOccurs="1" minOccurs="1" name="accountId" type="xs:string"/><xs:element maxOccurs="1" minOccurs="1" name="token" type="xs:string"/></xs:sequence></xs:complexType></xs:element><xs:element name="unlockMoneyResponse"><xs:complexType><xs:sequence><xs:element maxOccurs="1" minOccurs="1" name="success" type="xs:boolean"/><xs:element maxOccurs="1" minOccurs="0" name="errorStatus" type="xs:string"/><xs:element maxOccurs="1" minOccurs="1" name="message" type="xs:string"/><xs:element maxOccurs="1" minOccurs="1" name="token" type="xs:string"/></xs:sequence></xs:complexType></xs:element><xs:element name="chargeMoneyBlock"><xs:complexType><xs:sequence><xs:element maxOccurs="1" minOccurs="1" name="accountId" type="xs:string"/><xs:element maxOccurs="1" minOccurs="1" name="token" type="xs:string"/></xs:sequence></xs:complexType></xs:element><xs:element name="chargeMoneyBlockResponse"><xs:complexType><xs:sequence><xs:element maxOccurs="1" minOccurs="1" name="success" type="xs:boolean"/><xs:element maxOccurs="1" minOccurs="0" name="errorStatus" type="xs:string"/><xs:element maxOccurs="1" minOccurs="1" name="message" type="xs:string"/><xs:element maxOccurs="1" minOccurs="1" name="token" type="xs:string"/></xs:sequence></xs:complexType></xs:element><xs:element name="chargeMoney"><xs:complexType><xs:sequence><xs:element maxOccurs="1" minOccurs="1" name="accountId" type="xs:string"/><xs:element maxOccurs="1" minOccurs="1" name="amount" type="xs:double"/><xs:element maxOccurs="1" minOccurs="1" name="token" type="xs:string"/></xs:sequence></xs:complexType></xs:element><xs:element name="chargeMoneyResponse"><xs:complexType><xs:sequence><xs:element maxOccurs="1" minOccurs="1" name="success" type="xs:boolean"/><xs:element maxOccurs="1" minOccurs="0" name="errorStatus" type="xs:string"/><xs:element maxOccurs="1" minOccurs="1" name="message" type="xs:string"/><xs:element maxOccurs="1" minOccurs="1" name="token" type="xs:string"/></xs:sequence></xs:complexType></xs:element><xs:element name="blockMoney"><xs:complexType><xs:sequence><xs:element maxOccurs="1" minOccurs="1" name="accountId" type="xs:string"/></xs:sequence></xs:complexType></xs:element><xs:element name="blockMoneyResponse"><xs:complexType><xs:sequence><xs:element maxOccurs="1" minOccurs="1" name="success" type="xs:boolean"/><xs:element maxOccurs="1" minOccurs="0" name="errorStatus" type="xs:string"/><xs:element maxOccurs="1" minOccurs="1" name="message" type="xs:string"/><xs:element maxOccurs="1" minOccurs="0" name="token" type="xs:string"/></xs:sequence></xs:complexType></xs:element></xs:schema>
+  </wsdl:types>
+  <wsdl:message name="BlockMoneyResponse">
+    <wsdl:part name="body" element="xsd1:blockMoneyResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ChargeMoneyBlockResponse">
+    <wsdl:part name="body" element="xsd1:chargeMoneyBlockResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UnlockMoneyRequest">
+    <wsdl:part name="body" element="xsd1:unlockMoney">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ChargeMoneyRequest">
+    <wsdl:part name="body" element="xsd1:chargeMoney">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ChargeMoneyBlockRequest">
+    <wsdl:part name="body" element="xsd1:chargeMoneyBlock">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UnlockMoneyResponse">
+    <wsdl:part name="body" element="xsd1:unlockMoneyResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ChargeMoneyResponse">
+    <wsdl:part name="body" element="xsd1:chargeMoneyResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BlockMoneyRequest">
+    <wsdl:part name="body" element="xsd1:blockMoney">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="BankPort">
+    <wsdl:operation name="unlockMoney">
+      <wsdl:input message="tns:UnlockMoneyRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:UnlockMoneyResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="chargeMoneyBlock">
+      <wsdl:input message="tns:ChargeMoneyBlockRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:ChargeMoneyBlockResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="chargeMoney">
+      <wsdl:input message="tns:ChargeMoneyRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:ChargeMoneyResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="blockMoney">
+      <wsdl:input message="tns:BlockMoneyRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:BlockMoneyResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BankPortSOAPBinding" type="tns:BankPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="unlockMoney">
+      <soap:operation soapAction="unlockMoney" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="chargeMoneyBlock">
+      <soap:operation soapAction="chargeMoneyBlock" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="chargeMoney">
+      <soap:operation soapAction="chargeMoney" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="blockMoney">
+      <soap:operation soapAction="blockMoney" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BankPortService">
+    <wsdl:port name="BankPortServicePort" binding="tns:BankPortSOAPBinding">
+      <soap:address location="http://localhost:8000"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

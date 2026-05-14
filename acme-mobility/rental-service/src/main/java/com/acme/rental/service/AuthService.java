@@ -6,18 +6,18 @@ import com.acme.rental.dto.auth.RegisterRequest;
 import com.acme.rental.dto.auth.RegisterResponse;
 import com.acme.rental.model.User;
 import com.acme.rental.repository.UserRepository;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
     private final UserRepository userRepository;
-
-    public AuthService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public LoginResponse authenticateUser(LoginRequest request) {
         System.out.println("[DEBUG] Login attempt received");
@@ -36,6 +36,7 @@ public class AuthService {
                 return new LoginResponse(
                         String.valueOf(user.getId()),
                         user.getName(),
+                        user.getAccountId(),
                         true,
                         "Login successful"
                 );
@@ -46,7 +47,7 @@ public class AuthService {
             System.out.println("[DEBUG] User NOT found in DB for email: " + request.email());
         }
 
-        return new LoginResponse(null, null, false, "Invalid email or password");
+        return new LoginResponse(null, null, null, false, "Invalid email or password");
     }
 
     public RegisterResponse registerNewUser(RegisterRequest request) {
@@ -60,6 +61,7 @@ public class AuthService {
         newUser.setName(request.name());
         newUser.setEmail(request.email());
         newUser.setPassword(request.password());
+        newUser.setAccountId(request.accountId());
 
         userRepository.save(newUser);
         System.out.println("[DEBUG] User registered successfully: " + request.email());

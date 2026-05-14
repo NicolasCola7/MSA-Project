@@ -79,7 +79,7 @@ export class RentalService implements OnDestroy {
     this.addLog('GET /api/rentals/map…');
 
     const sub = this.http
-      .get<MapStationsResponse>(`${environment.apiBase}/api/rentals/map`)
+      .get<MapStationsResponse>(`${environment.apiBase}/rentals/map`)
       .subscribe({
         next: res => {
           this.addLog(`✅ ${res.stations.length} stations received`, 'ok');
@@ -102,15 +102,16 @@ export class RentalService implements OnDestroy {
   // RENTAL LOGIC
   // ─────────────────────────────────────────────────────────────────────────
   initRentalProcess(userId: string): Observable<InitRentalResponse> {
-    return this.http.post<InitRentalResponse>(`${environment.apiBase}/api/rentals/init`, { userId });
+    return this.http.post<InitRentalResponse>(`${environment.apiBase}/rentals/init`, { userId });
   }
 
   startRental(req: StartRentalRequest): void {
     this.rentalState.set('starting');
 
-    this.http.post<StartRentalResponse>(`${environment.apiBase}/api/rentals/scan`, {
+    this.http.post<StartRentalResponse>(`${environment.apiBase}/rentals/scan`, {
       userId: req.userId,
-      vehicleId: req.vehicleId
+      vehicleId: req.vehicleId,
+      accountId: req.accountId
     }).subscribe({
       next: (res) => {
         this.addLog(`✅ QR code scan request sent for vehicle: ${req.vehicleId}`);
@@ -123,7 +124,7 @@ export class RentalService implements OnDestroy {
   }
 
   bookByType(userId: string, stationId: number, vehicleType: string): Observable<BookVehicleResponse> {
-    return this.http.post<BookVehicleResponse>(`${environment.apiBase}/api/rentals/book`, {
+    return this.http.post<BookVehicleResponse>(`${environment.apiBase}/rentals/book`, {
       userId,
       stationId,
       vehicleType

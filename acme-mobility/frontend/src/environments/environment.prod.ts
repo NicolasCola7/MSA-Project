@@ -5,6 +5,7 @@ export const environment = {
   production: true,
   apiBase: '/api',
   wsBase: `${wsProtocol}//${window.location.host}/ws/vehicles`,
+  createAccountEndpoint: '/createAccount',
   appVersion: '1.0.0',
   envTag: 'PROD',
 };

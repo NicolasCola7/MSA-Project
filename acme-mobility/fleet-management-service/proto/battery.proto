@@ -1,0 +1,22 @@
+syntax = "proto3";
+package acmemobility.battery;
+
+service BatteryService {
+  rpc StartMonitoring  (BatteryRequest)  returns (BatteryAck);
+  rpc StopMonitoring   (BatteryRequest)  returns (BatteryAck);
+  rpc GetBatteryLevel  (BatteryRequest)  returns (BatteryResponse);
+}
+
+message BatteryRequest {
+  string vehicle_id = 1;
+}
+
+message BatteryAck {
+  bool success = 1;
+}
+
+message BatteryResponse {
+  string vehicle_id   = 1;
+  int32  battery_level = 2;
+  string updated_at   = 3;
+}

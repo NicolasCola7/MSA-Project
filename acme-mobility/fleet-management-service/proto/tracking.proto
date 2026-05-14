@@ -1,0 +1,23 @@
+syntax = "proto3";
+package acmemobility.tracking;
+
+service TrackingService {
+  rpc StartTracking (TrackingRequest) returns (TrackingAck);
+  rpc StopTracking  (TrackingRequest) returns (TrackingAck);
+  rpc GetPosition   (TrackingRequest) returns (PositionResponse);
+}
+
+message TrackingRequest {
+  string vehicle_id = 1;
+}
+
+message TrackingAck {
+  bool success = 1;
+}
+
+message PositionResponse {
+  string vehicle_id = 1;
+  double latitude   = 2;
+  double longitude  = 3;
+  string updated_at = 4;
+}

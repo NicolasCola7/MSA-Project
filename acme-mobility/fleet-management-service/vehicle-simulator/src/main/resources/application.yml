@@ -1,0 +1,11 @@
+# Vehicle Simulator Configuration
+# This is a development tool, not a microservice.
+
+simulation:
+  enabled: true
+  interval-ms: 5000
+
+# Targets for telemetry ingest (using host-mapped ports)
+targets:
+  tracking-service: "http://localhost:8092"
+  battery-service: "http://localhost:8093"

@@ -1,0 +1,17 @@
+server:
+  port: 8081
+
+grpc:
+  client:
+    tracking-service:
+      address: 'static://tracking-service:9092'
+      negotiation-type: 'plaintext'
+    battery-service:
+      address: 'static://battery-service:9093'
+      negotiation-type: 'plaintext'
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

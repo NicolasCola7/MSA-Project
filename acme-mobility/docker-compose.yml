@@ -126,6 +126,7 @@ services:
       - rental-service
 
   bank-service:
+    platform: linux/amd64
     build:
       context: ./bank-service
       dockerfile: Dockerfile.dev
@@ -163,6 +164,7 @@ services:
       retries: 10
       
   bank-account-registration-service:
+    platform: linux/amd64
     build:
       context: ./bank-account-registration-service
       dockerfile: Dockerfile.dev

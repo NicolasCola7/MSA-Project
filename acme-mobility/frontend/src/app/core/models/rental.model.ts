@@ -56,7 +56,8 @@ export interface Rental {
 
 export interface StartRentalRequest {
   userId: string;
-  vehicleId: string;      // scansionato dal QR
+  vehicleId: string;
+  accountId: string;
 }
 
 export interface StartRentalResponse {

@@ -1,71 +1,67 @@
 services:
 
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:8.9.1
-    container_name: elasticsearch
-    hostname: acme-elasticsearch
-    environment:
-      - discovery.type=single-node
-      - xpack.security.enabled=false
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - network.host=0.0.0.0
-      - network.publish_host=_local_
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
+  camunda-data-init:
+    image: camunda/camunda:${CAMUNDA_VERSION}
+    user: "0:0"
+    entrypoint: ["/bin/sh", "-c", "chown -R 1001:1001 /usr/local/camunda/camunda-data && chmod 775 /usr/local/camunda/camunda-data"]
     volumes:
-      - elasticsearch-data:/usr/share/elasticsearch/data
-    ports:
-      - "9200:9200"
-    networks:
-      - acme-net
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
-      interval: 20s
-      timeout: 10s
-      retries: 10
-      start_period: 30s
+      - camunda-data:/usr/local/camunda/camunda-data
+    restart: "no"
 
-  zeebe:
-    image: camunda/zeebe:8.4.6
-    container_name: zeebe
-    environment:
-      - ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_CLASSNAME=io.camunda.zeebe.exporter.ElasticsearchExporter
-      - ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_ARGS_URL=http://elasticsearch:9200
-      - ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_ARGS_BULK_DELAY=1
-      - ZEEBE_BROKER_EXPORTERS_ELASTICSEARCH_ARGS_BULK_SIZE=1
-      - ZEEBE_BROKER_GATEWAY_SECURITY_AUTHENTICATION_MODE=none
-      - ZEEBE_BROKER_GATEWAY_NETWORK_HOST=0.0.0.0
+  orchestration:
+    image: camunda/camunda:${CAMUNDA_VERSION}
+    container_name: orchestration
     ports:
-      - "26500:26500"   # gRPC gateway (used by Java clients)
-      - "9600:9600"     # Monitoring/health
-    networks:
-      - acme-net
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
+      - "26500:26500"
+      - "9600:9600"
+      - "8083:8080"
+    environment:
+      - JAVA_TOOL_OPTIONS="-XX:+PrintFlagsFinal"
+    mem_limit: 1g
+    restart: always
     healthcheck:
-      test: ["CMD", "bash", "-c", "echo > /dev/tcp/127.0.0.1/9600"]
+      test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/127.0.0.1/9600 && echo -e \"GET /actuator/health/status HTTP/1.1\r\nHost: localhost\r\n\r\n\" >&3 && head -n 1 <&3'"]
       interval: 30s
-      timeout: 15s
-      retries: 20
-      start_period: 120s 
-
-  operate-camunda:
-    image: camunda/operate:8.4.6
-    container_name: operate-camunda
-    environment:
-      - CAMUNDA_OPERATE_ZEEBE_GATEWAYADDRESS=zeebe:26500
-      - CAMUNDA_OPERATE_ELASTICSEARCH_URL=http://elasticsearch:9200
-      - CAMUNDA_OPERATE_ZEEBEELASTICSEARCH_URL=http://elasticsearch:9200
-      - SPRING_PROFILES_ACTIVE=dev
-    ports:
-      - "8081:8080"   # http://localhost:8081  (admin/admin)
+      retries: 30
+      start_period: 180s
+    volumes:
+      - zeebe:/usr/local/zeebe/data
+      - camunda-data:/usr/local/camunda/camunda-data
+      - ./driver-lib:/driver-lib:ro
+    configs:
+      - source: orchestration-config
+        target: /usr/local/camunda/config/application.yaml
     networks:
+      - camunda
       - acme-net
     depends_on:
-      zeebe:
+      camunda-data-init:
+        condition: service_completed_successfully
+  
+  connectors:
+    image: camunda/connectors-bundle:${CAMUNDA_CONNECTORS_VERSION}
+    container_name: connectors
+    ports:
+      - "8086:8080"
+    environment:
+      - management.endpoints.web.exposure.include=health,configprops
+      - management.endpoint.health.probes.enabled=true
+    env_file: connector-secrets.txt
+    mem_limit: 512m
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:8080/actuator/health/readiness"]
+      interval: 30s
+      timeout: 1s
+      retries: 5
+      start_period: 30s
+    configs:
+      - source: connectors-config
+        target: application.yaml
+    networks:
+      - camunda
+    depends_on:
+      orchestration:
         condition: service_healthy
 
   rental-service:
@@ -74,7 +70,7 @@ services:
       dockerfile: Dockerfile.dev
     container_name: rental-service
     environment:
-        ZEEBE_CLIENT_BROKER_GATEWAYADDRESS: zeebe:26500
+        ZEEBE_CLIENT_BROKER_GATEWAYADDRESS: orchestration:26500
         ZEEBE_CLIENT_SECURITY_PLAINTEXT: true
         SPRING_PROFILES_ACTIVE: docker
         SPRING_DATASOURCE_URL: jdbc:postgresql://rental-service-db:5432/acme_mobility
@@ -84,15 +80,15 @@ services:
     ports:
       - "8080:8080"
     volumes: 
-      - ./rental-service:/app # java source code
-      - maven-cache:/root/.m2 # maven cache so dependencies persist between restarts
+      - ./rental-service:/app
+      - maven-cache:/root/.m2
     networks:
       - acme-net
     depends_on:
-      zeebe:
+      orchestration:
         condition: service_healthy
       rental-service-db:
-          condition: service_started
+          condition: service_healthy
 
   rental-service-db:
     image: postgres:18
@@ -104,10 +100,15 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./rental-service/db/:/docker-entrypoint-initdb.d # db initialization
-      - rental-service-db-data:/var/lib/postgresql/ # db persistent named volumes
+      - ./rental-service/db/:/docker-entrypoint-initdb.d
+      - rental-service-data:/var/lib/postgresql
     networks:
       - acme-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d acme_mobility"] 
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   frontend:
     build:
@@ -124,11 +125,79 @@ services:
     depends_on:
       - rental-service
 
+  bank-service:
+    build:
+      context: ./bank-service
+      dockerfile: Dockerfile.dev
+    container_name: bank-service
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./bank-service:/app
+    restart: unless-stopped
+    depends_on:
+      bank-service-db:
+        condition: service_healthy
+    networks:
+      - acme-net
+
+  bank-service-db:
+    image: postgres:18
+    container_name: bank-service-db
+    environment:
+        POSTGRES_DB: bank
+        POSTGRES_USER: user
+        POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+    restart: unless-stopped
+    volumes:
+      - ./bank-service/db/:/docker-entrypoint-initdb.d
+      - bank-service-data:/var/lib/postgresql
+    networks:
+      - acme-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d bank"] 
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      
+  bank-account-registration-service:
+    build:
+      context: ./bank-account-registration-service
+      dockerfile: Dockerfile.dev
+    container_name: bank-account-registration-service
+    ports:
+      - "8082:8080" 
+    volumes:
+      - ./bank-account-registration-service:/app
+    restart: unless-stopped
+    depends_on:
+      bank-service-db:
+        condition: service_healthy
+    networks:
+      - acme-net
+
 networks:
+  camunda:
   acme-net:
     driver: bridge
 
 volumes:
-  elasticsearch-data:
+  zeebe:
+  camunda-data:
   maven-cache:
-  rental-service-db-data:
+  rental-service-data:
+  bank-service-data:
+
+configs:
+  connectors-config:
+    content: |
+      camunda:
+        client:
+          mode: self-managed
+          grpc-address: http://orchestration:26500
+          rest-address: http://orchestration:8080
+
+  orchestration-config:
+    file: ./application.yaml

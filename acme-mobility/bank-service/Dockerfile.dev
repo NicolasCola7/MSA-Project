@@ -1,0 +1,11 @@
+FROM jolielang/jolie:latest
+
+WORKDIR /app
+
+EXPOSE 8000
+
+COPY ./lib/jdbc-postgresql.jar /usr/lib/jolie/lib/
+
+#COPY . .
+
+CMD [ "jolie", "bank.ol" ]

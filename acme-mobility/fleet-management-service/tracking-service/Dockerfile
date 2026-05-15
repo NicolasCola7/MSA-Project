@@ -2,8 +2,8 @@
 FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
 
-# Copy the proto directory
-COPY proto ./proto
+# Copy the proto directory (needed for code generation)
+COPY proto /proto
 
 # Copy the project files
 COPY tracking-service/pom.xml .

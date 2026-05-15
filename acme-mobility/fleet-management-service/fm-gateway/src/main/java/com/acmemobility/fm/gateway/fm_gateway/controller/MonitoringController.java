@@ -31,7 +31,7 @@ public class MonitoringController {
     @PostMapping("/start")
     public ResponseEntity<MonitoringResponse> startMonitoring(@RequestBody MonitoringRequest request) {
         String vehicleId = request.getVehicleId();
-        log.info("Received start monitoring request for vehicleId: {}", vehicleId);
+        log.info("[startMonitoring] Received start monitoring request for vehicleId: {}", vehicleId);
 
         try {
             // 1. Call Tracking Service
@@ -39,14 +39,14 @@ public class MonitoringController {
                     .setVehicleId(vehicleId)
                     .build();
             trackingStub.startTracking(trackingRequest);
-            log.info("Tracking started for vehicleId: {}", vehicleId);
+            log.info("[startMonitoring] SUCCESS: Tracking started for vehicleId: {}", vehicleId);
 
             // 2. Call Battery Service
             Battery.BatteryRequest batteryRequest = Battery.BatteryRequest.newBuilder()
                     .setVehicleId(vehicleId)
                     .build();
             batteryStub.startMonitoring(batteryRequest);
-            log.info("Battery monitoring started for vehicleId: {}", vehicleId);
+            log.info("[startMonitoring] SUCCESS: Battery monitoring started for vehicleId: {}", vehicleId);
 
             return ResponseEntity.ok(new MonitoringResponse("STARTED", vehicleId));
 

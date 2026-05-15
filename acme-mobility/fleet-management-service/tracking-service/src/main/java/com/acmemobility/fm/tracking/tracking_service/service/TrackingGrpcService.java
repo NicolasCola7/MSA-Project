@@ -13,7 +13,7 @@ public class TrackingGrpcService extends TrackingServiceGrpc.TrackingServiceImpl
     @Override
     public void startTracking(Tracking.TrackingRequest request, StreamObserver<Tracking.TrackingAck> responseObserver) {
         String vehicleId = request.getVehicleId();
-        log.info("Received gRPC request to start tracking for vehicleId: {}", vehicleId);
+        log.info("[startTracking] Received gRPC request to start tracking for vehicleId: {}", vehicleId);
 
         // Here we would initialize the tracking logic (e.g. state in memory or DB)
         
@@ -23,13 +23,13 @@ public class TrackingGrpcService extends TrackingServiceGrpc.TrackingServiceImpl
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
-        log.info("Tracking started successfully for vehicleId: {}", vehicleId);
+        log.info("[startTracking] SUCCESS: Tracking started for vehicleId: {}", vehicleId);
     }
 
     @Override
     public void stopTracking(Tracking.TrackingRequest request, StreamObserver<Tracking.TrackingAck> responseObserver) {
         String vehicleId = request.getVehicleId();
-        log.info("Received gRPC request to stop tracking for vehicleId: {}", vehicleId);
+        log.info("[stopTracking] Received gRPC request to stop tracking for vehicleId: {}", vehicleId);
 
         Tracking.TrackingAck response = Tracking.TrackingAck.newBuilder()
                 .setSuccess(true)

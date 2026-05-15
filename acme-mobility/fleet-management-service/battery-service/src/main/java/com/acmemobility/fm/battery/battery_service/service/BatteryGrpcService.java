@@ -13,7 +13,7 @@ public class BatteryGrpcService extends BatteryServiceGrpc.BatteryServiceImplBas
     @Override
     public void startMonitoring(Battery.BatteryRequest request, StreamObserver<Battery.BatteryAck> responseObserver) {
         String vehicleId = request.getVehicleId();
-        log.info("Received gRPC request to start battery monitoring for vehicleId: {}", vehicleId);
+        log.info("[startMonitoring] Received gRPC request to start battery monitoring for vehicleId: {}", vehicleId);
 
         Battery.BatteryAck response = Battery.BatteryAck.newBuilder()
                 .setSuccess(true)
@@ -21,13 +21,13 @@ public class BatteryGrpcService extends BatteryServiceGrpc.BatteryServiceImplBas
 
         responseObserver.onNext(response);
         responseObserver.onCompleted();
-        log.info("Battery monitoring started successfully for vehicleId: {}", vehicleId);
+        log.info("[startMonitoring] SUCCESS: Battery monitoring started for vehicleId: {}", vehicleId);
     }
 
     @Override
     public void stopMonitoring(Battery.BatteryRequest request, StreamObserver<Battery.BatteryAck> responseObserver) {
         String vehicleId = request.getVehicleId();
-        log.info("Received gRPC request to stop battery monitoring for vehicleId: {}", vehicleId);
+        log.info("[stopMonitoring] Received gRPC request to stop battery monitoring for vehicleId: {}", vehicleId);
 
         Battery.BatteryAck response = Battery.BatteryAck.newBuilder()
                 .setSuccess(true)

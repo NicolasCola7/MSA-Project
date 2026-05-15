@@ -19,11 +19,11 @@ public class FleetManagementWorker {
 
     @JobWorker(type = "startMonitoring")
     public void startMonitoring(ActivatedJob job, @Variable String vehicleId) {
-        log.info("Worker startMonitoring activated for job: {}. vehicleId: {}", job.getKey(), vehicleId);
+        log.info("[Zeebe] Worker startMonitoring activated for job: {}. vehicleId: {}", job.getKey(), vehicleId);
         
         try {
             fleetManagementClient.startMonitoring(vehicleId);
-            log.info("Completed startMonitoring for vehicleId: {}", vehicleId);
+            log.info("[Zeebe] Completed startMonitoring for vehicleId: {}", vehicleId);
         } catch (Exception e) {
             log.error("Failed to start monitoring for vehicleId: {}. Error: {}", vehicleId, e.getMessage());
             // In a real scenario, we might want to throw a ZeebeBpmnError or let it retry

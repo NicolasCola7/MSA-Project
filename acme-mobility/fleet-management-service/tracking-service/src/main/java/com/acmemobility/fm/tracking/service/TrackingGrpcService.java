@@ -1,4 +1,4 @@
-package com.acmemobility.fm.tracking.tracking_service.service;
+package com.acmemobility.fm.tracking.service;
 
 import acmemobility.tracking.Tracking;
 import acmemobility.tracking.TrackingServiceGrpc;

@@ -1,4 +1,4 @@
-package com.acmemobility.fm.battery.battery_service.service;
+package com.acmemobility.fm.battery.service;
 
 import acmemobility.battery.Battery;
 import acmemobility.battery.BatteryServiceGrpc;

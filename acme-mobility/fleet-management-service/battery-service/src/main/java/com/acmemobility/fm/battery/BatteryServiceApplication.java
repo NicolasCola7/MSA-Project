@@ -1,13 +1,13 @@
-package com.acmemobility.fm.tracking.tracking_service;
+package com.acmemobility.fm.battery;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TrackingServiceApplication {
+public class BatteryServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TrackingServiceApplication.class, args);
+		SpringApplication.run(BatteryServiceApplication.class, args);
 	}
 
 }

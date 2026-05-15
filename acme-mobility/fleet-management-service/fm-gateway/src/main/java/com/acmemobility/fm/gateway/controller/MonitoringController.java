@@ -1,4 +1,4 @@
-package com.acmemobility.fm.gateway.fm_gateway.controller;
+package com.acmemobility.fm.gateway.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.acmemobility.fm.gateway.fm_gateway.dto.MonitoringRequest;
-import com.acmemobility.fm.gateway.fm_gateway.dto.MonitoringResponse;
+import com.acmemobility.fm.gateway.dto.MonitoringRequest;
+import com.acmemobility.fm.gateway.dto.MonitoringResponse;
 
 import acmemobility.battery.Battery;
 import acmemobility.battery.BatteryServiceGrpc;

@@ -1,6 +1,10 @@
 syntax = "proto3";
 package acmemobility.battery;
 
+option java_package = "com.acmemobility.fm.battery";
+option java_multiple_files = true;
+
+
 service BatteryService {
   rpc StartMonitoring  (BatteryRequest)  returns (BatteryAck);
   rpc StopMonitoring   (BatteryRequest)  returns (BatteryAck);

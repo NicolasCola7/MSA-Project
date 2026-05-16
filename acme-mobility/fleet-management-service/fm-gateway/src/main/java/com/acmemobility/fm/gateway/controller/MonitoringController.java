@@ -5,14 +5,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.acmemobility.fm.gateway.dto.MonitoringRequest;
 import com.acmemobility.fm.gateway.dto.MonitoringResponse;
-
-import acmemobility.battery.Battery;
-import acmemobility.battery.BatteryServiceGrpc;
-import acmemobility.tracking.Tracking;
-import acmemobility.tracking.TrackingServiceGrpc;
+import com.acmemobility.fm.battery.BatteryAck;
+import com.acmemobility.fm.battery.BatteryRequest;
+import com.acmemobility.fm.battery.BatteryServiceGrpc;
+import com.acmemobility.fm.tracking.TrackingAck;
+import com.acmemobility.fm.tracking.TrackingRequest;
+import com.acmemobility.fm.tracking.TrackingServiceGrpc;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.client.inject.GrpcClient;
@@ -38,20 +38,20 @@ public class MonitoringController {
 
         try {
             // 1. Prepare Tracking Request
-            Tracking.TrackingRequest trackingRequest = Tracking.TrackingRequest.newBuilder()
+            TrackingRequest trackingRequest = TrackingRequest.newBuilder()
                     .setVehicleId(vehicleId)
                     .build();
 
             // 2. Prepare Battery Request
-            Battery.BatteryRequest batteryRequest = Battery.BatteryRequest.newBuilder()
+            BatteryRequest batteryRequest = BatteryRequest.newBuilder()
                     .setVehicleId(vehicleId)
                     .build();
 
             // 3. Initiate parallel calls using CompletableFuture
-            CompletableFuture<Tracking.TrackingAck> trackingFuture = new CompletableFuture<>();
-            trackingStub.startTracking(trackingRequest, new StreamObserver<Tracking.TrackingAck>() {
+            CompletableFuture<TrackingAck> trackingFuture = new CompletableFuture<>();
+            trackingStub.startTracking(trackingRequest, new StreamObserver<TrackingAck>() {
                 @Override
-                public void onNext(Tracking.TrackingAck value) {
+                public void onNext(TrackingAck value) {
                     trackingFuture.complete(value);
                 }
 
@@ -65,10 +65,10 @@ public class MonitoringController {
                 }
             });
 
-            CompletableFuture<Battery.BatteryAck> batteryFuture = new CompletableFuture<>();
-            batteryStub.startMonitoring(batteryRequest, new StreamObserver<Battery.BatteryAck>() {
+            CompletableFuture<BatteryAck> batteryFuture = new CompletableFuture<>();
+            batteryStub.startMonitoring(batteryRequest, new StreamObserver<BatteryAck>() {
                 @Override
-                public void onNext(Battery.BatteryAck value) {
+                public void onNext(BatteryAck value) {
                     batteryFuture.complete(value);
                 }
 

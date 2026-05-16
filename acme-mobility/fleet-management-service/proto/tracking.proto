@@ -1,6 +1,10 @@
 syntax = "proto3";
 package acmemobility.tracking;
 
+option java_package = "com.acmemobility.fm.tracking";
+option java_multiple_files = true;
+
+
 service TrackingService {
   rpc StartTracking (TrackingRequest) returns (TrackingAck);
   rpc StopTracking  (TrackingRequest) returns (TrackingAck);
